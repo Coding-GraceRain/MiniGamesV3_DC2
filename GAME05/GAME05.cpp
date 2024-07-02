@@ -1,11 +1,23 @@
 #include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include<stdlib.h>
+#include<stdio.h>
 #include<string.h>
 #include "GAME05.h"
 namespace GAME05
 {
-	int GAME::create(){
+	int GAME::create() {
+		Takara2_1Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_2Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_3Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_4Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_5Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_6Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_7Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_8Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_9Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		Takara2_10Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+		TakaraImg = loadImage("..\\main\\assets\\game05\\takarabako.png");
 		KizaruImg = loadImage("..\\main\\assets\\game05\\kizaru.png");
 		GachaImg = loadImage("..\\main\\assets\\game05\\gacha.png");
 		TitleImg = loadImage("..\\main\\assets\\game05\\title.png");
@@ -17,7 +29,9 @@ namespace GAME05
 		TamaImg = loadImage("..\\main\\assets\\game05\\tama.png");
 		EnelImg = loadImage("..\\main\\assets\\game05\\enel.png");
 		BackImg = loadImage("..\\main\\assets\\game05\\back.png");
+		WhiteImg = loadImage("..\\main\\assets\\game05\\white.png");
 		
+
 		LgSnd = loadSound("..\\main\\assets\\game05\\w006.wav");
 		GetSnd = loadSound("..\\main\\assets\\game05\\get.wav");
 		BgmSnd = loadSound("..\\main\\assets\\game05\\bgm.wav");
@@ -38,20 +52,21 @@ namespace GAME05
 		AtariSnd = loadSound("..\\main\\assets\\game05\\ジャジャーン.wav");
 		ToppaSnd = loadSound("..\\main\\assets\\game05\\イヤッホー！.wav");
 		ChoiceSnd = loadSound("..\\main\\assets\\game05\\選択してください.wav");
-		
+
 		return 0;
 	}
 
-	void GAME::destroy(){
+	void GAME::destroy() {
 	}
 
-	void GAME::proc(){
+	void GAME::proc() {
 		if (State == TITLE)Title();
 		else if (State == RULE)Rule();
 		else if (State == VOL)Vol();
 		else if (State == GACHA)Gacha();
 		else if (State == PROB)Prob();
 		else if (State == MEAN)Mean();
+		else if (State == BOX)Box();
 		else if (State == RESULT)Result();
 		else if (State == RESULT2)Result2();
 		else if (State == PLAY)Play();
@@ -73,7 +88,7 @@ namespace GAME05
 		*/
 	}
 
-	void GAME::Title(){
+	void GAME::Title() {
 		clear(0);
 		rectMode(CORNER);
 		image(TitleImg, 0, 0);
@@ -137,7 +152,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Vol(){
+	void GAME::Vol() {
 		clear(255);
 		fill(50);
 		textSize(50);
@@ -218,7 +233,7 @@ namespace GAME05
 		setVolume(GetSnd, -(100 - volume2) * (100 - volume2));
 		setVolume(PunchSnd, -(100 - volume2) * (100 - volume2));
 		setVolume(ClearSnd, -(100 - volume1) * (100 - volume1));
-		setVolume(BgmSnd, -(100 - volume1) *(100 - volume1));
+		setVolume(BgmSnd, -(100 - volume1) * (100 - volume1));
 		setVolume(OverSnd, -(100 - volume1) * (100 - volume1));
 		setVolume(LuckySnd, -(100 - volume2) * (100 - volume2));
 		setVolume(LGClearSnd, -(100 - volume1) * (100 - volume1));
@@ -292,7 +307,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Init(){
+	void GAME::Init() {
 		PPx = width / 2;
 		PPy = height / 2;
 		PVx = 20.0f;
@@ -351,7 +366,7 @@ namespace GAME05
 		adjustment = true;
 	}
 
-	void GAME::Init2(){
+	void GAME::Init2() {
 		//プレイヤー情報
 		Px = width / 2;
 		Py = 930;
@@ -387,7 +402,7 @@ namespace GAME05
 		EBhalfW = 10;
 		EBhalfH = 20;
 		OfstY = -110;
-		
+
 		//プレイヤー、敵のHP情報
 		HpX = 1400;
 		HpY = 1030;
@@ -421,7 +436,7 @@ namespace GAME05
 		adjustment = true;
 	}
 
-	void GAME::Init3(){
+	void GAME::Init3() {
 		cnt = 0;
 		adjustment = true;
 	}
@@ -448,63 +463,114 @@ namespace GAME05
 		star6Total = 7;
 		sstar6Total = 6;
 
+		star4Total1 = 10;
+		star5Total1 = 9;
+		star6Total1 = 7;
+		sstar6Total1 = 6;
+
+		star4Total2 = 10;
+		star5Total2 = 9;
+		star6Total2 = 7;
+		sstar6Total2 = 6;
+
+		star4Total3 = 10;
+		star5Total3 = 9;
+		star6Total3 = 7;
+		sstar6Total3 = 6;
+
+		star4Total4 = 10;
+		star5Total4 = 9;
+		star6Total4 = 7;
+		sstar6Total4 = 6;
+
+		star4Total5 = 10;
+		star5Total5 = 9;
+		star6Total5 = 7;
+		sstar6Total5 = 6;
+
+		star4Total6 = 10;
+		star5Total6 = 9;
+		star6Total6 = 7;
+		sstar6Total6 = 6;
+
+		star4Total7 = 10;
+		star5Total7 = 9;
+		star6Total7 = 7;
+		sstar6Total7 = 6;
+
+		star4Total8 = 10;
+		star5Total8 = 9;
+		star6Total8 = 7;
+		sstar6Total8 = 6;
+
+		star4Total9 = 10;
+		star5Total9 = 9;
+		star6Total9 = 7;
+		sstar6Total9 = 6;
+
+		star4Total10 = 10;
+		star5Total10 = 9;
+		star6Total10 = 7;
+		sstar6Total10 = 6;
+		takaraHp = 1;
+
 		randomsstar6num = random() % sstar6Total;
 		randomstar6num = random() % star6Total;
 		randomstar5num = random() % star5Total;
 		randomstar4num = random() % star4Total;
 
-		randomsstar6num1 = random() % sstar6Total;
-		randomstar6num1 = random() % star6Total;
-		randomstar5num1 = random() % star5Total;
-		randomstar4num1 = random() % star4Total;
+		randomsstar6num1 = random() % sstar6Total1;
+		randomstar6num1 = random() % star6Total1;
+		randomstar5num1 = random() % star5Total1;
+		randomstar4num1 = random() % star4Total1;
 
-		randomsstar6num2 = random() % sstar6Total;
-		randomstar6num2 = random() % star6Total;
-		randomstar5num2 = random() % star5Total;
-		randomstar4num2 = random() % star4Total;
+		randomsstar6num2 = random() % sstar6Total2;
+		randomstar6num2 = random() % star6Total2;
+		randomstar5num2 = random() % star5Total2;
+		randomstar4num2 = random() % star4Total2;
 
-		randomsstar6num3 = random() % sstar6Total;
-		randomstar6num3 = random() % star6Total;
-		randomstar5num3 = random() % star5Total;
-		randomstar4num3 = random() % star4Total;
+		randomsstar6num3 = random() % sstar6Total3;
+		randomstar6num3 = random() % star6Total3;
+		randomstar5num3 = random() % star5Total3;
+		randomstar4num3 = random() % star4Total3;
 
-		randomsstar6num4 = random() % sstar6Total;
-		randomstar6num4 = random() % star6Total;
-		randomstar5num4 = random() % star5Total;
-		randomstar4num4 = random() % star4Total;
+		randomsstar6num4 = random() % sstar6Total4;
+		randomstar6num4 = random() % star6Total4;
+		randomstar5num4 = random() % star5Total4;
+		randomstar4num4 = random() % star4Total4;
 
-		randomsstar6num5 = random() % sstar6Total;
-		randomstar6num5 = random() % star6Total;
-		randomstar5num5 = random() % star5Total;
-		randomstar4num5 = random() % star4Total;
+		randomsstar6num5 = random() % sstar6Total5;
+		randomstar6num5 = random() % star6Total5;
+		randomstar5num5 = random() % star5Total5;
+		randomstar4num5 = random() % star4Total5;
 
-		randomsstar6num6 = random() % sstar6Total;
-		randomstar6num6 = random() % star6Total;
-		randomstar5num6 = random() % star5Total;
-		randomstar4num6 = random() % star4Total;
+		randomsstar6num6 = random() % sstar6Total6;
+		randomstar6num6 = random() % star6Total6;
+		randomstar5num6 = random() % star5Total6;
+		randomstar4num6 = random() % star4Total6;
 
-		randomsstar6num7 = random() % sstar6Total;
-		randomstar6num7 = random() % star6Total;
-		randomstar5num7 = random() % star5Total;
-		randomstar4num7 = random() % star4Total;
+		randomsstar6num7 = random() % sstar6Total7;
+		randomstar6num7 = random() % star6Total7;
+		randomstar5num7 = random() % star5Total7;
+		randomstar4num7 = random() % star4Total7;
 
-		randomsstar6num8 = random() % sstar6Total;
-		randomstar6num8 = random() % star6Total;
-		randomstar5num8 = random() % star5Total;
-		randomstar4num8 = random() % star4Total;
+		randomsstar6num8 = random() % sstar6Total8;
+		randomstar6num8 = random() % star6Total8;
+		randomstar5num8 = random() % star5Total8;
+		randomstar4num8 = random() % star4Total8;
 
-		randomsstar6num9 = random() % sstar6Total;
-		randomstar6num9 = random() % star6Total;
-		randomstar5num9 = random() % star5Total;
-		randomstar4num9 = random() % star4Total;
+		randomsstar6num9 = random() % sstar6Total9;
+		randomstar6num9 = random() % star6Total9;
+		randomstar5num9 = random() % star5Total9;
+		randomstar4num9 = random() % star4Total9;
 
-		randomsstar6num10 = random() % sstar6Total;
-		randomstar6num10 = random() % star6Total;
-		randomstar5num10 = random() % star5Total;
-		randomstar4num10 = random() % star4Total;
+		randomsstar6num10 = random() % sstar6Total10;
+		randomstar6num10 = random() % star6Total10;
+		randomstar5num10 = random() % star5Total10;
+		randomstar4num10 = random() % star4Total10;
 	}
 
-	void GAME::Play(){
+	void GAME::Play() {
 		clear(200);
 		if (isPress(KEY_D)) { PPx += PVx; }
 		if (isPress(KEY_A)) { PPx += -PVx; }
@@ -530,22 +596,22 @@ namespace GAME05
 			EPy = random() % 780 + 150.0f;
 		}
 
-		if (EPx > width){
+		if (EPx > width) {
 			PointFlag = false;
 		}
 		//各ポイントの範囲と獲得ポイント
 		if (PointFlag == false) {
-			if (collision() && EPx < GPRx && PPx < GPRx){
+			if (collision() && EPx < GPRx && PPx < GPRx) {
 				playSound(GetSnd);
 				Point += GPR;
 				PointFlag = true;
 			}
-			if(collision() && EPx < GPYx && EPx > GPRx && PPx < GPYx && PPx > GPRx){
+			if (collision() && EPx < GPYx && EPx > GPRx && PPx < GPYx && PPx > GPRx) {
 				playSound(GetSnd);
 				Point += GPY;
 				PointFlag = true;
 			}
-			if (collision() && EPx < GPBx && EPx > GPYx && PPx < GPBx && PPx > GPYx){
+			if (collision() && EPx < GPBx && EPx > GPYx && PPx < GPBx && PPx > GPYx) {
 				playSound(GetSnd);
 				Point += GPB;
 				PointFlag = true;
@@ -591,7 +657,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Play2(){
+	void GAME::Play2() {
 		clear(200);
 		if (isPress(KEY_D)) { PPx += PVx; }
 		if (isPress(KEY_A)) { PPx += -PVx; }
@@ -678,7 +744,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Play3(){
+	void GAME::Play3() {
 		clear(200);
 		if (isPress(KEY_D)) { PPx += PVx; }
 		if (isPress(KEY_A)) { PPx += -PVx; }
@@ -784,7 +850,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Clear(){
+	void GAME::Clear() {
 		if (StageCount == 1) {
 			clear(35, 253, 59);
 			fill(255);
@@ -831,7 +897,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Allclear(){
+	void GAME::Allclear() {
 		clear(255);
 		fill(255, 0, 0);
 		textSize(300);
@@ -872,7 +938,7 @@ namespace GAME05
 		textSize(100);
 		text("ゲームクリア!", 630, 100);
 		text("ラッキーゲーム！", 600, 200);
-		text("パンチを当てて", 600,300);
+		text("パンチを当てて", 600, 300);
 		text("時間内に敵を倒そう!", 500, 400);
 		text("～操作方法～", 650, 600);
 		text("A:左移動", 500, 700);
@@ -941,7 +1007,7 @@ namespace GAME05
 			EPx > width - EhalfW) {
 			EVx = -EVx;
 		}
-		
+
 		if (PBHp == 0) {
 			EHitFlag = false;
 		}
@@ -1017,7 +1083,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Lgclear(){
+	void GAME::Lgclear() {
 		clear(255, 255, 255);
 		textSize(250);
 		fill(255, 72, 72);
@@ -1027,9 +1093,9 @@ namespace GAME05
 		fill(255, 203, 72);
 		text("C", 260, height / 2);
 		fill(250, 255, 72);
-		text("K", 370, height / 2); 
+		text("K", 370, height / 2);
 		fill(200, 255, 72);
-		text("Y", 490, height / 2); 
+		text("Y", 490, height / 2);
 		fill(100, 255, 72);
 		text("G", 590, height / 2);
 		fill(100, 255, 72);
@@ -1037,15 +1103,15 @@ namespace GAME05
 		fill(72, 255, 185);
 		text("M", 830, height / 2);
 		fill(72, 255, 250);
-		text("E", 950, height / 2); 
+		text("E", 950, height / 2);
 		fill(72, 200, 255);
 		text("C", 1270, height / 2);
 		fill(72, 190, 255);
-		text("L", 1390, height / 2); 
+		text("L", 1390, height / 2);
 		fill(72, 100, 255);
-		text("E", 1510, height / 2); 
+		text("E", 1510, height / 2);
 		fill(130, 72, 255);
-		text("A", 1630, height / 2); 
+		text("A", 1630, height / 2);
 		fill(220, 72, 255);
 		text("R", 1750, height / 2);
 		textSize(50);
@@ -1129,7 +1195,7 @@ namespace GAME05
 		text("左クリックでタイトルに戻る", 0, 1080);
 	}
 
-	void GAME::Finish(){
+	void GAME::Finish() {
 		clear(0, 200, 255);
 		image(LuffyImg, 600, height / 2);
 		image(EnelImg, 1200, height / 2);
@@ -1147,7 +1213,7 @@ namespace GAME05
 		text("左クリックでタイトルに戻る", 0, 1080);
 	}
 
-	void GAME::Over(){
+	void GAME::Over() {
 		clear(0);
 		image(EnelImg, EPx = width / 2, EPy = height / 2);
 		fill(255);
@@ -1164,7 +1230,7 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Gacha(){
+	void GAME::Gacha() {
 		clear();
 		rectMode(CORNER);
 		image(GachaImg, 0, 0);
@@ -1190,6 +1256,7 @@ namespace GAME05
 			tamaCnt -= 5;
 			clear(255);
 			FreamCount = 120;
+			image(TakaraImg, width / 2, height / 2);
 			State = RESULT;
 		}
 
@@ -1199,6 +1266,16 @@ namespace GAME05
 			tamaCnt -= 50;
 			clear(255);
 			FreamCount = 1320;
+			image(Takara2_1Img, 320, 220);
+			image(Takara2_2Img, 970, 220);
+			image(Takara2_3Img, 1620, 220);
+			image(Takara2_4Img, 320, 420);
+			image(Takara2_5Img, 970, 420);
+			image(Takara2_6Img, 1620, 420);
+			image(Takara2_7Img, 320, 620);
+			image(Takara2_8Img, 970, 620);
+			image(Takara2_9Img, 1620, 620);
+			image(Takara2_10Img, 970, 820);
 			State = RESULT2;
 		}
 
@@ -1214,6 +1291,10 @@ namespace GAME05
 		text("Mキー:ガチャ玉の入手方法", 1300, 980);
 		if (isTrigger(KEY_M)) {
 			State = MEAN;
+		}
+		text("Bキー:図鑑", 1300, 1080);
+		if (isTrigger(KEY_B)) {
+			State = BOX;
 		}
 	}
 
@@ -1247,7 +1328,7 @@ namespace GAME05
 		text("服部半蔵:3.0%", 490, 820);
 		text("葛飾北斎:3.0%", 490, 900);
 
-		text("☆6:7体:14%",930, 150);
+		text("☆6:7体:14%", 930, 150);
 		textSize(60);
 		text("伊達政宗:2.0%", 930, 260);
 		text("上杉謙信:2.0%", 930, 340);
@@ -1297,15 +1378,51 @@ namespace GAME05
 		}
 	}
 
-	void GAME::Result() {
+	void GAME::Box() {
+		clear(255);
+		
+		textSize(80);
+		for (int i = 0; i < 10; i++) {
+			text("☆4", 160, 100);
+			text(Name4[i].name, 50, 200 + 90 * i);
+			text(Name4[i].GetCnt, 400, 200 + 90 * i);
+
+		}
+		for (int i = 0; i < 9; i++) {
+			text("☆5", 640, 100);
+			text(Name5[i].name, 530, 200 + 90 * i);
+			text(Name5[i].GetCnt, 880, 200 + 90 * i);
+		}
+		for (int i = 0; i < 7; i++) {
+			text("☆6", 1120, 100);
+			text(Name6[i].name, 1010, 200 + 90 * i);
+			text(Name6[i].GetCnt, 1360, 200 + 90 * i);
+		}
+		for (int i = 0; i < 6; i++) {
+			text("★6", 1600, 100);
+			text(Name7[i].name, 1490, 200 + 90 * i);
+			text(Name7[i].GetCnt, 1840, 200 + 90 * i);
+		}
+
 		textSize(50);
+		text("左クリック:ガチャ選択画面に戻る", 0, 1080);
+		if (isTrigger(MOUSE_LBUTTON)){
+			State = GACHA;	   
+		}					   
+	}						   
+							   
+	void GAME::Result() {	   
+		textSize(50);		   
 		text("結果が出て約2秒後にガチャ選択画面に戻る", 0, 1080);
 		textSize(250);
+		rectMode(CENTER);
 		while (notQuit) {
 			if (gachaCnt == 1) {
 				break;
 			}
 			if (isTrigger(KEY_O)) {
+				TakaraImg = loadImage("..\\main\\assets\\game05\\white2.png");
+				image(TakaraImg, width / 2, height / 2);
 				playSound(OpenSnd);
 				gachaCnt++;
 				if (num0 > 94) {
@@ -1313,327 +1430,441 @@ namespace GAME05
 					fill(213, 202, 112);
 					text("★6:", 100, 560);
 					fill(0);
-					text((let)sstar6[randomsstar6num], 600, 560);
+					text((let)Name7[randomsstar6num].name, 600, 560);
+					Name7[randomsstar6num].GetCnt++;
 				}
 				else if (num0 > 80) {
 					playSound(HitSnd);
-					text("★6:", 100, 560);
-					text((let)star6[randomstar6num], 600, 560);
+					text("☆6:", 100, 560);
+					text((let)Name6[randomstar6num].name, 600, 560);
+					Name6[randomstar6num].GetCnt++;
 				}
 				else if (num0 > 53) {
-					text("★5:", 100, 560);
-					text((let)star5[randomstar5num], 600, 560);
+					text("☆5:", 100, 560);
+					text((let)Name5[randomstar5num].name, 600, 560);
+					Name5[randomstar5num].GetCnt++;
 				}
-				else{
-					text("★4:", 100, 560);
-					text((let)star4[randomstar4num], 600, 560);
+				else {
+					text("☆4:", 100, 560);
+					text((let)Name4[randomstar4num].name, 600, 560);
+					Name4[randomstar4num].GetCnt++;
 				}
 			}
 		}
 		FreamCount -= 2;
 		if (FreamCount == 0) {
+			TakaraImg = loadImage("..\\main\\assets\\game05\\takarabako.png");
 			State = GACHA;
 		}
 	}
-
 	void GAME::Result2() {
 		textSize(50);
 		fill(0);
 		text("すべての結果が出て約3秒後にガチャ選択画面に戻る", 0, 1080);
 		textSize(100);
 		while (notQuit) {
-			if (gachaCnt >= 10) {
+			if (gachaCnt == 10) {
 				break;
 			}
 			//1
 			if (isTrigger(KEY_A)) {
+				Takara2_1Img = loadImage("..\\main\\assets\\game05\\white.png");
+			    image(Takara2_1Img, 320, 220);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num1 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 10, 220);
+					text("★6:", 10, 260);
 					fill(0);
-					text((let)sstar6[randomsstar6num1], 200, 220);
+					text((let)Name7[randomsstar6num1].name, 200, 260);
+					chara = randomsstar6num1;
+					Name7[chara].GetCnt++;
 				}
 				else if (num1 > 80) {
 					playSound(HitSnd);
 					fill(0);
 					textSize(100);
-					text("☆6:", 10, 220);
-					text((let)star6[randomstar6num1], 200, 220);
+					text("☆6:", 10, 260);
+					text((let)Name6[randomstar6num1].name, 200, 260);
+					chara = randomstar6num1;
+					Name6[chara].GetCnt++;
 				}
 				else if (num1 > 53) {
 					fill(0);
-					text("☆5:", 10, 220);
-					text((let)star5[randomstar5num1], 200, 220);
+					text("☆5:", 10, 260);
+					text((let)Name5[randomstar5num1].name, 200, 260);
+					chara = randomstar5num1;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 10, 220);
-					text((let)star4[randomstar4num1], 200, 220);
+					text("☆4:", 10, 260);
+					text((let)Name4[randomstar4num1].name, 200, 260);
+					chara = randomstar4num1;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//2
 			if (isTrigger(KEY_S)) {
+				Takara2_2Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_2Img, 970, 220);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num2 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 650, 220);
+					text("★6:", 650, 260);
 					fill(0);
-					text((let)sstar6[randomsstar6num2], 850, 220);
+					text((let)Name7[randomsstar6num2].name, 850, 260);
+					chara = randomsstar6num2;
+					Name7[chara].GetCnt++;
 				}
 				else if (num2 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 650, 220);
-					text((let)star6[randomstar6num2], 850, 220);
+					text("☆6:", 650, 260);
+					text((let)Name6[randomstar6num2].name, 850, 260);
+					chara = randomstar6num2;
+					Name6[chara].GetCnt++;
 				}
 				else if (num2 > 53) {
 					fill(0);
-					text("☆5:", 650, 220);
-					text((let)star5[randomstar5num2], 850, 220);
+					text("☆5:", 650, 260);
+					text((let)Name5[randomstar5num2].name, 850, 260);
+					chara = randomstar5num2;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 650, 220);
-					text((let)star4[randomstar4num2], 850, 220);
+					text("☆4:", 650, 260);
+					text((let)Name4[randomstar4num2].name, 850, 260);
+					chara = randomstar4num2;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//3
 			if (isTrigger(KEY_D)) {
+				Takara2_3Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_3Img, 1620, 220);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num3 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 1300, 220);
+					text("★6:", 1300, 260);
 					fill(0);
-					text((let)sstar6[randomsstar6num3], 1500, 220);
+					text((let)Name7[randomsstar6num3].name, 1500, 260);
+					chara = randomsstar6num3;
+					Name7[chara].GetCnt++;
 				}
 				else if (num3 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 1300, 220);
-					text((let)star6[randomstar6num3], 1500, 220);
+					text("☆6:", 1300, 260);
+					text((let)Name6[randomstar6num3].name, 1500, 260);
+					chara = randomstar6num3;
+					Name6[chara].GetCnt++;
 				}
 				else if (num3 > 53) {
 					fill(0);
-					text("☆5:", 1300, 220);
-					text((let)star5[randomstar5num3], 1500, 220);
+					text("☆5:", 1300, 260);
+					text((let)Name5[randomstar5num3].name, 1500, 260);
+					chara = randomstar5num3;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 1300, 220);
-					text((let)star4[randomstar4num3], 1500, 220);
+					text("☆4:", 1300, 260);
+					text((let)Name4[randomstar4num3].name, 1500, 260);
+					chara = randomstar4num3;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//4
 			if (isTrigger(KEY_F)) {
+				Takara2_4Img = loadImage("..\\main\\assets\\game05\\white.png"); 
+				image(Takara2_4Img, 320, 420);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num4 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 10, 420);
+					text("★6:", 10, 460);
 					fill(0);
-					text((let)sstar6[randomsstar6num4], 200, 420);
+					text((let)Name7[randomsstar6num4].name, 200, 460);
+					chara = randomsstar6num4;
+					Name7[chara].GetCnt++;
 				}
 				else if (num4 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 10, 420);
-					text((let)star6[randomstar6num4], 200, 420);
+					text("☆6:", 10, 460);
+					text((let)Name6[randomstar6num4].name, 200, 460);
+					chara = randomstar6num4;
+					Name6[chara].GetCnt++;
 				}
 				else if (num4 > 53) {
 					fill(0);
-					text("☆5:", 10, 420);
-					text((let)star5[randomstar5num4], 200, 420);
+					text("☆5:", 10, 460);
+					text((let)Name5[randomstar5num4].name, 200, 460);
+					chara = randomstar5num4;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 10, 420);
-					text((let)star4[randomstar4num4], 200, 420);
+					text("☆4:", 10, 460);
+					text((let)Name4[randomstar4num4].name, 200, 460);
+					chara = randomstar4num4;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//5
 			if (isTrigger(KEY_G)) {
+				Takara2_5Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_5Img, 970, 420);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num5 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 650, 420);
+					text("★6:", 650, 460);
 					fill(0);
-					text((let)sstar6[randomsstar6num5], 850, 420);
+					text((let)Name7[randomsstar6num5].name, 850, 460);
+					chara = randomsstar6num5;
+					Name7[chara].GetCnt++;
 				}
 				else if (num5 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 650, 420);
-					text((let)star6[randomstar6num5], 850, 420);
+					text("☆6:", 650, 460);
+					text((let)Name6[randomstar6num5].name, 850, 460);
+					chara = randomstar6num5;
+					Name6[chara].GetCnt++;
 				}
 				else if (num5 > 53) {
 					fill(0);
-					text("☆5:", 650, 420);
-					text((let)star5[randomstar5num5], 850, 420);
+					text("☆5:", 650, 460);
+					text((let)Name5[randomstar5num5].name, 850, 460);
+					chara = randomstar5num5;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 650, 420);
-					text((let)star4[randomstar4num5], 850, 420);
+					text("☆4:", 650, 460);
+					text((let)Name4[randomstar4num5].name, 850, 460);
+					chara = randomstar4num5;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//6
 			if (isTrigger(KEY_H)) {
+				Takara2_6Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_6Img, 1620, 420);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num6 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 1300, 420);
+					text("★6:", 1300, 460);
 					fill(0);
-					text((let)sstar6[randomsstar6num6], 1500, 420);
+					text((let)Name7[randomsstar6num6].name, 1500, 460);
+					chara = randomsstar6num6;
+					Name7[chara].GetCnt++;
 				}
 				else if (num6 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 1300, 420);
-					text((let)star6[randomstar6num6], 1500, 420);
+					text("☆6:", 1300, 460);
+					text((let)Name6[randomstar6num6].name, 1500, 460);
+					chara = randomstar6num6;
+					Name6[chara].GetCnt++;
 				}
 				else if (num6 > 53) {
 					fill(0);
-					text("☆5:", 1300, 420);
-					text((let)star5[randomstar5num6], 1500, 420);
+					text("☆5:", 1300, 460);
+					text((let)Name5[randomstar5num6].name, 1500, 460);
+					chara = randomstar5num6;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 1300, 420);
-					text((let)star4[randomstar4num6], 1500, 420);
+					text("☆4:", 1300, 460);
+					text((let)Name4[randomstar4num6].name, 1500, 460);
+					chara = randomstar4num6;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//7
 			if (isTrigger(KEY_J)) {
+				Takara2_7Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_7Img, 320, 620);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num7 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 10, 620);
+					text("★6:", 10, 660);
 					fill(0);
-					text((let)sstar6[randomsstar6num7], 200, 620);
+					text((let)Name6[randomsstar6num7].name, 200, 660);
+					chara = randomsstar6num7;
+					Name7[chara].GetCnt++;
 				}
 				else if (num7 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 10, 620);
-					text((let)star6[randomstar6num7], 200, 620);
+					text("☆6:", 10, 660);
+					text((let)Name6[randomstar6num7].name, 200, 660);
+					chara = randomstar6num7; 
+					Name6[chara].GetCnt++;
 				}
 				else if (num7 > 53) {
 					fill(0);
-					text("☆5:", 10, 620);
-					text((let)star5[randomstar5num7], 200, 620);
+					text("☆5:", 10, 660);
+					text((let)Name5[randomstar5num7].name, 200, 660);
+					chara = randomstar5num7; 
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 10, 620);
-					text((let)star4[randomstar4num7], 200, 620);
+					text("☆4:", 10, 660);
+					text((let)Name4[randomstar4num7].name, 200, 660);
+					chara = randomstar4num7; 
+					Name4[chara].GetCnt++;
 				}
 			}
 			//8
 			if (isTrigger(KEY_K)) {
+				Takara2_8Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_8Img, 970, 620);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num8 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 650, 620);
+					text("★6:", 650, 660);
 					fill(0);
-					text((let)sstar6[randomsstar6num8], 850, 620);
+					text((let)Name7[randomsstar6num8].name, 850, 660);
+					chara = randomsstar6num8;
+					Name7[chara].GetCnt++;
 				}
 				else if (num8 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 650, 620);
-					text((let)star6[randomstar6num8], 850, 620);
+					text("☆6:", 650, 660);
+					text((let)Name6[randomstar6num8].name, 850, 660);
+					chara = randomstar6num8;
+					Name6[chara].GetCnt++;
 				}
 				else if (num8 > 53) {
 					fill(0);
-					text("☆5:", 650, 620);
-					text((let)star5[randomstar5num8], 850, 620);
+					text("☆5:", 650, 660);
+					text((let)Name5[randomstar5num8].name, 850, 660);
+					chara = randomstar5num8;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 650, 620);
-					text((let)star4[randomstar4num8], 850, 620);
+					text("☆4:", 650, 660);
+					text((let)Name4[randomstar4num8].name, 850, 660);
+					chara = randomstar4num8;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//9
 			if (isTrigger(KEY_L)) {
+				Takara2_9Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_9Img, 1620, 620);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num9 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 1300, 620);
+					text("★6:", 1300, 660);
 					fill(0);
-					text((let)sstar6[randomsstar6num9], 1500, 620);
+					text((let)Name7[randomsstar6num9].name, 1500, 660);
+					chara = randomsstar6num9;
+					Name7[chara].GetCnt++;
 				}
 				else if (num9 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 1300, 620);
-					text((let)star6[randomstar6num9], 1500, 620);
+					text("☆6:", 1300, 660);
+					text((let)Name6[randomstar6num9].name, 1500, 660);
+					chara = randomstar6num9;
+					Name6[chara].GetCnt++;
 				}
 				else if (num9 > 53) {
 					fill(0);
-					text("☆5:", 1300, 620);
-					text((let)star5[randomstar5num9], 1500, 620);
+					text("☆5:", 1300, 660);
+					text((let)Name5[randomstar5num9].name, 1500, 660);
+					chara = randomstar5num9;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 1300, 620);
-					text((let)star4[randomstar4num9], 1500, 620);
+					text("☆4:", 1300, 660);
+					text((let)Name4[randomstar4num9].name, 1500, 660);
+					chara = randomstar4num9;
+					Name4[chara].GetCnt++;
 				}
 			}
 			//10
 			if (isTrigger(KEY_P)) {
+				Takara2_10Img = loadImage("..\\main\\assets\\game05\\white.png");
+				image(Takara2_10Img, 970, 820);
 				gachaCnt++;
 				playSound(OpenSnd);
 				if (num10 > 94) {
 					playSound(AtariSnd);
 					fill(213, 202, 112);
-					text("★6:", 650, 820);
+					text("★6:", 650, 860);
 					fill(0);
-					text((let)sstar6[randomsstar6num10], 850, 820);
+					text((let)Name7[randomsstar6num10].name, 850, 860);
+					chara = randomsstar6num10;
+					Name7[chara].GetCnt++;
 				}
 				else if (num10 > 80) {
 					playSound(HitSnd);
 					fill(0);
-					text("☆6:", 650, 820);
-					text((let)star6[randomstar6num10], 850, 820);
+					text("☆6:", 650, 860);
+					text((let)Name6[randomstar6num10].name, 850, 860);
+					chara = randomstar6num10; 
+					Name6[chara].GetCnt++;
 				}
 				else if (num10 > 53) {
 					fill(0);
-					text("☆5:", 650, 820);
-					text((let)star5[randomstar5num10], 850, 820);
+					text("☆5:", 650, 860);
+					text((let)Name5[randomstar5num10].name, 850, 860);
+					chara = randomstar5num10;
+					Name5[chara].GetCnt++;
 				}
 				else {
 					fill(0);
-					text("☆4:", 650, 820);
-					text((let)star4[randomstar4num10], 850, 820);
+					text("☆4:", 650, 860);
+					text((let)Name4[randomstar4num10].name, 850, 860);
+					chara = randomstar4num10;
+					Name4[chara].GetCnt++;
 				}
 			}
 		}
 		FreamCount -= 15;
 		if (FreamCount == 0) {
+			Takara2_1Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_2Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_3Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_4Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_5Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_6Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_7Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_8Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_9Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
+			Takara2_10Img = loadImage("..\\main\\assets\\game05\\takarabako2.png");
 			State = GACHA;
 		}
 	}
 
-	int GAME::collision(){
+	int GAME::collision() {
 		if (EHp > 0) {
 			float cRight = PPx + PhalfW;
 			float cLeft = PPx - PhalfW;
@@ -1646,7 +1877,7 @@ namespace GAME05
 			float eBottom = EPy + EhalfH;
 
 			if (cRight < eLeft || eRight < cLeft ||
-				eBottom < cTop || cBottom < eTop ) {
+				eBottom < cTop || cBottom < eTop) {
 				return 0;
 			}
 			else {
@@ -1656,7 +1887,7 @@ namespace GAME05
 		return 0;
 	}
 
-	int GAME::collision2(){
+	int GAME::collision2() {
 		if (PBHp > 0) {
 			float PbRight = PBPx + PBhalfW;
 			float PbLeft = PBPx - PBhalfW;
@@ -1679,7 +1910,7 @@ namespace GAME05
 		return 0;
 	}
 
-	int GAME::collision3(){
+	int GAME::collision3() {
 		if (EBHp > 0) {
 			float EbRight = EBPx + EBhalfW;
 			float EbLeft = EBPx - EBhalfW;
@@ -1702,7 +1933,7 @@ namespace GAME05
 		return 0;
 	}
 
-	void GAME::hpGauge(){
+	void GAME::hpGauge() {
 		strokeWeight(0);
 		fill(128);
 		rectMode(CORNER);
@@ -1724,7 +1955,7 @@ namespace GAME05
 		text((let)EHP, EHpX, 120);
 	}
 
-	void GAME::hpGauge2(){
+	void GAME::hpGauge2() {
 		strokeWeight(0);
 		fill(128);
 		rectMode(CORNER);
@@ -1746,7 +1977,7 @@ namespace GAME05
 		text((let)HP, 1630, 1070);
 	}
 
-	void GAME::draw(){
+	void GAME::draw() {
 		clear();
 		rectMode(CORNER);
 		image(BackImg, 0, 0);
@@ -1757,8 +1988,8 @@ namespace GAME05
 
 		strokeWeight(15);
 		stroke(255, 255, 0);
-		line(GPYx, 0, GPYx, GPYy); 
-		
+		line(GPYx, 0, GPYx, GPYy);
+
 		strokeWeight(15);
 		stroke(0, 255, 255);
 		line(GPBx, 0, GPBx, GPBy);
@@ -1766,12 +1997,12 @@ namespace GAME05
 		strokeWeight(15);
 		stroke(0, 180, 0);
 		line(GPGx, 0, GPGx, GPGy);
-		
+
 		rectMode(CENTER);
 		image(KizaruImg, PPx, PPy);
 		image(EnelImg, EPx, EPy);
 
-		fill(255, 0 ,0);
+		fill(255, 0, 0);
 		textSize(75);
 		text((let)GPR + "Pt", 90, 1080);
 
@@ -1817,7 +2048,7 @@ namespace GAME05
 		rect(EPx, EPy, EhalfW * 1.5f, EhalfH * 1.5f);
 	}
 
-	void GAME::draw2(){
+	void GAME::draw2() {
 		clear();
 		rectMode(CORNER);
 		image(BackImg, 0, 0);

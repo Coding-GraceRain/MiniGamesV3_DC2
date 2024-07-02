@@ -12,13 +12,14 @@ namespace GAME05
         void proc();
         void destroy();
     private:
-        enum STATE { TITLE, VOL, GACHA, PROB, MEAN, RESULT, RESULT2, RULE, PLAY, PLAY2, PLAY3, STAGE, LUCKY,LUCKYGAME, CLEAR, ALLCLEAR, LGCLEAR, LGCLEAR2, LGCLEAR3, FINISH, OVER };
+        enum STATE { TITLE, VOL, GACHA, PROB, MEAN, BOX, RESULT, RESULT2, RULE, PLAY, PLAY2, PLAY3, STAGE, LUCKY, LUCKYGAME, CLEAR, ALLCLEAR, LGCLEAR, LGCLEAR2, LGCLEAR3, FINISH, OVER };
         STATE State = TITLE;
         void Title();
         void Vol();
         void Gacha();
         void Prob();
         void Mean();
+        void Box();
         void Result();
         void Result2();
         void Rule();
@@ -65,6 +66,18 @@ namespace GAME05
         int TitleImg = 0;
         int BlockImg = 0;
         int GachaImg = 0;
+        int TakaraImg = 0;
+        int Takara2_1Img = 255;
+        int Takara2_2Img = 0;
+        int Takara2_3Img = 0;
+        int Takara2_4Img = 0;
+        int Takara2_5Img = 0;
+        int Takara2_6Img = 0;
+        int Takara2_7Img = 0;
+        int Takara2_8Img = 0;
+        int Takara2_9Img = 0;
+        int Takara2_10Img = 0;
+        int WhiteImg = 0;
 
         int GetSnd = 0;
         int PunchSnd = 0;
@@ -190,6 +203,8 @@ namespace GAME05
 
         int cnt = 0;
 
+        int takaraHp = 0;
+
         int num0 = 0;
         int num1 = 0;
         int num2 = 0;
@@ -208,54 +223,108 @@ namespace GAME05
 
         int LTcnt = 0;
 
-        const char* star4[10] = {
-            "’O‰H’·G",
-            "¡ì‹`Œ³",
-            "¼‰i‹vG",
-            "Ö“¡“¹O",
-            "óˆä’·­",
-            "‘O“cŒcŸ",
-            "ˆäˆÉ’¼•J",
-            "ç —˜ ‹x",
-            "“y•ûÎO",
-            "‰«“c‘i"
-        };
-        
-        const char* star5[9] = {
-            "–{“c’‰Ÿ",
-            "‘O“c—˜‰Æ",
-            "–¾’qŒõG",
-            "G‰ê‘·s",
-            "“‡ ¶ ‹ß",
-            "‰Á“¡´³",
-            "‘å’J‹gŒp",
-            "••””¼‘ ",
-            "Š‹ü–kÖ"
-        };
+        int chara = 0;
 
-        const char* star6[7] = {
-            "ˆÉ’B­@",
-            "ã™ŒªM",
-            "•“cMŒº",
-            "^“cK‘º",
-            "–Ñ—˜Œ³A",
-            "X —– ŠÛ",
-            "‹{–{•‘ "
+        struct CHARA {
+            const char name[30];
+            int star;
+            int GetCnt = 0;
         };
-
-        const char* sstar6[6] = {
-            "D“cM’·",
-            "“¿ì‰ÆN",
-            "–LbG‹g",
-            "â–{—´”n",
-            "¼‹½—²·",
-            "¹“¿‘¾q"
+        struct CHARA Name4[10]{
+            {"’O‰H’·G",4,0},
+            {"¡ì‹`Œ³",4,0},
+            {"¼‰i‹vG",4,0},
+            {"Ö“¡“¹O",4,0},
+            {"óˆä’·­",4,0},
+            {"‘O“cŒcŸ",4,0},
+            {"ˆäˆÉ’¼•J",4,0},
+            {"ç —˜ ‹x",4,0},
+            {"“y•ûÎO",4,0},
+            {"‰«“c‘i",4,0},
+        };
+        struct CHARA Name5[9]{
+            {"–{“c’‰Ÿ",5,0},
+            {"‘O“c—˜‰Æ",5,0},
+            {"–¾’qŒõG",5,0},
+            {"G‰ê‘·s",5,0},
+            {"“‡ ¶ ‹ß",5,0},
+            {"‰Á“¡´³",5,0},
+            {"‘å’J‹gŒp",5,0},
+            {"••””¼‘ ",5,0},
+            {"Š‹ü–kÖ",5,0},
+        };
+        struct CHARA Name6[7]{
+            {"ˆÉ’B­@",6,0},
+            {"ã™ŒªM",6,0},
+            {"•“cMŒº",6,0},
+            {"^“cK‘º",6,0},
+            {"–Ñ—˜Œ³A",6,0},
+            {"X —– ŠÛ",6,0},
+            {"‹{–{•‘ ",6,0},
+        };
+        struct CHARA Name7[6]{
+            {"D“cM’·",6,0},
+            {"“¿ì‰ÆN",6,0},
+            {"–LbG‹g",6,0},
+            {"â–{—´”n",6,0},
+            {"¼‹½—²·",6,0},
+            {"¹“¿‘¾q",6,0},
         };
 
         int star4Total = 0;
         int star5Total = 0;
         int star6Total = 0;
         int sstar6Total = 0;
+
+        int star4Total1 = 0;
+        int star5Total1 = 0;
+        int star6Total1 = 0;
+        int sstar6Total1 = 0;
+
+        int star4Total2 = 0;
+        int star5Total2 = 0;
+        int star6Total2 = 0;
+        int sstar6Total2 = 0;
+
+        int star4Total3 = 0;
+        int star5Total3 = 0;
+        int star6Total3 = 0;
+        int sstar6Total3 = 0;
+
+        int star4Total4 = 0;
+        int star5Total4 = 0;
+        int star6Total4 = 0;
+        int sstar6Total4 = 0;
+
+        int star4Total5 = 0;
+        int star5Total5 = 0;
+        int star6Total5 = 0;
+        int sstar6Total5 = 0;
+
+        int star4Total6 = 0;
+        int star5Total6 = 0;
+        int star6Total6 = 0;
+        int sstar6Total6 = 0;
+
+        int star4Total7 = 0;
+        int star5Total7 = 0;
+        int star6Total7 = 0;
+        int sstar6Total7 = 0;
+
+        int star4Total8 = 0;
+        int star5Total8 = 0;
+        int star6Total8 = 0;
+        int sstar6Total8 = 0;
+
+        int star4Total9 = 0;
+        int star5Total9 = 0;
+        int star6Total9 = 0;
+        int sstar6Total9 = 0;
+
+        int star4Total10 = 0;
+        int star5Total10 = 0;
+        int star6Total10 = 0;
+        int sstar6Total10 = 0;
 
         int randomstar4num = 0;
         int randomstar5num = 0;
@@ -311,5 +380,6 @@ namespace GAME05
         int randomstar5num10 = 0;
         int randomstar6num10 = 0;
         int randomsstar6num10 = 0;
+
     };
 }

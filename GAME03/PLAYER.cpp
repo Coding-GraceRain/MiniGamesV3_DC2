@@ -95,7 +95,7 @@ namespace GAME03 {
 		}
 		if (op_option) {
 			time(&Player.cnt_time);
-			if (isTrigger(KEY_N)) {
+			if (isTrigger(KEY_N) || isTrigger(KEY_O)) {
 				Player.s_time += (Player.cnt_time - Player.n_time);
 				op_option = false;
 			}

@@ -7,6 +7,7 @@ namespace GAME03 {
 			int backImg = 0;
 			int stageClearImg = 0;
 			int gameOverImg = 0;
+			int playStopImg = 0;
 			float backToTitleTime = 0;
 			COLOR backColor;
 			COLOR gameOverColor;
@@ -14,6 +15,8 @@ namespace GAME03 {
 			float logoPx = 0;
 			float logoPy = 0;
 			time_t time = 0;
+			time_t stp_time = 0;
+			time_t cnt_time = 0;
 			time_t s_time = 0, e_time = 0, n_time = 0;
 		};
 	private:
@@ -28,5 +31,6 @@ namespace GAME03 {
 		void draw();
 		void nextScene();
 		int loopBgm = true;
+		int op_option = false;
 	};
 }

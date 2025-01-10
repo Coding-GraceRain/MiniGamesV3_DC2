@@ -19,6 +19,8 @@ namespace GAME03 {
 		time(&Stage.s_time);
 		time(&Stage.n_time);
 		loopBgm = true;
+		op_option = false;
+		flg_clear = false;
 	}
 	void STAGE::update() {
 		game()->characterManager()->update();
@@ -36,12 +38,33 @@ namespace GAME03 {
 			Logo(Stage.gameOverImg, Stage.gameOverColor);
 		}
 		else if (game()->characterManager()->player()->survived()) {
-			//image(game()->container()->data().playerChara.shadowImg, -2500, -1800);
 			Logo(Stage.stageClearImg, Stage.stageClearColor);
 		}
 		else {
-			time(&Stage.n_time);
-			Stage.time = Stage.n_time - Stage.s_time;
+			if (isTrigger(KEY_ESCAPE)) {
+				Stage.time = Stage.stp_time;
+				op_option = true;
+			}
+			if (op_option) {
+				time(&Stage.cnt_time);
+				image(Stage.playStopImg, 0, 0);
+				if (isTrigger(KEY_N)) {
+					Stage.s_time += (Stage.cnt_time - Stage.n_time);
+					op_option = false;
+				}
+				if (isTrigger(KEY_O)) {
+					game()->fade()->outTrigger();
+				}
+			}
+			else {
+				time(&Stage.n_time);
+				Stage.time = Stage.n_time - Stage.s_time;
+				Stage.stp_time = Stage.time;
+			}
+			if (Stage.time >= 30) {
+				flg_clear = true;
+			}
+			fill(225);
 			textSize(90);
 			text((let)(int)Stage.time, width / 2.0f, height / 10.0f);
 		}
@@ -55,13 +78,12 @@ namespace GAME03 {
 		image(Stage.backImg, 0, 0);
 	}
 	void STAGE::Logo(int img, const COLOR& color) {
-		//imageColor(color);
-		//image(img, Stage.logoPx, Stage.logoPy);
+		imageColor(color);
+		image(img, Stage.logoPx, Stage.logoPy);
 		Stage.backToTitleTime -= delta;
 	}
 	void STAGE::nextScene() {
 		if (Stage.backToTitleTime <= 0) {
-		//if (isTrigger(KEY_ENTER)) {
 			//stopSound(game()->container()->data().volume.Snd_B);
 			game()->fade()->outTrigger();
 		}

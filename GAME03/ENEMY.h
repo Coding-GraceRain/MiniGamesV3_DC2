@@ -33,7 +33,6 @@ namespace GAME03 {
         void CheckState();
     public:
         bool died();
-        float overCenterVx();
         int timeCnt = 0;
     };
 }

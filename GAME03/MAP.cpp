@@ -15,6 +15,7 @@ namespace GAME03 {
     }
     void MAP::init() {
         Map.wx = 0.0f;
+        Map.wy = 0.0f;
     }
     void MAP::update() {
         Map.wx += game()->characterManager()->player()->overCenterVx();

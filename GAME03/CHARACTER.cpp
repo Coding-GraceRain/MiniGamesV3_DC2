@@ -42,10 +42,9 @@ namespace GAME03 {
         }
         if (isPress(KEY_P)) {
             fill(255);
-            print((let)game()->map()->wDispRight());
-            print((let)game()->map()->wDispLeft());
             print((let)Chara.wx);
             print((let)Chara.wy);
+            print((let)flg_clear);
         }
     }
 }

@@ -28,8 +28,4 @@ namespace GAME03 {
 	bool ENEMY::died() {
 		return false;
 	}
-	float ENEMY::overCenterVx() {
-		float overCenterVx = 0;
-		return overCenterVx;
-	}
 }

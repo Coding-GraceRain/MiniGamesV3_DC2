@@ -25,6 +25,10 @@ namespace GAME03 {
             CHARACTER::DATA playerChara3;
             CHARACTER::DATA playerChara4;
             CHARACTER::DATA playerChara5;
+            CHARACTER::DATA enemyChara1;
+            CHARACTER::DATA enemyChara2;
+            CHARACTER::DATA enemyChara3;
+            CHARACTER::DATA enemyChara4;
             PLAYER::DATA player;
             ENEMY::DATA enemy;
             VOLUME::DATA volume;

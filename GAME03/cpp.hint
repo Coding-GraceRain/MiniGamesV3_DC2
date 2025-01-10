@@ -3,3 +3,4 @@
 // 詳細については次を参照してください https://go.microsoft.com/fwlink/?linkid=865984
 #define width
 #define delta
+#define height

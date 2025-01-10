@@ -59,7 +59,6 @@ namespace GAME03 {
 					text("～異形の夜明け～", width / 2.4f - 3.0f, height / 1.8f - (float)i * 1.0f - 1.0f);
 					size = 40;
 					textSize(size);
-					text("high score " + (let)f3, width / 2.5f - 2.0f, height / 1.35f - (float)i * 1.0f - 0.1f);
 					text("press space key to select", width / 2.6f - 2.0f, height / 1.45f - (float)i * 1.0f - 0.1f);
 					text("Ｏキー:オプション", width / 20.0f - 2.0f, height / 1.00625f - (float)i * 1.0f - 0.1f);
 					text("Ｒキー:リセット", width / 3.5f - 2.0f, height / 1.00625f - (float)i * 1.0f - 0.1f);
@@ -74,7 +73,6 @@ namespace GAME03 {
 					text("～異形の夜明け～", width / 2.4f, height / 1.8f - (float)i * 1.0f);
 					size = 40;
 					textSize(size);
-					text("high score " + (let)f3, width / 2.5f, height / 1.35f - (float)i * 1.0f);
 					text("press space key to select", width / 2.6f, height / 1.45f - (float)i * 1.0f);
 					text("Ｏキー:オプション", width / 20.0f, height / 1.00625f - (float)i * 1.0f);
 					text("Ｒキー:リセット", width / 3.5f, height / 1.00625f - (float)i * 1.0f);

@@ -6,11 +6,18 @@
 #include<time.h>
 namespace GAME03 {
     CONTAINER::~CONTAINER() {
+
         delete Data.playerChara1.anims;
         delete Data.playerChara2.anims;
         delete Data.playerChara3.anims;
         delete Data.playerChara4.anims;
         delete Data.playerChara5.anims;
+
+        delete Data.enemyChara1.anims;
+        delete Data.enemyChara2.anims;
+        delete Data.enemyChara3.anims;
+        delete Data.enemyChara4.anims;
+
     }
     void CONTAINER::load() {
         CreateData();
@@ -20,6 +27,10 @@ namespace GAME03 {
     void CONTAINER::CreateData() {
 
         Data.stage.backToTitleTime = 2;
+        Data.stage.gameOverColor = COLOR(255, 0, 0);
+        Data.stage.stageClearColor = COLOR(255, 255, 0);
+        Data.stage.logoPx = (width - 800) / 2;
+        Data.stage.logoPy = 220;
 
         Data.map.fileName = "..\\main\\assets\\game03\\data\\map.txt";
         Data.map.chipSize = 50;
@@ -47,9 +58,6 @@ namespace GAME03 {
         Data.player.initVecUp = -16.0f;
         Data.player.initVecDown = 3.0f;
         Data.player.gravity = 48;
-        Data.player.score = 0;
-        Data.player.newscore = 0;
-        Data.player.upDate = 0;
 
         Data.select.numPlayer = 0;
         Data.select.numStage = 0;
@@ -65,8 +73,12 @@ namespace GAME03 {
     }
     void CONTAINER::LoadGraphics() {
 
-        Data.map.blockImg = loadImage("..\\main\\assets\\game03\\data\\block.png");
+        Data.stage.stageClearImg = loadImage("..\\main\\assets\\game03\\data\\StageClear.png");
+        Data.stage.gameOverImg = loadImage("..\\main\\assets\\game03\\data\\GameOver.png");
         Data.stage.backImg = loadImage("..\\main\\assets\\game03\\data\\back_Img.png");
+        //Data.stage.backImg = loadImage("..\\main\\assets\\game03\\data\\BrightForest-A2.png");
+        Data.stage.playStopImg = loadImage("..\\main\\assets\\game03\\data\\play_stp.png");
+        Data.map.blockImg = loadImage("..\\main\\assets\\game03\\data\\block.png");
         Data.select.select_cfream = loadImage("..\\main\\assets\\game03\\data\\select_chara_fream.png");
         Data.select.select_sfream = loadImage("..\\main\\assets\\game03\\data\\select_stage_fream.png");
         Data.select.select_chara = loadImage("..\\main\\assets\\game03\\data\\select_chara.png");
@@ -89,6 +101,23 @@ namespace GAME03 {
                 break;
             case(5):
                 Data.playerChara5.anims = new ANIMS(filename);
+                break;
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            sprintf_s(filename, "..\\main\\assets\\game03\\data\\enemy\\Enemy%d", i + 1);
+            switch (i + 1) {
+            case(1):
+                Data.enemyChara1.anims = new ANIMS(filename);
+                break;
+            case(2):
+                Data.enemyChara2.anims = new ANIMS(filename);
+                break;
+            case(3):
+                Data.enemyChara3.anims = new ANIMS(filename);
+                break;
+            case(4):
+                Data.enemyChara4.anims = new ANIMS(filename);
                 break;
             }
         }

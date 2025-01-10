@@ -20,9 +20,8 @@ namespace GAME03 {
 		Chara.speed = 3.4f * 100;
 		time(&Player.s_time);
 		time(&Player.n_time);
-		Player.e_time = Player.n_time - Player.s_time;
+		flg_clear = false;
 		State = STATE::STRUGGLING;
-		timeCnt = 0;
 	}
 	void PLAYER::update() {
 		Move();
@@ -30,7 +29,7 @@ namespace GAME03 {
 		CheckState();
 	}
 	void PLAYER::Move() {
-		if (State != STATE::DIED) {
+		if (State == STATE::STRUGGLING && !op_option) {
 			Chara.vx = 0.0f;
 			Chara.vy = 0.0f;
 			if (isPress(KEY_A) || isPress(KEY_LEFT)) {
@@ -42,18 +41,17 @@ namespace GAME03 {
 				Chara.animId = Player.rightAnimId;
 			}
 			if (isPress(KEY_W) || isPress(KEY_UP)) {
-				if (Chara.wy < 560) {
-					Chara.wy += 0.0f;
-				}
-				else {
-					Chara.vy = -Chara.speed * delta;
-				}
+				Chara.vy = -Chara.speed * delta;
 				Chara.animId;
 			}
 			if (isPress(KEY_S) || isPress(KEY_DOWN)) {
 				Chara.vy = Chara.speed * delta;
 				Chara.animId;
 			}
+		}
+		else {
+			Chara.vx = 0.0f;
+			Chara.vy = 0.0f;
 		}
 		Player.curWx = Chara.wx;
 		if (Chara.vx != 0.0f || Chara.vy != 0.0f) {
@@ -64,12 +62,12 @@ namespace GAME03 {
 			Chara.animData.imgIdx = 0;
 			Chara.animData.elapsedTime = -delta;
 		}
-		if (Chara.hp == 0 && Player.e_time < 30) {
+		if (Chara.hp == 0) {
 			Chara.speed = 0.0f;
 		}
 	}
 	void PLAYER::CollisionWithMap() {
-		MAP* map = game()->map();
+		MAP* map = game()->map();/*
 		if (Chara.animId == Player.rightAnimId) {
 			if (map->collisionCharaRight(Chara.wx, Chara.wy)) {
 				Chara.wx = Player.curWx;
@@ -88,22 +86,38 @@ namespace GAME03 {
 			Chara.wy = (int)(Chara.wy / map->chipSize()) * (float)map->chipSize();
 		}
 		else {
-		}
+		}*/
 	}
 	void PLAYER::CheckState() {
-		time(&Player.n_time);
-		if (isPress(KEY_SHIFT) && isPress(KEY_ENTER) && timeCnt == 0) {
-			State = STATE::DIED;
-		}//debug
-		if (Chara.hp == 0 && Player.e_time < 30) {
+		if (isTrigger(KEY_ESCAPE)) {
+			Player.time = Player.stp_time;
+			op_option = true;
+		}
+		if (op_option) {
+			time(&Player.cnt_time);
+			if (isTrigger(KEY_N)) {
+				Player.s_time += (Player.cnt_time - Player.n_time);
+				op_option = false;
+			}
+		}
+		else {
+			time(&Player.n_time);
+			Player.time = Player.n_time - Player.s_time;
+			Player.stp_time = Player.time;
+		}
+		if (Player.time >= 30) {
+			flg_clear = true;
+		}
+		if (flg_clear) {
+			State = STATE::SURVIVED;
+		}
+		else if (Chara.hp == 0 && !flg_clear) {
 			State = STATE::DIED;
 			playSound(game()->container()->data().volume.Se_C);
 		}
-		if (Chara.hp > 0 && Player.e_time >= 30) {
+		else if (isPress(KEY_SHIFT) && isPress(KEY_ENTER)) {
 			State = STATE::SURVIVED;
-			playSound(game()->container()->data().volume.Se_B);
-			Chara.hp = 0;
-		}
+		}//debug
 	}
 	bool PLAYER::died() {
 		if (State == STATE::DIED) {
@@ -112,7 +126,7 @@ namespace GAME03 {
 		}
 		return false;
 	}
-	bool PLAYER::survived() const {
+	bool PLAYER::survived() const{
 		return State == STATE::SURVIVED;
 	}
 	float PLAYER::overCenterVx() {

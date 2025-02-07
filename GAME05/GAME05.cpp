@@ -184,8 +184,9 @@ namespace GAME05
 		}
 		text("(所持上限:99枚)", 0, 580);
 		text("(コインの所持上限:100000000コイン)", 300, 95);
-		text("G:ガチャ(10+1連ガチャが無料で引ける回数:" + (let)freeCnt + "回)", 0, 900);
-		text("C:賭けコイン変更", 0, 1000);
+		text("G:ガチャ(10+1連ガチャが無料で引ける回数:" + (let)freeCnt + "回)", 0, 850);
+		text("C:賭けコイン変更", 0, 940);
+		text("J:所持コインが0になったときに押してください。", 0, 1020);
 		text("ENTERキーでメニューに戻る", 0, 1080);
 		if (freeCnt <= 0) {
 			freeCnt = 0;
@@ -222,10 +223,10 @@ namespace GAME05
 			State = RULE;
 		}
 
-		/*if (isTrigger(KEY_J) && playerCoins == 0) {
+		if (isTrigger(KEY_J) && playerCoins == 0) {
 			Init();
 			State = JOB;
-		}*/
+		}
 
 		if (isTrigger(KEY_G)) {
 			Init2();

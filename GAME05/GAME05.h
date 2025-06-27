@@ -2,6 +2,7 @@
 #include "../MAIN/GAME_BASE.h"
 namespace GAME05
 {
+    
     class GAME :
         public GAME_BASE
     {
@@ -11,5 +12,13 @@ namespace GAME05
         int create();
         void proc();
         void destroy();
+        class GAME_STRUCT* game_struct;
+        class PLAYER* player;
+        class MAP* map;
+        class TITLE* title;
+        class SELECT* select;
+        class MAP2* map2;
+        FILE* fp;
+
     };
 }

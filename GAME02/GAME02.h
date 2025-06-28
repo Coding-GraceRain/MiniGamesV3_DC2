@@ -11,5 +11,6 @@ namespace GAME02
         int create();
         void proc();
         void destroy();
+        void reset();
     };
 }

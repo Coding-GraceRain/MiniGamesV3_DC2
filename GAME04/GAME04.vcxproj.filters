@@ -2,9 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME04.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="ebullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME04.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="ebullet.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game04\title.txt" />

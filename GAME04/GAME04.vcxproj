@@ -137,7 +137,6 @@
     <ClCompile Include="ebullet.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="GAME04.cpp" />
-    <ClCompile Include="maji.cpp" />
     <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +144,6 @@
     <ClInclude Include="ebullet.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="GAME04.h" />
-    <ClInclude Include="maji.h" />
     <ClInclude Include="player.h" />
   </ItemGroup>
   <ItemGroup>

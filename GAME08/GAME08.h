@@ -2,9 +2,7 @@
 #include "../MAIN/GAME_BASE.h"
 namespace GAME08
 {
-    class GAME :
-        public GAME_BASE
-    {
+    class GAME :public GAME_BASE{
     public:
         GAME(class MAIN* main) :GAME_BASE(main) {};
         ~GAME() {};

@@ -2,9 +2,21 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME08.cpp" />
+    <ClCompile Include="GAMESCENE.cpp" />
+    <ClCompile Include="SCENEBASE.cpp" />
+    <ClCompile Include="SCENEMANAGER.cpp" />
+    <ClCompile Include="TITLESCENE.cpp" />
+    <ClCompile Include="DIFFICULTYSCENE.cpp" />
+    <ClCompile Include="RESULTSCENE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME08.h" />
+    <ClInclude Include="GAMESCENE.h" />
+    <ClInclude Include="SCENEBASE.h" />
+    <ClInclude Include="SCENEMANAGER.h" />
+    <ClInclude Include="TITLESCENE.h" />
+    <ClInclude Include="DIFFICULTYSCENE.h" />
+    <ClInclude Include="RESULTSCENE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game08\title.txt" />

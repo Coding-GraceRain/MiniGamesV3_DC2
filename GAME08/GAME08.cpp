@@ -1,28 +1,36 @@
 #include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME08.h"
+#include "SCENEMANAGER.h"
+#include "TITLESCENE.h"
+#include "DIFFICULTYSCENE.h"
+#include "GAMESCENE.h"
+#include "RESULTSCENE.h"
+
 namespace GAME08
 {
+	SCENEMANAGER sceneMgr;
+
 	int GAME::create()
 	{
+		//loadPackage("assets.package");
+		//disableEscapeKey();
+		hideCursor();
+		sceneMgr.change(SCENEMANAGER::TITLE);
 		return 0;
 	}
 
 	void GAME::destroy()
 	{
-
+		sceneMgr.shutdown();
+		//deletePackage();
+		showCursor();
 	}
 
 	void GAME::proc()
 	{
-		clear(0, 0, 64);
-		textSize(50);
-		fill(255, 255, 0);
-		text("GAME08", 0, 100);
-		fill(255);
-		text("ENTERキーでメニューに戻る", 0, 1080);
-		if (isTrigger(KEY_ENTER)) {
-			main()->backToMenu();
-		}
+		if (isTrigger(KEY_M))main()->backToMenu();//Mキーでメニューに戻る
+		if (isTrigger(KEY_Q))closeWindow();//Qキーでプログラム終了
+		sceneMgr.update();
 	}
 }

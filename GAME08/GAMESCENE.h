@@ -16,6 +16,7 @@ namespace GAME08 {
         int cpuReactionFrame = -1;
         int foulCount = 0;
         int cpuFrame = -1;
+        bool assetsLoaded = false;
 
         int soraImg = -1;
         int enemyImgs[SCENEMANAGER::HISTORY_SIZE] = {};

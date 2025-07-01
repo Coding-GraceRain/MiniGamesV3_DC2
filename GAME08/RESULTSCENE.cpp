@@ -2,7 +2,10 @@
 #include "../../libOne/inc/libOne.h"
 namespace GAME08 {
     void RESULTSCENE::create() {
-        bgImg = loadImage("..\\MAIN\\assets\\game08\\TitleBackground.png");
+        if (!assetsLoaded) {
+            bgImg = loadImage("..\\MAIN\\assets\\game08\\TitleBackground.png");
+            assetsLoaded = true;
+        }
     }
 
     void RESULTSCENE::update() {

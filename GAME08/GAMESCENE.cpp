@@ -1,13 +1,9 @@
 #include "GAMESCENE.h"
 #include "../../libOne/inc/libOne.h"
 namespace GAME08 {
-
-    static bool assetsLoaded = false;
-
     void GAMESCENE::create() {
         frame = 0;
         if (!assetsLoaded) {
-
             cutInActive = true;
             cutInFrame = 0;
             cpuTriggered = false;

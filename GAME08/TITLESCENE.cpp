@@ -2,7 +2,10 @@
 #include "../../libOne/inc/libOne.h"
 namespace GAME08 {
     void TITLESCENE::create() {
-        bgImg = loadImage("..\\MAIN\\assets\\game08\\Titlebackground.png");
+        if (!assetsLoaded) {
+            bgImg = loadImage("..\\MAIN\\assets\\game08\\Titlebackground.png");
+            assetsLoaded = true;
+        }
         select = 0;
         difficultySelect = 0;
         selectingDifficulty = false;

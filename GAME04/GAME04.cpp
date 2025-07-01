@@ -73,10 +73,10 @@ namespace GAME04
 			for (int i = 0; i < MAX_BULLET; i++) {
 				if (ebullets[i].hp == 0) {
 					// vx は -30 〜 30 の間のランダムな値
-					float vx = (rand() % 61) - 30;  // 0〜60 の整数を生成してから -30で範囲をずらす
+					float vx = (rand() % 21) - 10;  // 0〜60 の整数を生成してから -30で範囲をずらす
 
 					// vy は 5 〜 15 の間のランダムな値
-					float vy = (rand() % 7) + 3;   // 0〜10 の整数を生成してから +5で範囲をずらす
+					float vy = (rand() % 9) + 2;   // 0〜10 の整数を生成してから +5で範囲をずらす
 
 					ebullets[i].shoot(enemy->px, enemy->py + enemy->ofsY, vx, vy);
 					bulletsFired++;
@@ -143,9 +143,9 @@ namespace GAME04
 
 	void GAME::proc()
 	{
-
+		
 		clear(0, 0, 64);
-
+		ShowCursor(FALSE);
 		if (state == TITLE) {
 			// タイトル画面
 			textSize(80);
@@ -153,8 +153,8 @@ namespace GAME04
 			text("SHOOTING GAME", 600,500);
 			textSize(40);
 			fill(255);
-			text("SPACEキーでスタート", 600, 600);
-			text("ENTERキー; メニューに戻る", 600, 700);
+			text("SPACEでスタート", 600, 600);
+			text("ENTERでメニューに戻る", 600, 700);
 			if (isTrigger(KEY_SPACE)) {
 				create();
 				state = PLAY;
@@ -179,54 +179,54 @@ namespace GAME04
 			if (enemy->hp <= 0) {
 				text("YOU WIN!", 600, 600);
 			}
-			textSize(50);
+			textSize(35);
 			fill(255, 255, 0);
 			
 			fill(255);
-			text("SPACEキー: 撃つ  Zキー: タイトルに戻る ENTERキー; メニューに戻る", 0, 1080);
+			text("SPACE: 撃つ  W;上  A;左  S;下  D;右  Z: タイトルに戻る  ENTER; メニューに戻る", 0, 1080);
 		}
 		if (isTrigger(KEY_ENTER)) {
 			state = TITLE;
 			destroy();
 			main()->backToMenu();
 		}
+		if (isTrigger(KEY_Z)) {
+			state = TITLE;
+			destroy();
+
+		}
+		else if (state == GAME_OVER) {
+			endStateTimer++;
+			textSize(80);
+			fill(255, 0, 0);
+			text("GAME OVER", 500, 500);
+			textSize(40);
+			fill(255);
+			text("Zでタイトルへ戻る　ENTERでメニューに戻る", 500, 700);
+
 			if (isTrigger(KEY_Z)) {
 				state = TITLE;
 				destroy();
-				
 			}
-			else if (state == GAME_OVER) {
-				endStateTimer++;
-				textSize(80);
-				fill(255, 0, 0);
-				text("GAME OVER", 500, 500);
-				textSize(40);
-				fill(255);
-				text("Zキーでタイトルへ戻る　ENTERキー; メニューに戻る", 500, 700);
+		}
+		else if (state == GAME_CLEAR) {
+			endStateTimer++;
+			textSize(80);
+			fill(0, 255, 0);
+			text("YOU WIN!", 500, 500);
+			textSize(40);
+			fill(255);
+			text("Zでタイトルへ戻る　ENTERでメニューに戻る", 500, 700);
 
-				if (isTrigger(KEY_Z)) {
-					state = TITLE;
-					destroy();
-				}
+			if (endStateTimer > endStateDuration) {
+				state = TITLE;
+				destroy();
 			}
-			else if (state == GAME_CLEAR) {
-				endStateTimer++;
-				textSize(80);
-				fill(0, 255, 0);
-				text("YOU WIN!", 500, 500);
-				textSize(40);
-				fill(255);
-				text("Zキーでタイトルへ戻る　ENTERキー; メニューに戻る", 500, 700);
-
-				if (endStateTimer > endStateDuration) {
-					state = TITLE;
-					destroy();
-				}
-				if (isTrigger(KEY_Z)) {
-					state = TITLE;
-					destroy();
-				}
+			if (isTrigger(KEY_Z)) {
+				state = TITLE;
+				destroy();
 			}
+		}
 		
 	}
 }

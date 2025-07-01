@@ -30,6 +30,7 @@ namespace GAME04 {
 	void PLAYER::draw() {
 
 		rectMode(CENTER);
+		//fill(255, 255, 0);
 		circle(px, py, pr);
 	}
 

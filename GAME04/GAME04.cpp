@@ -1,16 +1,16 @@
-ï»¿#include "../../libOne/inc/libOne.h"
+#include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include <math.h>
 #include "GAME04.h"
 #include <sstream> 
-#include <cstdlib>  // rand() ã‚’ä½¿ã†ãŸã‚ã«å¿…è¦
-#include <ctime>    // srand() ã¨æ™‚é–“å–å¾—ç”¨
+#include <cstdlib>  // rand() ‚ğg‚¤‚½‚ß‚É•K—v
+#include <ctime>    // srand() ‚ÆŠÔæ“¾—p
 namespace GAME04
 {
-	int playerShootTimer = 0;   // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å¼¾ã®ç™ºå°„ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³ç”¨ã‚¿ã‚¤ãƒãƒ¼
-	const int playerShootInterval = 25;  // ç™ºå°„é–“éš”ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã€ã“ã“ã¯èª¿æ•´å¯èƒ½ï¼‰
-	int endStateTimer = 0;       // ã‚²ãƒ¼ãƒ çµ‚äº†çŠ¶æ…‹è¡¨ç¤ºç”¨ã®ã‚¿ã‚¤ãƒãƒ¼
-	const int endStateDuration = 180;  // è¡¨ç¤ºæ™‚é–“ï¼ˆãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã€60fpsãªã‚‰3ç§’ï¼‰
+	int playerShootTimer = 0;   // ƒvƒŒƒCƒ„[’e‚Ì”­ËƒN[ƒ‹ƒ_ƒEƒ“—pƒ^ƒCƒ}[
+	const int playerShootInterval = 25;  // ”­ËŠÔŠuiƒtƒŒ[ƒ€”A‚±‚±‚Í’²®‰Â”\j
+	int endStateTimer = 0;       // ƒQ[ƒ€I—¹ó‘Ô•\¦—p‚Ìƒ^ƒCƒ}[
+	const int endStateDuration = 180;  // •\¦ŠÔiƒtƒŒ[ƒ€”A60fps‚È‚ç3•bj
 	enum GameState {
 		TITLE,
 		PLAY,
@@ -72,11 +72,11 @@ namespace GAME04
 			int bulletsFired = 0;
 			for (int i = 0; i < MAX_BULLET; i++) {
 				if (ebullets[i].hp == 0) {
-					// vx ã¯ -30 ã€œ 30 ã®é–“ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤
-					float vx = (rand() % 21) - 10;  // 0ã€œ60 ã®æ•´æ•°ã‚’ç”Ÿæˆã—ã¦ã‹ã‚‰ -30ã§ç¯„å›²ã‚’ãšã‚‰ã™
+					// vx ‚Í -30 ? 30 ‚ÌŠÔ‚Ìƒ‰ƒ“ƒ_ƒ€‚È’l
+					float vx = (rand() % 21) - 10;  // 0?60 ‚Ì®”‚ğ¶¬‚µ‚Ä‚©‚ç -30‚Å”ÍˆÍ‚ğ‚¸‚ç‚·
 
-					// vy ã¯ 5 ã€œ 15 ã®é–“ã®ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤
-					float vy = (rand() % 9) + 2;   // 0ã€œ10 ã®æ•´æ•°ã‚’ç”Ÿæˆã—ã¦ã‹ã‚‰ +5ã§ç¯„å›²ã‚’ãšã‚‰ã™
+					// vy ‚Í 5 ? 15 ‚ÌŠÔ‚Ìƒ‰ƒ“ƒ_ƒ€‚È’l
+					float vy = (rand() % 11) + 2;   // 0?10 ‚Ì®”‚ğ¶¬‚µ‚Ä‚©‚ç +5‚Å”ÍˆÍ‚ğ‚¸‚ç‚·
 
 					ebullets[i].shoot(enemy->px, enemy->py + enemy->ofsY, vx, vy);
 					bulletsFired++;
@@ -91,8 +91,8 @@ namespace GAME04
 			if (bullets[i].hp > 0) {
 				float d = distance(enemy->px, enemy->py, bullets[i].px, bullets[i].py);
 				if (d < enemy->pr / 2 + bullets[i].pr / 2) {
-					bullets[i].hp = 0;     // å¼¾ã¯æ¶ˆãˆã‚‹
-					enemy->hp = (enemy->hp > 0) ? enemy->hp - 1 : 0;  // HPæ¸›å°‘ã€0æœªæº€é˜²æ­¢
+					bullets[i].hp = 0;     // ’e‚ÍÁ‚¦‚é
+					enemy->hp = (enemy->hp > 0) ? enemy->hp - 1 : 0;  // HPŒ¸­A0–¢––h~
 					printf("Enemy hit! HP: %d\n", enemy->hp);
 					if (enemy->hp <= 0) {
 						print("Enemy defeated!\n");
@@ -104,8 +104,8 @@ namespace GAME04
 			if (ebullets[i].hp > 0) {
 				float d = distance(player->px, player->py, ebullets[i].px, ebullets[i].py);
 				if (d < player->pr / 2 + ebullets[i].pr / 2) {
-					ebullets[i].hp = 0;    // å¼¾ã¯æ¶ˆãˆã‚‹
-					player->hp = (player->hp > 0) ? player->hp - 1 : 0;  // HPæ¸›å°‘ã€0æœªæº€é˜²æ­¢
+					ebullets[i].hp = 0;    // ’e‚ÍÁ‚¦‚é
+					player->hp = (player->hp > 0) ? player->hp - 1 : 0;  // HPŒ¸­A0–¢––h~
 					printf("Player hit! HP: %d\n", player->hp);
 					if (player->hp <= 0) {
 						print("Player is dead!\n");
@@ -116,13 +116,13 @@ namespace GAME04
 		if (player->hp <= 0) {
 			if (state != GAME_OVER) {
 				state = GAME_OVER;
-				endStateTimer = 0;  // ã‚¿ã‚¤ãƒãƒ¼ãƒªã‚»ãƒƒãƒˆ
+				endStateTimer = 0;  // ƒ^ƒCƒ}[ƒŠƒZƒbƒg
 			}
 		}
 		if (enemy->hp <= 0) {
 			if (state != GAME_CLEAR) {
 				state = GAME_CLEAR;
-				endStateTimer = 0;  // ã‚¿ã‚¤ãƒãƒ¼ãƒªã‚»ãƒƒãƒˆ
+				endStateTimer = 0;  // ƒ^ƒCƒ}[ƒŠƒZƒbƒg
 			}
 		}
 
@@ -147,14 +147,14 @@ namespace GAME04
 		clear(0, 0, 64);
 		ShowCursor(FALSE);
 		if (state == TITLE) {
-			// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢
+			// ƒ^ƒCƒgƒ‹‰æ–Ê
 			textSize(80);
 			fill(255, 255, 0);
 			text("SHOOTING GAME", 600,500);
 			textSize(40);
 			fill(255);
-			text("SPACEã§ã‚¹ã‚¿ãƒ¼ãƒˆ", 600, 600);
-			text("ENTERã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 600, 700);
+			text("SPACE‚ÅƒXƒ^[ƒg", 600, 600);
+			text("ENTER‚Åƒƒjƒ…[‚É–ß‚é", 600, 700);
 			if (isTrigger(KEY_SPACE)) {
 				create();
 				state = PLAY;
@@ -170,7 +170,7 @@ namespace GAME04
 			std::stringstream ss;
 			ss << "Player HP: " << player->hp;
 			text(ss.str().c_str(), 50, 50);
-			ss.str("");  // æ–‡å­—åˆ—ã‚’ã‚¯ãƒªã‚¢
+			ss.str("");  // •¶š—ñ‚ğƒNƒŠƒA
 			ss << "Enemy HP: " << enemy->hp;
 			text(ss.str().c_str(), 50, 120);
 			if (player->hp <= 0) {
@@ -183,7 +183,7 @@ namespace GAME04
 			fill(255, 255, 0);
 			
 			fill(255);
-			text("SPACE: æ’ƒã¤  W;ä¸Š  A;å·¦  S;ä¸‹  D;å³  Z: ã‚¿ã‚¤ãƒˆãƒ«ã«æˆ»ã‚‹  ENTER; ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 0, 1080);
+			text("SPACE: Œ‚‚Â  W;ã  A;¶  S;‰º  D;‰E  Z: ƒ^ƒCƒgƒ‹‚É–ß‚é  ENTER; ƒƒjƒ…[‚É–ß‚é", 0, 1080);
 		}
 		if (isTrigger(KEY_ENTER)) {
 			state = TITLE;
@@ -202,7 +202,7 @@ namespace GAME04
 			text("GAME OVER", 500, 500);
 			textSize(40);
 			fill(255);
-			text("Zã§ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹ã€€ENTERã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 500, 700);
+			text("Z‚Åƒ^ƒCƒgƒ‹‚Ö–ß‚é@ENTER‚Åƒƒjƒ…[‚É–ß‚é", 500, 700);
 
 			if (isTrigger(KEY_Z)) {
 				state = TITLE;
@@ -216,7 +216,7 @@ namespace GAME04
 			text("YOU WIN!", 500, 500);
 			textSize(40);
 			fill(255);
-			text("Zã§ã‚¿ã‚¤ãƒˆãƒ«ã¸æˆ»ã‚‹ã€€ENTERã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 500, 700);
+			text("Z‚Åƒ^ƒCƒgƒ‹‚Ö–ß‚é@ENTER‚Åƒƒjƒ…[‚É–ß‚é", 500, 700);
 
 			if (endStateTimer > endStateDuration) {
 				state = TITLE;

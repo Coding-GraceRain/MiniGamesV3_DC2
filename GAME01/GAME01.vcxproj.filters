@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="math.cpp" />
     <ClCompile Include="GAME01.cpp" />
+    <ClCompile Include="input2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="math.h" />
     <ClInclude Include="GAME01.h" />
+    <ClInclude Include="input2.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game01\title.txt" />
+    <Text Include="score.txt" />
+    <Text Include="playcount.txt" />
   </ItemGroup>
 </Project>

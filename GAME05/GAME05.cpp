@@ -31,10 +31,14 @@ namespace GAME05
 		int stage2_load_Image = loadImage("..\\MAIN\\assets\\game05\\block_graw.png");
 		int stage_goal_Image = loadImage("..\\MAIN\\assets\\game05\\goal.png");
 		int stage2_goal_Image = loadImage("..\\MAIN\\assets\\game05\\goal.png");
+		int stage1_sound = loadSound("..\\main\\assets\\game05\\Artcore_first_5.wav");
+		int stage2_sound = loadSound("..\\main\\assets\\game05\\hardcore_1.wav");
 		player->setImage(player_load_Image);
 		title->setImage(title_load_Image);
 		map->setImage(stage_load_Image, stage_goal_Image);
 		map2->setImage(stage2_load_Image, stage2_goal_Image);
+		map->setMusic(stage1_sound);
+		map2->setMusic(stage2_sound);
 
 		player->Player_INIT();
 		title->for_TITLE_LOAD();
@@ -67,8 +71,9 @@ namespace GAME05
 		if (game_struct->game_state == game_struct->MAEGAKI) {
 			fill(255);
 			textSize(50);
+			text("GAME TITLE : SO5:20Z", 700, 100);
 			text("楽曲の音量が大きいです！",200,200);
-			text("推奨：2～6", 200, 300);
+			text("十分に音量を下げてからプレイすることを推奨します。", 200, 300);
 			text("移動方法", 200, 500);
 			text("Q&U : →↑", 200, 600);
 			text("W&I :→", 200, 700);
@@ -115,6 +120,10 @@ namespace GAME05
 				game_struct->game_state = game_struct->PLAY;
 				player->Player_position_reset();
 			}
+			text("ENTERキーでメニューに戻る", 0, 1080);
+			if (isTrigger(KEY_ENTER)) {
+				main()->backToMenu();
+			}
 		}
 		if (game_struct->game_state == game_struct->PLAY) {
 			if (select->STAGE_SELECT() == 1) {
@@ -129,7 +138,7 @@ namespace GAME05
 					if (isTrigger(KEY_W)) {
 						game_struct->play_start = 1;
 						if (game_struct->music_onoff == 0) {
-							playSound(loadSound("..\\main\\assets\\game05\\Artcore_first_5.wav"));
+							map->playMusic();
 						}
 					}
 				}
@@ -140,6 +149,13 @@ namespace GAME05
 					clear();
 					map->MAP_DRAW();
 					player->Player_DRAW();
+				}
+				fill(255);
+				textSize(50);
+				text("ENTERキーでメニューに戻る", 0, 1080);
+				textSize(100);
+				if (isTrigger(KEY_ENTER)) {
+					main()->backToMenu();
 				}
 			}
 			else if (select->STAGE_SELECT() == 2) {
@@ -154,7 +170,7 @@ namespace GAME05
 					if (isTrigger(KEY_W)) {
 						game_struct->play_start = 1;
 						if (game_struct->music_onoff == 0) {
-							playSound(loadSound("..\\main\\assets\\game05\\hardcore_1.wav"));
+							map2->playMusic();
 						}
 					}
 				}
@@ -167,15 +183,21 @@ namespace GAME05
 					map2->MAP2_DRAW();
 					player->Player_DRAW();
 				}
-
+				fill(255);
+				textSize(50);
+				text("ENTERキーでメニューに戻る", 0, 1080);
+				textSize(100);
+				if (isTrigger(KEY_ENTER)) {
+					main()->backToMenu();
+				}
 			}
 			else {
 				game_struct->game_state = game_struct->SELECT;
 			}
 		}
 		if (game_struct->game_state == game_struct->OVER) {
-			stopSound(loadSound("..\\main\\assets\\game05\\Artcore_first_5.wav"));
-			stopSound(loadSound("..\\main\\assets\\game05\\hardcore_1.wav"));
+			map->stopMusic();
+			map2->stopMusic();
 			if (select->STAGE_SELECT() == 1) {
 				clear();
 				map->MAP_DRAW();
@@ -222,8 +244,8 @@ namespace GAME05
 			}
 		}
 		if (game_struct->game_state == game_struct->CLEAR) {
-			stopSound(loadSound("..\\main\\assets\\game05\\Artcore_first_5.wav"));
-			stopSound(loadSound("..\\main\\assets\\game05\\hardcore_1.wav"));
+			map->stopMusic();
+			map2->stopMusic();
 			if (select->STAGE_SELECT() == 1) {
 				clear();
 				map->MAP_DRAW();

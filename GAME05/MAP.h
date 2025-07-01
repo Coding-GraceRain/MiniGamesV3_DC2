@@ -4,6 +4,7 @@ namespace GAME05 {
         int StageImage = 0;
         int BackImage = 0;
         int GoalImage = 0;
+        int Stage_Music = 0;
         const char* fileName = 0;
         int fileSize = 0;
         char* map = 0;
@@ -28,6 +29,9 @@ namespace GAME05 {
         float distance = 0;
     public:
         void setImage(int Img,int gImg);
+        void setMusic(int Music);
+        void playMusic();
+        void stopMusic();
         void for_MAP_INIT();
         void for_MAP_LOAD();
         void FILE_OPEN_etc_MEMORY_ALLOCATION(FILE** fp_pointer);

@@ -10,6 +10,15 @@ namespace GAME05 {
         StageImage = Img;
         GoalImage = gImg;
     }
+    void MAP2::setMusic(int Music) {
+        StageMusic = Music;
+    }
+    void MAP2::playMusic() {
+        playSound(StageMusic);
+    }
+    void MAP2::stopMusic() {
+        stopSound(StageMusic);
+    }
     void MAP2::for_MAP2_LOAD() {
         fileName = "..\\MAIN\\assets\\game05\\stage2_map.txt";
     }
@@ -80,28 +89,9 @@ namespace GAME05 {
                 }
             }
         }
-        /*
-    m_pointer->start_Cols = w_pointer->worldX / b_pointer->size;
-    m_pointer->end_Cols = m_pointer->start_Cols + m_pointer->display_Cols;
-    for (int c = m_pointer->start_Cols; c < m_pointer->end_Cols; c++) {
-        p_pointer->player_x = -w_pointer->worldX + b_pointer->size * c;
-        for (int r = 0; r < m_pointer->rows; r++) {
-            p_pointer->player_y = b_pointer->size * r;
-            m_pointer->index = r * m_pointer->cols + c;
-            if (m_pointer->map[m_pointer->index] == 'b') {
-                image(f_pointer->blockImg, p_pointer->player_x, p_pointer->player_y);
-            }
-            else if (m_pointer->map[m_pointer->index] == 'i') {
-                image(f_pointer->itemblockImg, p_pointer->player_x, p_pointer->player_y);
-            }
-        }
-    }
-*/
     }
     void MAP2::PLAYER_MAP2_COLLISION(class PLAYER* p_pointer, class GAME_STRUCT* g_pointer) {
         noStroke();
-        //fill(50, 0, 0);
-        //rect(0, 0, width, height);
         start_Cols = worldX / blockSize;
         end_Cols = start_Cols + display_Cols;
         for (int c = start_Cols; c < end_Cols; c++) {

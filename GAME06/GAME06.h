@@ -1,5 +1,6 @@
 #pragma once
 #include "../MAIN/GAME_BASE.h"
+
 namespace GAME06
 {
     class GAME :

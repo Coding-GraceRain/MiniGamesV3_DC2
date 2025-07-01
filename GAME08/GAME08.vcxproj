@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -134,9 +134,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GAME08.cpp" />
+    <ClCompile Include="GAMESCENE.cpp" />
+    <ClCompile Include="RESULTSCENE.cpp" />
+    <ClCompile Include="SCENEMANAGER.cpp" />
+    <ClCompile Include="TITLESCENE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME08.h" />
+    <ClInclude Include="GAMESCENE.h" />
+    <ClInclude Include="RESULTSCENE.h" />
+    <ClInclude Include="SCENEBASE.h" />
+    <ClInclude Include="SCENEMANAGER.h" />
+    <ClInclude Include="TITLESCENE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game08\title.txt" />

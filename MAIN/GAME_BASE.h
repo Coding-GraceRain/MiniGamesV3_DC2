@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
-class GAME_BASE
-{
+class GAME_BASE{
 public:
 	GAME_BASE(class MAIN* main);
 	virtual ~GAME_BASE();

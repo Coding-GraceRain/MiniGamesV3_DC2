@@ -22,7 +22,7 @@ namespace GAME04
         class ENEMY* enemy = nullptr;
         class BULLET* bullet = nullptr;
         class ENEMYBULLET* ebullet = nullptr;
-        static const int MAX_BULLET = 100;
+        static const int MAX_BULLET = 1000;
         BULLET bullets[MAX_BULLET];
         ENEMYBULLET ebullets[MAX_BULLET];
 

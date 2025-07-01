@@ -1,4 +1,4 @@
-ï»¿#include "../../libOne/inc/libOne.h"
+#include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME10.h"
 #include <cstdlib>
@@ -14,7 +14,7 @@ namespace GAME10 {
     int maxStreak = 0;
     int score = 0;
     int maxScore = 0;
-    int state = -1;  // -1:ãƒ«ãƒ¼ãƒ«èª¬æ˜Ž, 0:å¾…æ©Ÿä¸­, 1:çµæžœè¡¨ç¤º
+    int state = -1;  // -1:ƒ‹[ƒ‹à–¾, 0:‘Ò‹@’†, 1:Œ‹‰Ê•\Ž¦
     char resultStr[64] = "";
 
     int GAME::create() {
@@ -25,7 +25,7 @@ namespace GAME10 {
             soundBGM = loadSound("../MAIN/assets/game10/14.wav");
                                                                              //playLoopSound ...BGM
                                                                              //playSound...SE
-        }                                                                    //stopSound...BGMã‚’æ­¢ã‚ã‚‹ã€€
+        }                                                                    //stopSound...BGM‚ðŽ~‚ß‚é@
                                                                              //volume
                                                                              //pan 
 
@@ -39,23 +39,23 @@ namespace GAME10 {
     void GAME::proc() {
         clear(0, 0, 64);
 
-        // ãƒ«ãƒ¼ãƒ«èª¬æ˜Žç”»é¢
+        // ƒ‹[ƒ‹à–¾‰æ–Ê
         if (state == -1) {
             textSize(50);
             fill(255, 255, 0);
-            text("ã€ãƒ«ãƒ¼ãƒ«èª¬æ˜Žã€‘", 700, 100);
+            text("yƒ‹[ƒ‹à–¾z", 700, 100);
 
             textSize(40);
             fill(255);
-            text("è¡¨ç¤ºã•ã‚ŒãŸã‚«ãƒ¼ãƒ‰ã‚ˆã‚Šæ¬¡ã®ã‚«ãƒ¼ãƒ‰ãŒ", 100, 250);
-            text("Highï¼ˆâ†‘ï¼‰ã‹ Lowï¼ˆâ†“ï¼‰ã‹ã‚’äºˆæƒ³ã—ã¦ãã ã•ã„ã€‚", 100, 310);
-            text("å½“ãŸã‚‹ã¨é€£ç¶šæ­£è§£ãƒ»ã‚¹ã‚³ã‚¢ãŒåŠ ç®—ã•ã‚Œã¾ã™ã€‚", 100, 370);
-            text("3å›žç›®ä»¥é™ã®é€£ç¶šæ­£è§£ã¯ã‚¹ã‚³ã‚¢ãŒå€ã«ãªã‚Šã¾ã™ï¼", 100, 430);
-            text("å¤–ã‚Œã‚‹ã¨ã‚¹ã‚³ã‚¢ã¯0ã«ãªã‚Šã¾ã™ã€‚", 100, 490);
+            text("•\Ž¦‚³‚ê‚½ƒJ[ƒh‚æ‚èŽŸ‚ÌƒJ[ƒh‚ª", 100, 250);
+            text("Highiªj‚© Lowi«j‚©‚ð—\‘z‚µ‚Ä‚­‚¾‚³‚¢B", 100, 310);
+            text("“–‚½‚é‚Æ˜A‘±³‰ðEƒXƒRƒA‚ª‰ÁŽZ‚³‚ê‚Ü‚·B", 100, 370);
+            text("3‰ñ–ÚˆÈ~‚Ì˜A‘±³‰ð‚ÍƒXƒRƒA‚ª”{‚É‚È‚è‚Ü‚·I", 100, 430);
+            text("ŠO‚ê‚é‚ÆƒXƒRƒA‚Í0‚É‚È‚è‚Ü‚·B", 100, 490);
 
             fill(255, 255, 255);
-            text("ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆ", 100, 600);
-            text("Enterã‚­ãƒ¼ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 100, 700);
+            text("ƒXƒy[ƒXƒL[‚ÅƒQ[ƒ€ƒXƒ^[ƒg", 100, 600);
+            text("EnterƒL[‚Åƒƒjƒ…[‚É–ß‚é", 100, 700);
 
             if (isTrigger(KEY_SPACE)) {
                 state = 0;
@@ -65,23 +65,23 @@ namespace GAME10 {
             return;
         }
 
-        // ã‚¹ã‚³ã‚¢ãƒ»é€£ç¶šè¡¨ç¤º
+        // ƒXƒRƒAE˜A‘±•\Ž¦
         textSize(50);
         fill(255, 255, 255);
         char streakStr[64];
-        sprintf_s(streakStr, sizeof(streakStr), "é€£ç¶šæ­£è§£: %d å›ž", streak);
+        sprintf_s(streakStr, sizeof(streakStr), "˜A‘±³‰ð: %d ‰ñ", streak);
         text(streakStr, 50, 50);
 
         char maxStr[64];
-        sprintf_s(maxStr, sizeof(maxStr), "æœ€å¤§é€£ç¶š: %d å›ž", maxStreak);
+        sprintf_s(maxStr, sizeof(maxStr), "Å‘å˜A‘±: %d ‰ñ", maxStreak);
         text(maxStr, 50, 110);
 
         char scoreStr[64];
-        sprintf_s(scoreStr, sizeof(scoreStr), "ã‚¹ã‚³ã‚¢: %d ç‚¹", score);
+        sprintf_s(scoreStr, sizeof(scoreStr), "ƒXƒRƒA: %d “_", score);
         text(scoreStr, 50, 170);
 
         char maxScoreStr[64];
-        sprintf_s(maxScoreStr, sizeof(maxScoreStr), "æœ€å¤§ã‚¹ã‚³ã‚¢: %d ç‚¹", maxScore);
+        sprintf_s(maxScoreStr, sizeof(maxScoreStr), "Å‘åƒXƒRƒA: %d “_", maxScore);
         text(maxScoreStr, 50, 230);
 
 
@@ -98,8 +98,8 @@ namespace GAME10 {
         fill(255);
 
         if (state == 0) {
-            text("â†‘ã‚­ãƒ¼ï¼šHigh", 50, 850);
-            text("â†“ã‚­ãƒ¼ï¼šLow", 50, 900);
+            text("ªƒL[FHigh", 50, 850);
+            text("«ƒL[FLow", 50, 900);
 
             if (isTrigger(KEY_UP) || isTrigger(KEY_DOWN)) {
                 bool isHigh = isTrigger(KEY_UP);
@@ -112,15 +112,15 @@ namespace GAME10 {
                     int gain = (streak >= 3) ? 20 : 10;
                     score += gain;
                     if (score > maxScore) maxScore = score;
-                    sprintf_s(resultStr, sizeof(resultStr), "æ­£è§£ï¼+%dç‚¹ é€£ç¶š %d å›ž", gain, streak);
+                    sprintf_s(resultStr, sizeof(resultStr), "³‰ðI+%d“_ ˜A‘± %d ‰ñ", gain, streak);
                 }
                 else if (b == a) {
-                    sprintf_s(resultStr, sizeof(resultStr), "å¼•ãåˆ†ã‘ï¼ã‚«ã‚¦ãƒ³ãƒˆãã®ã¾ã¾(%då›ž)", streak);
+                    sprintf_s(resultStr, sizeof(resultStr), "ˆø‚«•ª‚¯IƒJƒEƒ“ƒg‚»‚Ì‚Ü‚Ü(%d‰ñ)", streak);
                 }
                 else {
                     streak = 0;
                     score = 0;
-                    sprintf_s(resultStr, sizeof(resultStr), "ä¸æ­£è§£!ã‚¹ã‚³ã‚¢ãƒªã‚»ãƒƒãƒˆ");
+                    sprintf_s(resultStr, sizeof(resultStr), "•s³‰ð!ƒXƒRƒAƒŠƒZƒbƒg");
                 }
                 state = 1;
             }
@@ -129,7 +129,7 @@ namespace GAME10 {
             textSize(38);
             image(cardImgs[b - 1], cardX2, cardY);
             text(resultStr, 50, 850);
-            text("ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§æ¬¡ã®ã‚²ãƒ¼ãƒ ã¸", 50, 900);
+            text("ƒXƒy[ƒXƒL[‚ÅŽŸ‚ÌƒQ[ƒ€‚Ö", 50, 900);
 
             if (isTrigger(KEY_SPACE)) {
 
@@ -138,7 +138,7 @@ namespace GAME10 {
             }
         }
 
-        text("Enterã‚­ãƒ¼ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 50, 1000);
+        text("EnterƒL[‚Åƒƒjƒ…[‚É–ß‚é", 50, 1000);
         if (isTrigger(KEY_ENTER)) {
             stopSound(soundBGM);
             main()->backToMenu();

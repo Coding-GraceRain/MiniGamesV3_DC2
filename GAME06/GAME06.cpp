@@ -12,7 +12,7 @@ bool isMouseLeftPressed() {
     return (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
 }
 
-// マウスX座標取得
+// マウスX座標
 int getMouseX() {
     POINT p;
     GetCursorPos(&p);
@@ -20,7 +20,7 @@ int getMouseX() {
     return p.x;
 }
 
-// マウスY座標取得
+// マウスY座標
 int getMouseY() {
     POINT p;
     GetCursorPos(&p);
@@ -43,12 +43,12 @@ namespace GAME06 {
 
     int GAME::create() {
         srand((unsigned int)time(nullptr));
-
+        
         // 初期位置
         circleX = rand() % (1920 - 2 * RADIUS) + RADIUS;
         circleY = rand() % (1080 - 2 * RADIUS) + RADIUS;
 
-        // 現在時刻
+        // 現在時間
         lastUpdateTime = duration_cast<milliseconds>(
             steady_clock::now().time_since_epoch()).count();
 
@@ -64,7 +64,7 @@ namespace GAME06 {
 
     void GAME::proc() {
         // 背景色
-        clear(30, 30, 60); 
+        clear(0, 60, 100); 
 
         // 現在時刻
         long long currentTime = duration_cast<milliseconds>(
@@ -92,8 +92,8 @@ namespace GAME06 {
             return; 
         }
 
-        // 1秒ごとに円を移動
-        if (currentTime - lastUpdateTime > 1000) {
+        // 2秒ごとに円を移動
+        if (currentTime - lastUpdateTime > 2000) {
             circleX = rand() % (1920 - 2 * RADIUS) + RADIUS;
             circleY = rand() % (1080 - 2 * RADIUS) + RADIUS;
             lastUpdateTime = currentTime;

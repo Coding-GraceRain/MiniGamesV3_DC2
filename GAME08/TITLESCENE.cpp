@@ -45,7 +45,7 @@ namespace GAME08 {
         textSize(80);
         text("『！』マークが、", width / 2 - 500, 420);
         text("あらわれたら、", width / 2 - 100, 520);
-        text("すかさずボタンをおそう！", width / 2 - 460, 620);
+        text("すかさず A をおそう！", width / 2 - 460, 620);
 
         // プレイモード選択
         textSize(48);
@@ -64,18 +64,25 @@ namespace GAME08 {
         text("1", optionX1, baseY);
         fill(0);
         text("人", optionX1 + 48, baseY);
-        fill(255, 0, 0);
-        text("2", optionX2, baseY);
-        fill(0);
-        text("人", optionX2 + 48, baseY);
+        //fill(255, 0, 0);
+        //text("2", optionX2, baseY);
+        //fill(0);
+        //text("人", optionX2 + 48, baseY);
 
         // 選択中の左に三角形
-        float markerX = (select == 0) ? optionX1 - 40 : optionX2 - 40;
+        //float markerX = (select == 0) ? optionX1 - 40 : optionX2 - 40;
+        float markerX = optionX1 - 40;
         float markerY = baseY;
         textSize(48);
         fill(0);
         text("＞", markerX, markerY);
 
+        fill(227, 162, 36);
+        rect(width / 2 - 20, baseY + 150, width / 4+20, 110);
+        fill(255);
+        rect(width / 2 - 20, baseY + 150, width / 4, 90);
+        fill(0);
+        text("Aで決定　←→で選択", optionX1-100, baseY + 170);
 
         if (selectingDifficulty) {
             const char* difficultyLabels[] = { "易", "中", "難" };
@@ -121,7 +128,11 @@ namespace GAME08 {
             }
         }
         else {
-            if (isTrigger(KEY_LEFT)) {
+            if (isTrigger(KEY_A)) {
+                mgr.mode = SCENEMANAGER::ONE_PLAYER;
+                selectingDifficulty = true;
+            }
+            /*if (isTrigger(KEY_LEFT)) {
                 select = 0;
             }
             else if (isTrigger(KEY_RIGHT)) {
@@ -129,7 +140,7 @@ namespace GAME08 {
             }
             else if (isTrigger(KEY_A)) {
                 selectingDifficulty = true;
-            }
+            }*/
         }
         
 

@@ -133,16 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DIFFICULTYSCENE.cpp" />
     <ClCompile Include="GAME08.cpp" />
     <ClCompile Include="GAMESCENE.cpp" />
     <ClCompile Include="RESULTSCENE.cpp" />
-    <ClCompile Include="SCENEBASE.cpp" />
     <ClCompile Include="SCENEMANAGER.cpp" />
     <ClCompile Include="TITLESCENE.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DIFFICULTYSCENE.h" />
     <ClInclude Include="GAME08.h" />
     <ClInclude Include="GAMESCENE.h" />
     <ClInclude Include="RESULTSCENE.h" />

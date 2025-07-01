@@ -26,13 +26,6 @@ namespace GAME08 {
         int winHistory[HISTORY_SIZE] = { 0 };
 
         int currentRound = 0;
-        COLOR characterColors[HISTORY_SIZE] = {
-            COLOR(255, 255, 255),  // îí
-            COLOR(255, 0, 0),      // ê‘
-            COLOR(0, 255, 0),      // óŒ
-            COLOR(0, 0, 255),      // ê¬
-            COLOR(255, 255, 0)     // â©
-        };
 
         void change(SCENEID id);
         void update();

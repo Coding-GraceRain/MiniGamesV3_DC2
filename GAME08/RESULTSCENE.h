@@ -5,6 +5,7 @@ namespace GAME08 {
 	class RESULTSCENE : public SCENEBASE
 	{
 		SCENEMANAGER& mgr;
+		int bgImg = -1;
 	public:
 		RESULTSCENE(SCENEMANAGER& manager) : mgr(manager) {}
 		void create() override;

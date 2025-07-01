@@ -1,6 +1,5 @@
 #include "SCENEMANAGER.h"
 #include "TITLESCENE.h"
-#include "DIFFICULTYSCENE.h"
 #include "GAMESCENE.h"
 #include "RESULTSCENE.h"
 namespace GAME08 {
@@ -14,9 +13,6 @@ namespace GAME08 {
         switch (id) {
         case TITLE:
             current = new TITLESCENE(*this);
-            break;
-        case DIFFICULTY:
-            current = new DIFFICULTYSCENE(*this);
             break;
         case GAME:
             current = new GAMESCENE(*this);

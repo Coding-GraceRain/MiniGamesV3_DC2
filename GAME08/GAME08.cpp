@@ -3,7 +3,6 @@
 #include "GAME08.h"
 #include "SCENEMANAGER.h"
 #include "TITLESCENE.h"
-#include "DIFFICULTYSCENE.h"
 #include "GAMESCENE.h"
 #include "RESULTSCENE.h"
 
@@ -13,8 +12,6 @@ namespace GAME08
 
 	int GAME::create()
 	{
-		//loadPackage("assets.package");
-		//disableEscapeKey();
 		hideCursor();
 		sceneMgr.change(SCENEMANAGER::TITLE);
 		return 0;
@@ -23,7 +20,6 @@ namespace GAME08
 	void GAME::destroy()
 	{
 		sceneMgr.shutdown();
-		//deletePackage();
 		showCursor();
 	}
 

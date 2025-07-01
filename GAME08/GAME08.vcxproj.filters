@@ -3,10 +3,8 @@
   <ItemGroup>
     <ClCompile Include="GAME08.cpp" />
     <ClCompile Include="GAMESCENE.cpp" />
-    <ClCompile Include="SCENEBASE.cpp" />
     <ClCompile Include="SCENEMANAGER.cpp" />
     <ClCompile Include="TITLESCENE.cpp" />
-    <ClCompile Include="DIFFICULTYSCENE.cpp" />
     <ClCompile Include="RESULTSCENE.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -15,7 +13,6 @@
     <ClInclude Include="SCENEBASE.h" />
     <ClInclude Include="SCENEMANAGER.h" />
     <ClInclude Include="TITLESCENE.h" />
-    <ClInclude Include="DIFFICULTYSCENE.h" />
     <ClInclude Include="RESULTSCENE.h" />
   </ItemGroup>
   <ItemGroup>

@@ -13,7 +13,9 @@ namespace GAME08 {
         bool cpuTriggered = false;
         int reactionFrame = -1;
         int resultDisplayTimer = 0;
+        int cpuReactionFrame = -1;
         int foulCount = 0;
+        int cpuFrame = -1;
 
         int soraImg = -1;
         int enemyImgs[SCENEMANAGER::HISTORY_SIZE] = {};
@@ -26,7 +28,7 @@ namespace GAME08 {
 
         int cutinImg = -1;
         int enemyCutinImgs[SCENEMANAGER::HISTORY_SIZE] = {};
-        float cutinX = 777;
+        float cutinX = 747;
         float enemyCutinX = 1203;
         static const int CUT_IN_DURATION = 60;
 
@@ -35,6 +37,7 @@ namespace GAME08 {
         int currentEnemyCutinImg = -1;
         bool showEx = false;
         bool redoRound = false;
+
 
     public:
         GAMESCENE(SCENEMANAGER& manager) : mgr(manager) {}

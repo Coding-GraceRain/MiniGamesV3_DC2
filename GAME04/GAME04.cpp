@@ -76,7 +76,7 @@ namespace GAME04
 					float vx = (rand() % 21) - 10;  // 0〜60 の整数を生成してから -30で範囲をずらす
 
 					// vy は 5 〜 15 の間のランダムな値
-					float vy = (rand() % 6) + 2;   // 0〜10 の整数を生成してから +5で範囲をずらす
+					float vy = (rand() % 9) + 2;   // 0〜10 の整数を生成してから +5で範囲をずらす
 
 					ebullets[i].shoot(enemy->px, enemy->py + enemy->ofsY, vx, vy);
 					bulletsFired++;

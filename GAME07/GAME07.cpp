@@ -16,6 +16,8 @@ namespace GAME07
 		dice6Img = loadImage("..\\main\\assets\\game07\\dice6.png");
 		oyaImg = loadImage("..\\main\\assets\\game07\\oya.png");
 		yakuImg= loadImage("..\\main\\assets\\game07\\Yaku.png");
+		oyaSnd=loadSound("..\\main\\assets\\game07\\oyaroll.wav");
+		playerSnd = loadSound("..\\main\\assets\\game07\\playerroll.wav");
 		srand(time(NULL));
 		return 0;  
 	}
@@ -115,6 +117,7 @@ namespace GAME07
 		textSize(100);
 		text("サイコロを振る:R",500, Height);
 		if (!oyaRolled && isTrigger(KEY_R)) {
+			playSound(oyaSnd);
 			oyaDice[0] = rand() % 6 + 1;
 			oyaDice[1] = rand() % 6 + 1;
 			oyaDice[2] = rand() % 6 + 1;
@@ -214,6 +217,7 @@ namespace GAME07
 		textSize(100);
 		text("サイコロを振る:R", 500, Height);
 		if (!playerRolled && isTrigger(KEY_R)) {
+			playSound(playerSnd);
 			playerDice[0] = rand() % 6 + 1;
 			playerDice[1] = rand() % 6 + 1;
 			playerDice[2] = rand() % 6 + 1;

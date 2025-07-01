@@ -41,6 +41,9 @@ namespace GAME07
         int oyaImg;
         int yakuImg;
 
+        int playerSnd;
+        int oyaSnd;
+
         int oyaDice[3];
         int playerDice[3];
 

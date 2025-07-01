@@ -9,6 +9,7 @@ namespace GAME08 {
 		int select = 0;
 		int difficultySelect = 0;
 		bool selectingDifficulty = false;
+		bool assetsLoaded = false;
 	public:
 		TITLESCENE(SCENEMANAGER& manager) : mgr(manager) {}
 		void create() override;

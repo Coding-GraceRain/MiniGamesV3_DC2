@@ -6,6 +6,8 @@ namespace GAME08 {
 	{
 		SCENEMANAGER& mgr;
 		int bgImg = -1;
+		bool assetsLoaded = false;
+
 	public:
 		RESULTSCENE(SCENEMANAGER& manager) : mgr(manager) {}
 		void create() override;

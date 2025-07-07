@@ -3,6 +3,7 @@
 namespace GAME08 {
     void GAMESCENE::create() {
         frame = 0;
+        
         if (!assetsLoaded) {
             cutInActive = true;
             cutInFrame = 0;
@@ -76,7 +77,7 @@ namespace GAME08 {
                 cutInActive = false;
                 frame = 0;
             }
-            present();
+            //present;
             return;
         }
 
@@ -162,7 +163,7 @@ namespace GAME08 {
                     mgr.change(SCENEMANAGER::GAME);
                 }
             }
-            present();
+            //present;
             return;
         }
 
@@ -190,7 +191,9 @@ namespace GAME08 {
             }
             if (result != 3) {
                 mgr.winHistory[mgr.currentRound] = result;
-                mgr.currentRound++;
+                if (mgr.currentRound <= 4) {
+                    mgr.currentRound++;
+                }
             }
             mgr.winner = result;
             lastWinner = result;
@@ -201,12 +204,9 @@ namespace GAME08 {
             textSize(48);
             fill(255);
             text("”½‰ž P: " + let(reactionFrame) + "F", width - 280, height - 100);
-            if (cpuReactionFrame >= 0) {
-                text("”½‰ž C: " + let(cpuReactionFrame) + "F", width - 280, height - 50);
-            }
         }
 
-        present();
+        //present;
     }
 
     void GAMESCENE::destroy() {

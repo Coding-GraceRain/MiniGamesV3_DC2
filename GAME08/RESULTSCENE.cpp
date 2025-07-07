@@ -28,7 +28,7 @@ namespace GAME08 {
         case 1: resultText = "P1の勝ち！"; break;
         case 2: resultText = "NPCの勝ち！"; break;
         case 3: resultText = "引き分け！"; break;
-        case 4: resultText = "フライング！"; break;
+        //case 4: resultText = "フライング！"; break;
         default: resultText = "";
         }
         text(resultText, px - 90, 300);
@@ -41,18 +41,19 @@ namespace GAME08 {
             case 1: mark = "○"; break;
             case 2: mark = "×"; break;
             case 3: mark = "△"; break;
-            case 4: mark = "F"; break;
+            //case 4: mark = "F"; break;
             }
             text(mark, px - 130 + i * 60, 400);
         }
 
         text("ENTERキーでタイトルに戻る", px - 280, 500);
         if (isTrigger(KEY_ENTER)) {
+            mgr.currentRound = 0;
             mgr.winCount = 0;
             mgr.change(SCENEMANAGER::TITLE);
         }
 
-        present();
+        //present();
     }
 
     void RESULTSCENE::destroy() {

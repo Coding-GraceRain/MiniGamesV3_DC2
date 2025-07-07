@@ -1,3 +1,5 @@
+//プレゼントは全消し
+
 #include "TITLESCENE.h"
 #include "../../libOne/inc/libOne.h"
 namespace GAME08 {
@@ -19,6 +21,7 @@ namespace GAME08 {
 
         // タイトル表示（上部）
         textSize(200);
+        stroke(0,0,0,0);
         fill(255);
         text("刹", width / 2 - 400, 280);
 
@@ -148,7 +151,7 @@ namespace GAME08 {
         
 
 
-        present();
+        //present;
     }
 
     void TITLESCENE::destroy() {

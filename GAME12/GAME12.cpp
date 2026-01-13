@@ -5,23 +5,19 @@ namespace GAME12
 {
 	int GAME::create()
 	{
+		mario = new MARIO;
 		return 0;
 	}
 
 	void GAME::destroy()
 	{
-
+		delete mario;
 	}
 
 	void GAME::proc()
 	{
-		clear(0, 0, 64);
-		textSize(50);
-		fill(255, 255, 0);
-		text("GAME12", 0, 100);
-		fill(255);
-		text("ENTERキーでメニューに戻る", 0, 1080);
-		if (isTrigger(KEY_ENTER)) {
+		mario->game_console();
+		if (mario->Back_Scene == true) {
 			main()->backToMenu();
 		}
 	}

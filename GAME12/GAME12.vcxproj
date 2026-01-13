@@ -133,9 +133,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2D_MARIO.cpp" />
     <ClCompile Include="GAME12.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2D_MARIO.h" />
     <ClInclude Include="GAME12.h" />
   </ItemGroup>
   <ItemGroup>

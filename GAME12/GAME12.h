@@ -1,5 +1,6 @@
 #pragma once
 #include "../MAIN/GAME_BASE.h"
+#include"2D_MARIO.h"
 namespace GAME12
 {
     class GAME :
@@ -11,5 +12,6 @@ namespace GAME12
         int create();
         void proc();
         void destroy();
+        class MARIO* mario = { 0 };
     };
 }

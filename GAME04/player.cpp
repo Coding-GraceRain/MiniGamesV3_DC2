@@ -1,44 +1,44 @@
 #include "../../libOne/inc/libOne.h"
-
-#include "GAME04.h"
 #include "player.h"
 
 namespace GAME04 {
-	
-	void PLAYER::move() {
-		//posx = posx + 5.0f;
-		
-		if (isPress(KEY_A)) { px += -vx; }
-		if (isPress(KEY_D)) { px += vx; }
-		if (isPress(KEY_S)) { py += vx; }
-		if (isPress(KEY_W)) { py += -vx; }
-		if (py < 1080 / 2) {
-			if (isPress(KEY_W)) { py += vx; }
 
-		}
-		
+    extern float scrollX;
 
-		
-		if (py < 0) py = 0;
-		if (py > 1080) py = 1080;
-		if (px < 0) px = 0;
-		if (px > 1920) px = 1920;
+    void PLAYER::move()
+    {
+        // 横移動
+        if (isPress(KEY_D)) vx = 5;
+        else if (isPress(KEY_A)) vx = -5;
+        else vx = 0;
 
-		
-	}
+        // ジャンプ
+        if (isTrigger(KEY_W) && onGround) {
+            vy = -18;
+            onGround = false;
+        }
 
-	void PLAYER::draw() {
+        // 重力
+        vy += 1.2f;
 
-		rectMode(CENTER);
-		//fill(255, 255, 0);
-		circle(px, py, pr);
-	}
+        // 移動
+        wx += vx;
+        wy += vy;
 
+        // 地面
+        if (wy > 800) {
+            wy = 800;
+            vy = 0;
+            onGround = true;
+        }
 
-	
+        // カメラ追従（画面中央）
+        scrollX = wx - 400;
+        if (scrollX < 0) scrollX = 0;
+    }
 
-	void PLAYER::ku() {
-
-	
-	}
+    void PLAYER::draw()
+    {
+        circle(wx - scrollX, wy, pr);
+    }
 }

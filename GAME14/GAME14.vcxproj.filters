@@ -2,9 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME14.cpp" />
+    <ClCompile Include="EXPLOIT_DRAW_PLAY.cpp" />
+    <ClCompile Include="GAME_SCENE_CHANGE.cpp" />
+    <ClCompile Include="HIRAGANA_GAME.cpp" />
+    <ClCompile Include="INPUT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME14.h" />
+    <ClInclude Include="EXPLOIT_DRAW_PLAY.h" />
+    <ClInclude Include="GAME_SCENE_CHANGE.h" />
+    <ClInclude Include="HIRAGANA_GAME.h" />
+    <ClInclude Include="INPUT.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game14\title.txt" />

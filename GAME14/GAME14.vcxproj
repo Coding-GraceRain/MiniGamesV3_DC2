@@ -133,10 +133,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EXPLOIT_DRAW_PLAY.cpp" />
     <ClCompile Include="GAME14.cpp" />
+    <ClCompile Include="GAME_SCENE_CHANGE.cpp" />
+    <ClCompile Include="HIRAGANA_GAME.cpp" />
+    <ClCompile Include="INPUT.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EXPLOIT_DRAW_PLAY.h" />
     <ClInclude Include="GAME14.h" />
+    <ClInclude Include="GAME_SCENE_CHANGE.h" />
+    <ClInclude Include="HIRAGANA_GAME.h" />
+    <ClInclude Include="INPUT.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game14\title.txt" />

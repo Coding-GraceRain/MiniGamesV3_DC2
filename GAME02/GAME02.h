@@ -12,5 +12,10 @@ namespace GAME02
         void proc();
         void destroy();
         void reset();
+        void diceroll();
+        void yaku();
+        void kakutei();
+        void yotreset();
+        void UI();
     };
 }

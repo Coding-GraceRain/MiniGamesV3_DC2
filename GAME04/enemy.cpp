@@ -8,12 +8,16 @@ namespace GAME04 {
 
     void ENEMY::move()
     {
-        
+        if (!active) return;
+
+        wx += vx;
     }
 
     void ENEMY::draw()
     {
-        if (active)
-            circle(wx - scrollX, wy, pr);
+        if (!active) return;
+        circle(wx - scrollX, wy, pr);
+       /* if (active)
+            circle(wx - scrollX, wy, pr);*/
     }
 }

@@ -10,5 +10,6 @@ namespace GAME04 {
 
         void move();
         void draw();
+        int knockTimer = 0;
     };
 }

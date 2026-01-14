@@ -3,6 +3,7 @@
 #include "GAME01.h"
 #include "time.h"
 #include"math.h"
+#include"kanji.h"
 namespace GAME01
 {
 	int GAME::create()  //1回限り
@@ -38,6 +39,12 @@ namespace GAME01
 		return &mathInstance;
 	}
 
+	KANJI* GAME::kanji()
+	{
+		static KANJI kanjiInstance;
+		return &kanjiInstance;
+	}
+
 	void GAME::counter()
 	{
 		FILE* file2;
@@ -67,6 +74,21 @@ namespace GAME01
 		textSize(30);
 		fill(255);
 		text("制限時間内で四則の演算をするモードです。※不正解でも次に進めます。", 900, 380);
+		fill(255, 0, 0);
+		rect(100, 600, 800, 300);
+		textSize(60);
+		fill(0);
+		text("漢字問題/「K」KEYを押す", 100, 780);
+		if (MATH::cont == 1) {
+			textSize(50);
+			fill(255);
+			text("計算:コンテニュー", 520, 1080);
+		}
+		if (KANJI::cont == 1) {
+			textSize(50);
+			fill(255);
+			text("漢字:コンテニュー", 520, 1080);
+		}
 		return;
 	}
 
@@ -87,6 +109,13 @@ namespace GAME01
 		else if (currentScene == 1) {
 			MATH* Imath = GAME::math();
 			Imath->proc();
+			if (isTrigger(KEY_LEFT)) {
+				currentScene = 0;
+			}
+		}
+		else if (currentScene == 2) {
+			KANJI* Ikanji = GAME::kanji();
+			Ikanji->proc();
 			if (isTrigger(KEY_LEFT)) {
 				currentScene = 0;
 			}

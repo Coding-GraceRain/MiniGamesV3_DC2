@@ -1,6 +1,7 @@
 #pragma once
 #include"../MAIN/GAME_BASE.h"
 #include"MATH.h"
+#include"kanji.h"
 namespace GAME01
 {
     class GAME :
@@ -19,6 +20,7 @@ namespace GAME01
         void destroy();
         void draw();
         MATH* math();
+        KANJI* kanji();
     };
 }
 

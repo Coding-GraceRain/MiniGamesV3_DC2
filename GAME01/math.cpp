@@ -3,9 +3,9 @@
 #include "GAME01.h"
 #include "math.h"
 #include"windows.h"
-#include<cstdlib>
 #include"input2.h"
 namespace GAME01 {
+	int MATH::cont = 0;
 	void MATH::game()    /*ランダム数読み込み→計算*/
 	{
 		clear(0, 0, 64);
@@ -46,7 +46,7 @@ namespace GAME01 {
 		clear(0, 0, 64);
 		textSize(80);
 		text("答えを入力してください。SPACEで確定。", 20, 200);
-		text("※回答を入力しないとメニューに戻れません※", 20, 700);
+		text("※[＜]キーでいったんメニューに戻る※", 20, 700);
 		fill(255, 255, 0);
 		text(Ma, 620, 100);
 		text("+", 730, 100);
@@ -70,7 +70,7 @@ namespace GAME01 {
 		clear(0, 0, 64);
 		textSize(80);
 		text("答えを入力してください。SPACEで確定。", 20, 200);
-		text("※回答を入力しないとメニューに戻れません※", 20, 700);
+		text("※[＜]キーでいったんメニューに戻る※", 20, 700);
 		if (Mc > Md) {
 			fill(255, 255, 0);
 			text(Mc, 620, 100);
@@ -99,7 +99,7 @@ namespace GAME01 {
 		clear(0, 0, 64);
 		textSize(80);
 		text("答えを入力してください。SPACEで確定。", 20, 200);
-		text("※回答を入力しないとメニューに戻れません※", 20, 700);
+		text("※[＜]キーでいったんメニューに戻る※", 20, 700);
 		fill(255, 255, 0);
 		text(Me, 620, 100);
 		text("×", 730, 100);
@@ -119,7 +119,7 @@ namespace GAME01 {
 		textSize(60);
 		text("答えを入力してください(商のみで可)。SPACEで確定。", 20, 200);
 		textSize(80);
-		text("※回答を入力しないとメニューに戻れません※", 20, 700);
+		text("※[＜]キーでいったんメニューに戻る※", 20, 700);
 		fill(255, 255, 0);
 		text(Mg, 620, 100);
 		text("÷", 730, 100);
@@ -138,7 +138,7 @@ namespace GAME01 {
 		clear(0, 0, 64);
 		textSize(80);
 		text("答えを入力してください。SPACEで確定。", 20, 200);
-		text("※回答を入力しないとメニューに戻れません※", 20, 700);
+		text("※[＜]キーでいったんメニューに戻る※", 20, 700);
 		textSize(60);
 		fill(255, 255, 0);
 		text(Mi, 620, 100);
@@ -163,7 +163,7 @@ namespace GAME01 {
 		clear(0, 0, 64);
 		textSize(80);
 		text("答えを入力してください。SPACEで確定。", 20, 200);
-		text("※回答を入力しないとメニューに戻れません※", 20, 700);
+		text("※[＜]キーでいったんメニューに戻る※", 20, 700);
 		if (Mk > Ml) {
 			fill(255, 255, 0);
 			text(Mk, 570, 100);
@@ -252,6 +252,9 @@ namespace GAME01 {
 			MATH* m1 = MATH::math1();
 			m1->anser1();
 			key();
+			if (isTrigger(KEY_LEFT)) {
+				cont = 1;
+			}
 			if (!answerChecked) {
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrA[0] != '\0') {
@@ -268,10 +271,12 @@ namespace GAME01 {
 					text("正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
+					cont = 0;
 				}
 				else {
 					text("不正解！", 700, 400);
 					text("Shiftでメニューに戻る", 700, 500);
+					text("Enterで次の問題へ", 700, 600);
 				}
 
 				if (isTrigger(KEY_ENTER)) { //正解
@@ -294,6 +299,9 @@ namespace GAME01 {
 			MATH* m2 = MATH::math2();
 			m2->anser2();
 			key();
+			if (isTrigger(KEY_LEFT)) {
+				cont = 1;
+			}
 			if (!answerChecked) {
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrA[0] != '\0') {
@@ -310,10 +318,12 @@ namespace GAME01 {
 					text("正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
+					cont = 0;
 				}
 				else {
 					text("不正解！", 700, 400);
 					text("Shiftでメニューに戻る", 700, 500);
+					text("Enterで次の問題へ", 700, 600);
 				}
 
 				if (isTrigger(KEY_ENTER)) { //正解
@@ -336,6 +346,9 @@ namespace GAME01 {
 			MATH* m3 = MATH::math3();
 			m3->anser3();
 			key();
+			if (isTrigger(KEY_LEFT)) {
+				cont = 1;
+			}
 			if (!answerChecked) {
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrA[0] != '\0') {
@@ -352,10 +365,12 @@ namespace GAME01 {
 					text("正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
+					cont = 0;
 				}
 				else {
 					text("不正解！", 700, 400);
 					text("Shiftでメニューに戻る", 700, 500);
+					text("Enterで次の問題へ", 700, 600);
 				}
 
 				if (isTrigger(KEY_ENTER)) { //正解
@@ -378,6 +393,9 @@ namespace GAME01 {
 			MATH* m4 = MATH::math4();
 			m4->anser4();
 			key();
+			if (isTrigger(KEY_LEFT)) {
+				cont = 1;
+			}
 			if (!answerChecked) {
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrA[0] != '\0') {
@@ -394,10 +412,12 @@ namespace GAME01 {
 					text("正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
+					cont = 0;
 				}
 				else {
 					text("不正解！", 700, 400);
 					text("Shiftでメニューに戻る", 700, 500);
+					text("Enterで次の問題へ", 700, 600);
 				}
 				if (isTrigger(KEY_ENTER)) { //正解
 					MATH::math4()->anser4Generated = false;
@@ -419,6 +439,9 @@ namespace GAME01 {
 			MATH* m5 = MATH::math5();
 			m5->anser5();
 			key();
+			if (isTrigger(KEY_LEFT)) {
+				cont = 1;
+			}
 			if (!answerChecked) {
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrA[0] != '\0') {
@@ -435,10 +458,12 @@ namespace GAME01 {
 					text("正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
+					cont = 0;
 				}
 				else {
 					text("不正解！", 700, 400);
 					text("Shiftでメニューに戻る", 700, 500);
+					text("Enterで次の問題へ", 700, 600);
 				}
 				if (isTrigger(KEY_ENTER)) { //正解
 					MATH::math5()->anser5Generated = false;
@@ -460,6 +485,9 @@ namespace GAME01 {
 			MATH* m6 = MATH::math6();
 			m6->anser6();
 			key();
+			if (isTrigger(KEY_LEFT)) {
+				cont = 1;
+			}
 			if (!answerChecked) {
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrA[0] != '\0') {
@@ -476,10 +504,12 @@ namespace GAME01 {
 					text("正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
+					cont = 0;
 				}
 				else {
 					text("不正解！", 700, 400);
 					text("Shiftでメニューに戻る", 700, 500);
+					text("Enterで次の問題へ", 700, 600);
 				}
 
 				if (isTrigger(KEY_ENTER)) { //正解

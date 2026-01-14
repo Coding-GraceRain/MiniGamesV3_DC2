@@ -22,6 +22,7 @@ namespace GAME01 {
 		bool answerChecked = false;
 		bool answerCorrect = false;
 	public:
+		static int cont;
 		void game();
 		void proc();
 		void anser1();

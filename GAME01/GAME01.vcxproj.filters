@@ -4,11 +4,13 @@
     <ClCompile Include="math.cpp" />
     <ClCompile Include="GAME01.cpp" />
     <ClCompile Include="input2.cpp" />
+    <ClCompile Include="kanji.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math.h" />
     <ClInclude Include="GAME01.h" />
     <ClInclude Include="input2.h" />
+    <ClInclude Include="kanji.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game01\title.txt" />

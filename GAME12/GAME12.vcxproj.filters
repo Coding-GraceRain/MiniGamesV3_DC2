@@ -2,9 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME12.cpp" />
+    <ClCompile Include="2D_MARIO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME12.h" />
+    <ClInclude Include="2D_MARIO.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game12\title.txt" />

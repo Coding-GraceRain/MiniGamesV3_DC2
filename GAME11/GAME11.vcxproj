@@ -134,9 +134,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GAME11.cpp" />
+    <ClCompile Include="GAME_GRAPHIC.cpp" />
+    <ClCompile Include="GAME_SCENE.cpp" />
+    <ClCompile Include="PLAYER_and_NPC(BOSS)2.cpp" />
+    <ClCompile Include="PLAYER_and_NPC.cpp" />
+    <ClCompile Include="TITLE_SELECT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME11.h" />
+    <ClInclude Include="GAME_GRAPHIC.h" />
+    <ClInclude Include="GAME_SCENE.h" />
+    <ClInclude Include="PLAYER_and_NPC.h" />
+    <ClInclude Include="TITLE_SELECT.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game11\title.txt" />

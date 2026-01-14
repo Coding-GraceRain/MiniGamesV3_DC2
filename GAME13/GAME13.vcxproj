@@ -133,10 +133,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DASSYUTU.cpp" />
     <ClCompile Include="GAME13.cpp" />
+    <ClCompile Include="GAME_SCENE_CHANGE.cpp" />
+    <ClCompile Include="Minesweeper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DASSYUTU.h" />
     <ClInclude Include="GAME13.h" />
+    <ClInclude Include="GAME_SCENE_CHANGE.h" />
+    <ClInclude Include="Minesweeper.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game13\title.txt" />

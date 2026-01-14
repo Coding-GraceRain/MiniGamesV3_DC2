@@ -9,8 +9,7 @@ extern bool EscapeKeyValid;
 
 namespace GAME15
 {
-	int GAME::create()
-	{
+	int GAME::create(){
 		//メインループ側でのESCキーでの終了判定を無効化する
 		EscapeKeyValid = false;
 
@@ -21,8 +20,7 @@ namespace GAME15
 		return 0;
 	}
 
-	void GAME::destroy()
-	{
+	void GAME::destroy(){
 		//ここにはゲーム終了時に1回だけ行うものを記述する
 
 
@@ -31,8 +29,7 @@ namespace GAME15
 		EscapeKeyValid = true;
 	}
 
-	void GAME::proc()
-	{
+	void GAME::proc(){
 		clear(0, 0, 64);
 
 		//print(delta);

@@ -1,44 +1,50 @@
 #include "../../libOne/inc/libOne.h"
-
-#include "GAME04.h"
 #include "player.h"
 
 namespace GAME04 {
-	
-	void PLAYER::move() {
-		//posx = posx + 5.0f;
-		
-		if (isPress(KEY_A)) { px += -vx; }
-		if (isPress(KEY_D)) { px += vx; }
-		if (isPress(KEY_S)) { py += vx; }
-		if (isPress(KEY_W)) { py += -vx; }
-		if (py < 1080 / 2) {
-			if (isPress(KEY_W)) { py += vx; }
 
-		}
-		
+    extern float scrollX;
+    void PLAYER::move()
+    {
+        const float MOVE = 5;
+        const float GRAVITY = 1.2f;
 
-		
-		if (py < 0) py = 0;
-		if (py > 1080) py = 1080;
-		if (px < 0) px = 0;
-		if (px > 1920) px = 1920;
+        // ノックバック中は操作不能
+        if (knockTimer > 0)
+        {
+            knockTimer--;
+        }
+        else
+        {
+            if (isPress(KEY_D)) vx = MOVE;
+            else if (isPress(KEY_A)) vx = -MOVE;
+            else vx = 0;
 
-		
-	}
+            if (isTrigger(KEY_W) && onGround)
+            {
+                vy = -18;
+                onGround = false;
+            }
+        }
 
-	void PLAYER::draw() {
+        vy += GRAVITY;
 
-		rectMode(CENTER);
-		//fill(255, 255, 0);
-		circle(px, py, pr);
-	}
+        wx += vx;
+        wy += vy;
 
+        if (wy > 800)
+        {
+            wy = 800;
+            vy = 0;
+            onGround = true;
+        }
 
-	
+        scrollX = wx - 400;
+        if (scrollX < 0) scrollX = 0;
+    }
 
-	void PLAYER::ku() {
-
-	
-	}
+    void PLAYER::draw()
+    {
+        circle(wx - scrollX, wy, pr);
+    }
 }

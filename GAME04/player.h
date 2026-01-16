@@ -1,26 +1,15 @@
 #pragma once
-#include "../../libOne/inc/libOne.h"
-
 namespace GAME04 {
-	
-	class PLAYER {
-	public:
-		int ing = 0;
-		float px = 1920 / 2;
-		float py = 1080 - 150;
-		float pr = 25 * 2;
-		float w = 100;
-		float h = 200;
-		float vx = 15;
-		float ofsY = -100;
-		int hp = 10;
-		void move();
-		void loadImage(const char* filepath);
+    class PLAYER {
+    public:
+        float wx = 200, wy = 800;
+        float vx = 0, vy = 0;
+        float pr = 30;
+        int hp = 10;
+        bool onGround = true;
 
-		void ku();
-		void ef();
-		void draw();
-
-	};
-
+        void move();
+        void draw();
+        int knockTimer = 0;
+    };
 }

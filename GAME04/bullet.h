@@ -1,24 +1,14 @@
 #pragma once
-#include "player.h"
-
 namespace GAME04 {
-	
-	class BULLET {
-	public:
+    class BULLET {
+    public:
+        float wx, wy;
+        float vx = 12;
+        float pr = 10;
+        int hp = 0;
 
-
-		
-		int hp = 0;
-		float px = 0;
-		float py = 0;
-		float vy = -20.0f; // è„å¸Ç´
-		float pr = 15;
-		float h = 20;
-
-		void move();
-		void draw();
-		void shoot(float x, float y);
-
-	};
-
+        void shoot(float x, float y);
+        void move();
+        void draw();
+    };
 }

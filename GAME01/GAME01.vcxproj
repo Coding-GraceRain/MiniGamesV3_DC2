@@ -135,11 +135,13 @@
   <ItemGroup>
     <ClCompile Include="GAME01.cpp" />
     <ClCompile Include="input2.cpp" />
+    <ClCompile Include="kanji.cpp" />
     <ClCompile Include="math.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME01.h" />
     <ClInclude Include="input2.h" />
+    <ClInclude Include="kanji.h" />
     <ClInclude Include="math.h" />
   </ItemGroup>
   <ItemGroup>

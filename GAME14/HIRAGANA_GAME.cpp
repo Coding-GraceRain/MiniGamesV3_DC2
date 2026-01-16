@@ -57,35 +57,55 @@ namespace GAME14 {
 		}
 	}
 	void HIRAGANA::STAGE1_DRAW() {
-			fill(255);
-			textSize(text_Size);
-			Goto_Select_Stage = false;
-			Correct_answer();
-		if (stage_Progress == 1) {
-			text("‚ +‚¢=?", text_Potition_X, text_Potition_Y);
-			text("‚¢+‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
-
+		fill(255);
+		textSize(text_Size);
+		Goto_Select_Stage = false;
+		Correct_answer();
+		if (!correct_Answer) {
+			if (stage_Progress == 1) {
+				text("‚ +‚¢=?", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 2) {
+				text("‚ +‚¨=?", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¤=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 3) {
+				text("‚¢+‚¨=?", text_Potition_X, text_Potition_Y);
+				text("‚ +‚¤=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 4) {
+				text("‚¤+‚¤=?", text_Potition_X, text_Potition_Y);
+				text("‚¤+‚¦=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 5) {
+				text("‚¢+‚¨=?", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¦=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚¤+‚¦=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
 		}
-		else if (stage_Progress == 2) {
-			text("‚ +‚¨=?", text_Potition_X, text_Potition_Y);
-			text("‚¢+‚¤=?", text_Potition_X, text_Potition_Y+text_Size);
-
-		}
-		else if (stage_Progress == 3) {
-			text("‚¢+‚¨=?", text_Potition_X, text_Potition_Y);
-			text("‚ +‚¤=?", text_Potition_X, text_Potition_Y+text_Size);
-
-		}
-		else if (stage_Progress == 4) {
-			text("‚¤+‚¤=?", text_Potition_X, text_Potition_Y);
-			text("‚¤+‚¦=?", text_Potition_X, text_Potition_Y+text_Size);
-
-		}
-		else if (stage_Progress == 5) {
-			text("‚¢+‚¨=?", text_Potition_X, text_Potition_Y);
-			text("‚¢+‚¦=?", text_Potition_X, text_Potition_Y+text_Size);
-			text("‚¤+‚¦=?", text_Potition_X, text_Potition_Y + (text_Size*2));
-
+		else {
+			if (stage_Progress == 1) {
+				text("‚ +‚¢=‚¤", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¢=‚¦", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 2) {
+				text("‚ +‚¨=‚ ", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¤=‚¨", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 3) {
+				text("‚¢+‚¨=‚¢", text_Potition_X, text_Potition_Y);
+				text("‚ +‚¤=‚¦", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 4) {
+				text("‚¤+‚¤=‚ ", text_Potition_X, text_Potition_Y);
+				text("‚¤+‚¦=‚¢", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 5) {
+				text("‚¢+‚¨=‚¢", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¦=‚ ", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚¤+‚¦=‚¢", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
 		}
 	}
 	void HIRAGANA::STAGE1_INPUT(const char* str) {
@@ -120,31 +140,53 @@ namespace GAME14 {
 		textSize(text_Size);
 		Goto_Select_Stage = false;
 		Correct_answer();
-		if (stage_Progress == 1) {
-			text("‚¢-‚ =?", text_Potition_X, text_Potition_Y);
-			text("‚¦-‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
-
+		if (!correct_Answer) {
+			if (stage_Progress == 1) {
+				text("‚¢-‚ =?", text_Potition_X, text_Potition_Y);
+				text("‚¦-‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 2) {
+				text("‚¤-‚¤=?", text_Potition_X, text_Potition_Y);
+				text("‚¨-‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 3) {
+				text("‚ -‚¦=?", text_Potition_X, text_Potition_Y);
+				text("‚¢-‚¦=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 4) {
+				text("‚¨-‚¤=?", text_Potition_X, text_Potition_Y);
+				text("‚¢-‚¢+‚¦=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚ +‚¦-‚¤=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 5) {
+				text("‚¦-‚¦=?", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¨-‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚¦-‚ -‚¨=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
 		}
-		else if (stage_Progress == 2) {
-			text("‚¤-‚¤=?", text_Potition_X, text_Potition_Y);
-			text("‚¨-‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
-
-		}
-		else if (stage_Progress == 3) {
-			text("‚ -‚¦=?", text_Potition_X, text_Potition_Y);
-			text("‚¢-‚¦=?", text_Potition_X, text_Potition_Y + text_Size);
-
-		}
-		else if (stage_Progress == 4) {
-			text("‚¨-‚¤=?", text_Potition_X, text_Potition_Y);
-			text("‚¢-‚¢+‚¦=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚ +‚¦-‚¤=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 5) {
-			text("‚¦-‚¦=?", text_Potition_X, text_Potition_Y);
-			text("‚¢+‚¨-‚¢=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚¦-‚ -‚¨=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-
+		else {
+			if (stage_Progress == 1) {
+				text("‚¢-‚ =‚ ", text_Potition_X, text_Potition_Y);
+				text("‚¦-‚¢=‚¢", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 2) {
+				text("‚¤-‚¤=‚¨", text_Potition_X, text_Potition_Y);
+				text("‚¨-‚¢=‚¤", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 3) {
+				text("‚ -‚¦=‚¢", text_Potition_X, text_Potition_Y);
+				text("‚¢-‚¦=‚¤", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 4) {
+				text("‚¨-‚¤=‚¢", text_Potition_X, text_Potition_Y);
+				text("‚¢-‚¢+‚¦=‚¦", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚ +‚¦-‚¤=‚¢", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 5) {
+				text("‚¦-‚¦=‚¨", text_Potition_X, text_Potition_Y);
+				text("‚¢+‚¨-‚¢=‚¨", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚¦-‚ -‚¨=‚¤", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
 		}
 	}
 	void HIRAGANA::STAGE2_INPUT(const char* str) {
@@ -179,32 +221,57 @@ namespace GAME14 {
 		textSize(text_Size);
 		Goto_Select_Stage = false;
 		Correct_answer();
-		if (stage_Progress == 1) {
-			text("‚ +‚È=?", text_Potition_X, text_Potition_Y);
-			text("‚©+‚©=?", text_Potition_X, text_Potition_Y + text_Size);
+		if (!correct_Answer) {
+			if (stage_Progress == 1) {
+				text("‚ +‚È=?", text_Potition_X, text_Potition_Y);
+				text("‚©+‚©=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 2) {
+				text("‚­+‚¢=?", text_Potition_X, text_Potition_Y);
+				text("‚Ê+‚·=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 3) {
+				text("‚µ+‚Ä=?", text_Potition_X, text_Potition_Y);
+				text("‚­+‚¹=?", text_Potition_X, text_Potition_Y + text_Size);
 
+			}
+			else if (stage_Progress == 4) {
+				text("‚«+‚Ä=?", text_Potition_X, text_Potition_Y);
+				text("‚ +‚³=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 5) {
+				text("‚·+‚Â=?", text_Potition_X, text_Potition_Y);
+				text("‚­+‚·=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚«+‚»=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
 		}
-		else if (stage_Progress == 2) {
-			text("‚­+‚¢=?", text_Potition_X, text_Potition_Y);
-			text("‚Ê+‚·=?", text_Potition_X, text_Potition_Y + text_Size);
+		else {
+			if (stage_Progress == 1) {
+				text("‚ +‚È=‚É", text_Potition_X, text_Potition_Y);
+				text("‚©+‚©=‚µ", text_Potition_X, text_Potition_Y + text_Size);
 
-		}
-		else if (stage_Progress == 3) {
-			text("‚µ+‚Ä=?", text_Potition_X, text_Potition_Y);
-			text("‚­+‚¹=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 2) {
+				text("‚­+‚¢=‚±", text_Potition_X, text_Potition_Y);
+				text("‚Ê+‚·=‚Ü", text_Potition_X, text_Potition_Y + text_Size);
 
-		}
-		else if (stage_Progress == 4) {
-			text("‚«+‚Ä=?", text_Potition_X, text_Potition_Y);
-			text("‚ +‚³=?", text_Potition_X, text_Potition_Y + text_Size);
+			}
+			else if (stage_Progress == 3) {
+				text("‚µ+‚Ä=‚Í", text_Potition_X, text_Potition_Y);
+				text("‚­+‚¹=‚¿", text_Potition_X, text_Potition_Y + text_Size);
 
+			}
+			else if (stage_Progress == 4) {
+				text("‚«+‚Ä=‚È", text_Potition_X, text_Potition_Y);
+				text("‚ +‚³=‚µ", text_Potition_X, text_Potition_Y + text_Size);
+
+			}
+			else if (stage_Progress == 5) {
+				text("‚·+‚Â=‚Í", text_Potition_X, text_Potition_Y);
+				text("‚­+‚·=‚½", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚«+‚»=‚¿", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
 		}
-		else if (stage_Progress == 5) {
-			text("‚·+‚Â=?", text_Potition_X, text_Potition_Y);
-			text("‚­+‚·=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚«+‚»=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
-		Correct_answer();
 	}
 	void HIRAGANA::STAGE3_INPUT(const char* str) {
 		if (stage_Progress == 1) {
@@ -237,32 +304,61 @@ namespace GAME14 {
 		fill(255);
 		textSize(text_Size);
 		Goto_Select_Stage = false;
-		if (stage_Progress == 1) {
-			text("‚ë+‚ñ=?", text_Potition_X, text_Potition_Y);
-			text("‚Ó+‚ä=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚í+‚±=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 2) {
-			text("‚í+‚ê=?", text_Potition_X, text_Potition_Y);
-			text("‚µ+‚Ö=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚ä+‚ß=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 3) {
-			text("‚¤-‚ñ=?", text_Potition_X, text_Potition_Y);
-			text("‚é-‚ç=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚È-‚â=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 4) {
-			text("‚¯-‚ñ=?", text_Potition_X, text_Potition_Y);
-			text("‚ä-‚â=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚¢-‚ñ=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 5) {
-			text("‚Ó+‚ê=?", text_Potition_X, text_Potition_Y);
-			text("‚ë+‚È=?", text_Potition_X, text_Potition_Y + text_Size);
-			text("‚â+‚Ð=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
-		}
 		Correct_answer();
+		if (!correct_Answer) {
+			if (stage_Progress == 1) {
+				text("‚ë+‚ñ=?", text_Potition_X, text_Potition_Y);
+				text("‚Ó+‚ä=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚í+‚±=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 2) {
+				text("‚í+‚ê=?", text_Potition_X, text_Potition_Y);
+				text("‚µ+‚Ö=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚ä+‚ß=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 3) {
+				text("‚¤-‚ñ=?", text_Potition_X, text_Potition_Y);
+				text("‚é-‚ç=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚È-‚â=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 4) {
+				text("‚¯-‚ñ=?", text_Potition_X, text_Potition_Y);
+				text("‚ä-‚â=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚¢-‚ñ=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 5) {
+				text("‚Ó+‚ê=?", text_Potition_X, text_Potition_Y);
+				text("‚ë+‚È=?", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚â+‚Ð=?", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+		}
+		else {
+			if (stage_Progress == 1) {
+				text("‚ë+‚ñ=‚â", text_Potition_X, text_Potition_Y);
+				text("‚Ó+‚ä=‚©", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚í+‚±=‚ñ", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 2) {
+				text("‚í+‚ê=‚à", text_Potition_X, text_Potition_Y);
+				text("‚µ+‚Ö=‚â", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚ä+‚ß=‚µ", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 3) {
+				text("‚¤-‚ñ=‚«", text_Potition_X, text_Potition_Y);
+				text("‚é-‚ç=‚¢", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚È-‚â=‚ë", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 4) {
+				text("‚¯-‚ñ=‚·", text_Potition_X, text_Potition_Y);
+				text("‚ä-‚â=‚¢", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚¢-‚ñ=‚©", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 5) {
+				text("‚Ó+‚ê=‚µ", text_Potition_X, text_Potition_Y);
+				text("‚ë+‚È=‚©", text_Potition_X, text_Potition_Y + text_Size);
+				text("‚â+‚Ð=‚­", text_Potition_X, text_Potition_Y + (text_Size * 2));
+			}
+		}
 	}
 	void HIRAGANA::STAGE4_INPUT(const char* str) {
 		if (stage_Progress == 1) {
@@ -295,33 +391,61 @@ namespace GAME14 {
 		fill(255);
 		textSize(text_Size);
 		Goto_Select_Stage = false;
-		if (stage_Progress == 1) {
-			text("‚³+‚Í+‚ =?", text_Potition_X - 100, text_Potition_Y);
-			text("‚í+‚í+‚Ö=?", text_Potition_X - 100, text_Potition_Y + text_Size);
-			text("‚Í+‚Í+‚Ë=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 2) {
-			text("‚Ý+‚«+‚Ö=?", text_Potition_X - 100, text_Potition_Y);
-			text("‚Í+‚Ó+‚ï=?", text_Potition_X - 100, text_Potition_Y + text_Size);
-			text("‚È+‚Ð+‚é=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 3) {
-			text("‚ä-‚ +‚Ý=?", text_Potition_X - 100, text_Potition_Y);
-			text("‚ð-‚³+‚¿=?", text_Potition_X - 100, text_Potition_Y + text_Size);
-			text("‚µ-‚¿+‚ð=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 4) {
-			text("‚±-‚³+‚ä=?", text_Potition_X - 100, text_Potition_Y);
-			text("‚Ð-‚ß+‚·=?", text_Potition_X - 100, text_Potition_Y + text_Size);
-			text("‚Â-‚â+‚Ä=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
-		}
-		else if (stage_Progress == 5) {
-			text("‚ß+‚Ì+‚·=?", text_Potition_X - 100, text_Potition_Y);
-			text("‚½-‚È+‚³=?", text_Potition_X - 100, text_Potition_Y + text_Size);
-			text("‚î+‚«+‚­=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
-
-		}
 		Correct_answer();
+		if (!correct_Answer) {
+			if (stage_Progress == 1) {
+				text("‚³+‚Í+‚ =?", text_Potition_X - 100, text_Potition_Y);
+				text("‚í+‚í+‚Ö=?", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚Í+‚Í+‚Ë=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 2) {
+				text("‚Ý+‚«+‚Ö=?", text_Potition_X - 100, text_Potition_Y);
+				text("‚Í+‚Ó+‚ï=?", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚È+‚Ð+‚é=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 3) {
+				text("‚ä-‚ +‚Ý=?", text_Potition_X - 100, text_Potition_Y);
+				text("‚ð-‚³+‚¿=?", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚µ-‚¿+‚ð=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 4) {
+				text("‚±-‚³+‚ä=?", text_Potition_X - 100, text_Potition_Y);
+				text("‚Ð-‚ß+‚·=?", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚Â-‚â+‚Ä=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 5) {
+				text("‚ß+‚Ì+‚·=?", text_Potition_X - 100, text_Potition_Y);
+				text("‚½-‚È+‚³=?", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚î+‚«+‚­=?", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+		}
+		else {
+			if (stage_Progress == 1) {
+				text("‚³+‚Í+‚ =‚ä", text_Potition_X - 100, text_Potition_Y);
+				text("‚í+‚í+‚Ö=‚©", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚Í+‚Í+‚Ë=‚½", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 2) {
+				text("‚Ý+‚«+‚Ö=‚­", text_Potition_X - 100, text_Potition_Y);
+				text("‚Í+‚Ó+‚ï=‚é", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚È+‚Ð+‚é=‚Ü", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 3) {
+				text("‚ä-‚ +‚Ý=‚¹", text_Potition_X - 100, text_Potition_Y);
+				text("‚ð-‚³+‚¿=‚ñ", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚µ-‚¿+‚ð=‚ë", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 4) {
+				text("‚±-‚³+‚ä=‚Ý", text_Potition_X - 100, text_Potition_Y);
+				text("‚Ð-‚ß+‚·=‚©", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚Â-‚â+‚Ä=‚ñ", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+			else if (stage_Progress == 5) {
+				text("‚ß+‚Ì+‚·=‚«", text_Potition_X - 100, text_Potition_Y);
+				text("‚½-‚È+‚³=‚©", text_Potition_X - 100, text_Potition_Y + text_Size);
+				text("‚î+‚«+‚­=‚¢", text_Potition_X - 100, text_Potition_Y + (text_Size * 2));
+			}
+		}
 	}
 	void HIRAGANA::STAGE5_INPUT(const char* str) {
 		if (stage_Progress == 1) {
@@ -465,26 +589,34 @@ namespace GAME14 {
 	}
 	void HIRAGANA::Correct_answer() {
 		if (correct_Answer == true) {
+			fill(255);
+			rect(1500, 930, 500, 200);
+			if (1500 < mouseX && 930 < mouseY) {
+				fill(0, 255, 255);
+				rect(1500, 930, 500, 200);
+				if (isTrigger(MOUSE_LBUTTON)) {
+					if (stage_Progress == 5) {
+						stage_Progress = 1;
+						Goto_Select_Stage = true;
+						correct_Answer = false;
+					}
+					else {
+						stage_Progress++;
+						correct_Answer = false;
+					}
+				}
+			}
 			textSize(150);
 			fill(0);
 			text("³‰ð!", 1500, 930);
-			text("ŽŸ‚Ö:N", 1425, 1080);
+			text("ŽŸ‚Ö", 1500, 1080);
 			fill(255, 0, 0);
-			circle(Yoko / 2, Tate / 2, 700);
+			circle(Yoko / 2, Tate / 3, 700);
 			fill(190);
-			circle(Yoko / 2, Tate / 2, 600);
+			circle(Yoko / 2, Tate / 3, 600);
 			fill(255);
-			if (isTrigger(KEY_N)) {
-				if (stage_Progress == 5) {
-					stage_Progress = 1;
-					Goto_Select_Stage = true;
-					correct_Answer = false;
-				}
-				else {
-					stage_Progress++;
-					correct_Answer = false;
-				}
-			}
 		}
+		fill(0);
+		textSize(text_Size);
 	}
 }

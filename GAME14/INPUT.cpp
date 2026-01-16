@@ -172,6 +172,8 @@ namespace GAME14 {
             text("íi  íi  íi  íi  íi", 450, 540);
             text("äK  äK  äK  äK  äK", 450, 640);
             text("ÇP  ÇQ  ÇR  ÇS  ÇT", 450, 740);
+            textSize(200);
+            text("Ç†Å{Ç†ÅÅÇ¢", 450, 340);
         }
     }
     int INPUT::SELECT_MOUSE_INPUT(int mouseX, int mouseY) {

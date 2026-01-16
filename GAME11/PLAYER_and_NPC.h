@@ -175,6 +175,7 @@ namespace GAME11 {
 		int Enemy_Image = 0;
 		float save_HP = 0;
 		float save_SPEED = 0;
+		int Debug_Num = 0;
 
 	public:
 		void ENEMY_INIT(ENEMY* enemy);

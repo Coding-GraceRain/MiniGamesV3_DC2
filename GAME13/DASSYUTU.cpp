@@ -61,6 +61,12 @@ namespace GAME13 {
 		fill(0);
 		text("PLAY", 650, 600);
 		text("EXIT", 650, 900);
+		fill(255);
+		textSize(50);
+		text("W : ª", Yoko - 200, Tate - 150);
+		text("S : «", Yoko - 200, Tate - 100);
+		text("SPACE:", Yoko - 200, Tate - 50);
+		text("Decision", Yoko - 200, Tate);
 		if (o_pointer->point == 0) {
 			if (isTrigger(KEY_SPACE)) {
 				initmap(s_pointer);
@@ -73,7 +79,6 @@ namespace GAME13 {
 				Back_Scene = true;
 			}
 		}
-
 	}
 	void DASSYUTU::draw_player(struct STAGE* s_pointer, struct PLAYER* p_pointer) {
 		rectMode(CENTER);

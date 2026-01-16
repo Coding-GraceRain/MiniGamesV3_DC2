@@ -1,32 +1,47 @@
-#include "../../libOne/inc/libOne.h"
-#include "../MAIN/MAIN.h"
+#include "Board.h"
 #include "GAME08.h"
-#include "SCENEMANAGER.h"
-#include "TITLESCENE.h"
-#include "GAMESCENE.h"
-#include "RESULTSCENE.h"
+#include "../MAIN/MAIN.h"
+#include "../../libOne/inc/libOne.h"
+
+
 
 namespace GAME08
 {
-	SCENEMANAGER sceneMgr;
+	using namespace GAME08;
+
+	GAME::GAME(MAIN* main)
+		: GAME_BASE(main)
+		, board()
+	{
+	}
 
 	int GAME::create()
 	{
-		hideCursor();
-		sceneMgr.change(SCENEMANAGER::TITLE);
+		board = new Board();
 		return 0;
 	}
 
 	void GAME::destroy()
 	{
-		sceneMgr.shutdown();
-		showCursor();
+		delete board;
+		board = nullptr;
 	}
 
 	void GAME::proc()
 	{
-		if (isTrigger(KEY_M))main()->backToMenu();//Mキーでメニューに戻る
-		if (isTrigger(KEY_Q))closeWindow();//Qキーでプログラム終了
-		sceneMgr.update();
+		clear(0, 0, 0);
+
+		board->update();
+		board->draw();
+
+		// 戻る処理
+		fill(255);
+		textSize(30);
+		text("ENTER : メニューに戻る", 50, 1050);
+
+		if (isTrigger(KEY_ENTER)) {
+			main()->backToMenu();
+		}
+
 	}
 }

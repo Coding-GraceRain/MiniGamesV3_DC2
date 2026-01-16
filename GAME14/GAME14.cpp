@@ -270,20 +270,22 @@ namespace GAME14
 				exploit->Draw_Board();
 				exploit->DRAW_Game_Finish();
 				exploit->DEBUG_DRAW();
-				if (isTrigger(MOUSE_LBUTTON)) {
-					int r, c;
-					if (exploit->Mouse_To_Cell(mouseX, mouseY, r, c)) {
-						exploit->Click_Cell(r, c);
+				if (exploit->CHANGE_Turn()) {
+					if (isTrigger(MOUSE_LBUTTON)) {
+						int r, c;
+						if (exploit->Mouse_To_Cell(mouseX, mouseY, r, c)) {
+							exploit->Click_Cell(r, c);
+						}
 					}
-				}
-				else if (isTrigger(MOUSE_RBUTTON)) {
-					exploit->Select_Cancel();
-				}
-				if (exploit->Sent_gameOver()) {
-					if (isTrigger(KEY_SPACE)) {
-						game_scene->game_state = game_scene->SELECT;
-						exploit->INIT();
-						exploit->PLAY_INIT();
+					else if (isTrigger(MOUSE_RBUTTON)) {
+						exploit->Select_Cancel();
+					}
+					if (exploit->Sent_gameOver()) {
+						if (isTrigger(KEY_SPACE)) {
+							game_scene->game_state = game_scene->SELECT;
+							exploit->INIT();
+							exploit->PLAY_INIT();
+						}
 					}
 				}
 				if (exploit->Back_TITLE()) {

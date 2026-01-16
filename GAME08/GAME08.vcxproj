@@ -133,19 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Board.cpp" />
     <ClCompile Include="GAME08.cpp" />
-    <ClCompile Include="GAMESCENE.cpp" />
-    <ClCompile Include="RESULTSCENE.cpp" />
-    <ClCompile Include="SCENEMANAGER.cpp" />
-    <ClCompile Include="TITLESCENE.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h" />
     <ClInclude Include="GAME08.h" />
-    <ClInclude Include="GAMESCENE.h" />
-    <ClInclude Include="RESULTSCENE.h" />
-    <ClInclude Include="SCENEBASE.h" />
-    <ClInclude Include="SCENEMANAGER.h" />
-    <ClInclude Include="TITLESCENE.h" />
+    <ClInclude Include="Piece.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game08\title.txt" />

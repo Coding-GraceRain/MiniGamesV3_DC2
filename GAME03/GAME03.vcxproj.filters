@@ -2,9 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME03.cpp" />
+    <ClCompile Include="MiniTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME03.h" />
+    <ClInclude Include="MiniTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game03\title.txt" />

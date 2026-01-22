@@ -8,6 +8,7 @@ namespace GAME01 {
 	struct KanjiData {
 		int img;                // ‰æ‘œID
 		const char* yomi;       // ³‰ğ‚Ì“Ç‚İ
+		//char yomi[32];   // © šŒÅ’è”z—ñ‚É‚·‚é
 	};
 	class KANJI {
 	private:
@@ -19,7 +20,6 @@ namespace GAME01 {
 		char inputStrB[32] = "";    // “ü—Í•¶š
 		char displayStr[64] = "";
 		int inputLenB = 0;
-		bool decided = false;
 		void loadKanjiImages();
 		void romajiToKana(const char* src, char* dst);
 		bool Kanser1Generated = false;
@@ -43,7 +43,9 @@ namespace GAME01 {
 		void Kanser6();
 		void key();
 		void proc();
-		KANJI* kanji1();
+		void initialize();
+		void triming(char* s);
+		static KANJI* kanji1();
 		KANJI* kanji2();
 		KANJI* kanji3();
 		KANJI* kanji4();

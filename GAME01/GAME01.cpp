@@ -87,7 +87,7 @@ namespace GAME01
 		if (KANJI::cont == 1) {
 			textSize(50);
 			fill(255);
-			text("漢字:コンテニュー", 520, 1080);
+			text("漢字:コンテニュー", 1220, 1080);
 		}
 		return;
 	}
@@ -99,9 +99,13 @@ namespace GAME01
 				currentScene = 1;
 			}
 			if (isTrigger(KEY_K)) {
+				KANJI* k = KANJI::kanji1();
+				k->initialize();
 				currentScene = 2;
 			}
 			if (isTrigger(KEY_ENTER)) {
+				MATH::cont = 0;
+				KANJI::cont = 0;
 				counter();
 				main()->backToMenu();
 			}

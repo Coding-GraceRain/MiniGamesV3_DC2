@@ -1,71 +1,53 @@
 #pragma once
-#include "../../libOne/inc/libOne.h"
 #include "../MAIN/GAME_BASE.h"
-#include <vector>
-#include <string>
+#include "Player.h"
+#include "Platform.h"
+#include "PlatformData.h"
+#include "CourseManager.h"
+#include "Courses.h"
 
 namespace GAME00 {
 
-    struct Bullet {
-        float x, y;
-        float vx, vy;
-        bool isCharged = false;
+    enum class GameState {
+        STAGE_SELECT,
+        PLAYING,
+        GOAL,
+        FADE_OUT,
+        RESULT_WAIT
     };
 
-    struct Enemy {
-        float x, y;
-        float vx, vy;
-        bool alive;
-        int hp;
-    };
-
-    struct EnemyBullet {
-        float x, y;
-        float vx, vy;
-        bool active;
-    };
 
 
     class GAME : public GAME_BASE {
-    private:
-        // プレイヤー
-        float playerX = 640, playerY = 900, playerSpeed = 4.0f;
-        int playerHP = 10;
-        bool prevC = false;
-        bool isCharging = false;
-        int chargeTime = 0;
-        const int CHARGE_THRESHOLD = 90;
-
-        // タイマー&管理
-        int bulletTimer = 0, spawnTimer = 0, enemyShotTimer = 0;
-        bool bossAppeared = false;
-        bool allDead = true;
-        int splitCount = 0;
-        int killPoint = 0;
-
-        std::vector<Bullet> bullets;
-        std::vector<Enemy> enemies;
-        std::vector<EnemyBullet> enemyBullets;
-
-        template <typename T>
-        constexpr const T& my_clamp(const T& v, const T& lo, const T& hi) {
-            return (v < lo) ? lo : (hi < v) ? hi : v;
-        }
-
-        enum State {
-            STATE_TITLE,
-            STATE_INSTRUCTIONS,
-            STATE_PLAY,
-            STATE_GAME_OVER,
-            STATE_CLEAR
-        } state = STATE_TITLE;
-
     public:
-        GAME(class MAIN* main) :GAME_BASE(main) {};
-        ~GAME() {};
+        GAME(class MAIN* main) : GAME_BASE(main) {}
+        ~GAME() {}
+
         int create();
         void proc();
         void destroy();
-    };
 
+    private:
+        Player player;
+        float camX = 0, camY = 0;
+        float camOffsetY = 920, targetOffsetY = 920;
+        bool isGoal = false;
+        float goalTimer = 0;
+        float fadeAlpha = 0;
+        float startTimer = 0;
+
+        CourseManager courseManager;
+        int selectedStage = 0;
+        GameState state = GameState::STAGE_SELECT;
+
+        void updateStageSelect();
+        void drawStageSelect();
+        void updatePlaying();
+        void updateGoal();
+        void drawResultUI();
+        void updateResultWait();
+        void updateFadeOut();
+        void drawWorld();
+        void drawFade();
+    };
 }

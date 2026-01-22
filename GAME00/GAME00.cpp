@@ -1,416 +1,238 @@
 ﻿#include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME00.h"
-#include <string> 
+#include "Player.h"
+#include "CourseManager.h"
+#include "CourseData.h"
+
 
 namespace GAME00 {
 
+    static bool hitRect(float ax, float ay, float aw, float ah,
+        float bx, float by, float bw, float bh) {
+        return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
+    }
+
+    void Player::update(const std::vector<Platform>& platforms) {
+        vx = 0;
+        if (isPress(KEY_A)) vx = -5;
+        if (isPress(KEY_D)) vx = 5;
+
+        if (onGround) coyoteTimer = coyoteTime;
+        else coyoteTimer -= 1.0f / 60.0f;
+
+        if (isTrigger(KEY_SPACE)) {
+            if (onGround || coyoteTimer > 0) { vy = -10; coyoteTimer = 0; }
+            else if (onWall) { vy = -13; vx = (vx == 0) ? 8 : -vx; }
+        }
+
+        vy += (vy < 0) ? 0.18f : 0.25f;
+        if (vy > 18) vy = 18;
+
+        x += vx; onWall = false;
+        for (auto& p : platforms) {
+            if (hitRect(x - width / 2, y - height, width, height, p.x, p.y, p.w, p.h)) {
+                if (vx > 0) { x = p.x - width / 2; onWall = true; }
+                else if (vx < 0) { x = p.x + p.w + width / 2; onWall = true; }
+                vx = 0;
+            }
+        }
+
+        y += vy; onGround = false;
+        for (auto& p : platforms) {
+            if (hitRect(x - width / 2, y - height, width, height, p.x, p.y, p.w, p.h)) {
+                if (vy > 0) { y = p.y; vy = 0; onGround = true; }
+                else if (vy < 0) { y = p.y + p.h + height; vy = 0; }
+            }
+        }
+    }
+
+    void Player::draw(float camX, float camY) {
+        fill(255, 200, 0);
+        rect(x - width / 2 - camX, y - height - camY, width, height);
+    }
+
     int GAME::create() {
-        state = STATE_TITLE;
-        playerX = 640;
-        playerY = 900;
-        bulletTimer = 0;
-        spawnTimer = 0;
-        playerHP = 10;
-        enemyShotTimer = 0;
-        killPoint = 0;
-        enemies.clear();
-        bullets.clear();
-        enemyBullets.clear();
+        camX = camY = 0;
+        startTimer = 0;
+        camOffsetY = targetOffsetY = 920;
+        isGoal = false; fadeAlpha = 0;
+        goalTimer = 0;
+        state = GameState::STAGE_SELECT;
+        selectedStage = 0;
         return 0;
     }
 
-    void GAME::destroy() {
-        // 今は何もしない
+    void GAME::destroy() {}
+
+    void GAME::updateStageSelect() {
+        if (isTrigger(KEY_A)) selectedStage = (selectedStage + 2) % 3;
+        if (isTrigger(KEY_D)) selectedStage = (selectedStage + 1) % 3;
+
+        if (isTrigger(KEY_ENTER)) {
+            switch (selectedStage) {
+            case 0: courseManager.load(COURSE_1, player); break;
+            case 1: courseManager.load(COURSE_2, player); break;
+            case 2: courseManager.load(COURSE_3, player); break;
+            }
+            camX = camY = 0;
+            camOffsetY = targetOffsetY = 920;
+            isGoal = false; fadeAlpha = 0; goalTimer = 0;
+            state = GameState::PLAYING;
+        }
     }
 
-    void GAME::proc() {
-        const float PLAYER_RADIUS = 20.0f;
-        bool allEnemiesDead = true;
-        std::string hpText;
+    void GAME::drawStageSelect() {
+        fill(255); textSize(64);
+        text("STAGE SELECT", 620, 200);
 
-        clear(0, 0, 100);
+        const char* names[] = { "STAGE 1","STAGE 2","STAGE 3" };
+        for (int i = 0; i < 3; i++) {
+            if (i == selectedStage) { fill(255, 255, 0); text("> ", 650, 350 + i * 80); text(names[i], 690, 350 + i * 80); }
+            else { fill(180); text(names[i], 680, 350 + i * 80); }
+        }
+        fill(200); textSize(28); text("A/D Select   ENTER Confirm", 620, 650);
+    }
+
+    void GAME::updatePlaying()
+    {
+        if (state != GameState::PLAYING) return;
+        startTimer += 1.0f;
+        player.update(courseManager.platforms);
+
+        // カメラ追従
+        float targetCamX = player.x - 740;
+        float targetCamY = player.y - camOffsetY;
+
+        if (player.vy < 0) {
+            targetOffsetY = 780;
+        }
+        else {
+            targetOffsetY = 740;
+        }
+
+        camOffsetY += (targetOffsetY - camOffsetY) * 0.08f;
+
+        camX += (targetCamX - camX) * 0.1f;
+        camY += (targetCamY - camY) * 0.1f;
+
+        if (
+            startTimer > 30 &&
+            player.x - player.width / 2 < courseManager.goal.x + courseManager.goal.w &&
+            player.x + player.width / 2 > courseManager.goal.x &&
+            player.y - player.height < courseManager.goal.y + courseManager.goal.h &&
+            player.y > courseManager.goal.y
+            ) {
+            state = GameState::FADE_OUT;
+            fadeAlpha = 0.0f;
+            goalTimer = 0.0f;
+        }
+    }
+
+    void GAME::updateGoal()
+    {
+        goalTimer += 1.0f;
+        fadeAlpha += 5.0f;
+        if (fadeAlpha > 255) fadeAlpha = 255;
+        player.vx = 0;
+        player.vy = 0;
+        if (fadeAlpha >= 255 && goalTimer > 60 && isTrigger(KEY_ENTER)) {
+            main()->backToMenu();
+        }
+    }
+
+    void GAME::updateFadeOut() {
+        fadeAlpha += 4.0f;
+        if (fadeAlpha >= 255) {
+            fadeAlpha = 255;
+            state = GameState::RESULT_WAIT;
+        }
+    }
+
+    void GAME::updateResultWait() {
+        if (isTrigger(KEY_ENTER)) {
+            fadeAlpha = 0;
+            state = GameState::STAGE_SELECT;
+        }
+        if (isTrigger(KEY_ESCAPE)) {
+            fadeAlpha = 0;
+            main()->backToMenu();
+        }
+    }
+
+    void GAME::drawResultUI() {
+        if (state != GameState::RESULT_WAIT) return;
+
+        fill(255);
+        textSize(32);
+        text("ENTER : ステージセレクト", 580, 520);
+        text("ESC   : メインメニュー", 580, 560);
+    }
+
+    void GAME::drawWorld() {
+        // 足場
+        for (auto& p : courseManager.platforms) {
+            p.draw(camX, camY);
+        }
+
+        // ゴール
+        fill(0, 255, 0);
+        rect(
+            courseManager.goal.x - camX,
+            courseManager.goal.y - camY,
+            courseManager.goal.w,
+            courseManager.goal.h
+        );
+
+        // プレイヤー
+        player.draw(camX, camY);
+
+        // GOAL文字（演出用）
+        if (state == GameState::GOAL) {
+            fill(255, 255, 0);
+            textSize(64);
+            text("GOAL!", 600, 400);
+        }
+    }
+
+    void GAME::drawFade() {
+        if (fadeAlpha > 0) {
+            fill(0, 0, 0, (int)fadeAlpha);
+            rect(0, 0, 1920, 1080);
+        }
+    }
+
+
+    void GAME::proc()
+    {
+        clear(0, 0, 64);
 
         switch (state) {
-        case STATE_TITLE:
-            textSize(150);
-            fill(255, 255, 100);
-            text("弾幕ゲーム", 300, 300);
-            fill(255);
-            textSize(50);
-            text("Press SPACE to Start", 300, 380);
-            if (isTrigger(KEY_SPACE)) {
-                state = STATE_INSTRUCTIONS;  // 👈 まず操作説明へ
-            }
-            fill(255);
-            text("Press ENTER to return to Menu", 300, 480);
-            if (isTrigger(KEY_ENTER)) {
-                main()->backToMenu();
-            }
+        case GameState::STAGE_SELECT:
+            updateStageSelect();
+            drawStageSelect();
             break;
 
-        case STATE_INSTRUCTIONS:
-            textSize(40);
-            fill(255);
-            text("操作説明:", 300, 200);
-            text("十字キーで動けます", 300, 260);
-            text("弾はCキーで打てます　チャージショットもありますが空気です", 300, 320);
-            text("一分半ほど耐えきればステージクリアです！", 300, 380);
-            fill(255, 255, 0);
-            text("Press ENTER to Begin! good luck!", 300, 480);
-            if (isTrigger(KEY_ENTER)) {
-                state = STATE_PLAY;
-                bulletTimer = 0;
-                spawnTimer = 0;
-                playerHP = 10;
-                enemies.clear();
-                bullets.clear();
-                enemyBullets.clear();
-                playerX = 640;
-                playerY = 900;
-                killPoint = 0;
-            }
+        case GameState::PLAYING:
+            updatePlaying();
+            drawWorld();
             break;
 
-        case STATE_PLAY: {
-            // {}で囲って変数スコープ確保
-            text(spawnTimer, 300, 200);
-            if (isPress(KEY_LEFT))  playerX -= playerSpeed;
-            if (isPress(KEY_RIGHT)) playerX += playerSpeed;
-            if (isPress(KEY_UP))    playerY -= playerSpeed;
-            if (isPress(KEY_DOWN))  playerY += playerSpeed;
-
-            if (playerX < PLAYER_RADIUS) playerX = PLAYER_RADIUS;
-            if (playerX > 1920 - PLAYER_RADIUS) playerX = 1920 - PLAYER_RADIUS;
-            if (playerY < PLAYER_RADIUS) playerY = PLAYER_RADIUS;
-            if (playerY > 1080 - PLAYER_RADIUS) playerY = 1080 - PLAYER_RADIUS;
-
-            fill(255, 255, 255);
-            rect(playerX - PLAYER_RADIUS, playerY - PLAYER_RADIUS, 40, 40);
-
-            fill(255);
-            textSize(30);
-            hpText = "HP: " + std::to_string(playerHP);
-            text(hpText.c_str(), 20, 40);
-
-            // プレイヤーHPバー表示（右下）
-            float hpBarMaxWidth = 200.0f;
-            float hpBarHeight = 20.0f;
-            float hpBarX = 1920 - hpBarMaxWidth - 40;
-            float hpBarY = 1080 - hpBarHeight - 40;
-            // チャージゲージ表示
-            float chargeBarMaxWidth = 200.0f;
-            float chargeBarHeight = 10.0f;
-            float chargeBarX = 1920 - chargeBarMaxWidth - 40;
-            float chargeBarY = 1080 - hpBarHeight - 40 - 20;  // HPバーの上に少し間を空けて描画
-
-            // 背景バー
-            fill(0);
-            rect(chargeBarX, chargeBarY, chargeBarMaxWidth, chargeBarHeight);
-
-            // チャージ比率
-            float chargeRatio = (float)chargeTime / CHARGE_THRESHOLD;
-            if (chargeRatio > 1.0f) chargeRatio = 1.0f;
-
-            // 色（完了前は青→緑→黄、完了後は赤）
-            if (chargeRatio < 0.5f) fill(0, 200, 255);
-            else if (chargeRatio < 0.9f) fill(0, 255, 0);
-            else if (chargeRatio < 1.0f) fill(255, 255, 0);
-            else fill(255, 50, 50);
-
-            // 前景バー（現在のチャージ量）
-            rect(chargeBarX, chargeBarY, chargeBarMaxWidth * chargeRatio, chargeBarHeight);
-
-            // チャージショットエフェクト（Cキー長押し時）
-            if (isCharging) {
-                float scale = 0.8f + 0.4f * sin(chargeTime * 0.1f); // 揺れ演出
-                float radius = 30.0f + chargeTime * 0.2f;
-
-                if (chargeTime >= CHARGE_THRESHOLD) {
-                    fill(255, 100, 100, 128); // チャージ完了：赤系半透明
-                }
-                else {
-                    fill(100, 255, 255, 100); // チャージ中：水色系
-                }
-                circle(playerX, playerY, radius * scale);  // 揺れ円
-            }
-
-            float hpRatio = playerHP / 10.0f;
-            if (hpRatio < 0) hpRatio = 0;
-            if (hpRatio > 1) hpRatio = 1;
-
-            fill(0, 0, 0);
-            rect(hpBarX, hpBarY, hpBarMaxWidth, hpBarHeight);
-
-            if (hpRatio > 0.5f) {
-                fill(0, 255, 0);
-            }
-            else if (hpRatio > 0.2f) {
-                fill(255, 255, 0);
-            }
-            else {
-                fill(255, 0, 0);
-            }
-
-            rect(hpBarX, hpBarY, hpBarMaxWidth * hpRatio, hpBarHeight);
-
-
-            for (auto& b : bullets) {
-                b.x += b.vx;
-                b.y += b.vy;
-                if (b.isCharged) {
-                    fill(255, 100, 255);  // 紫っぽい
-                    rect(b.x - 6, b.y - 30, 12, 60);
-                }
-                else {
-                    fill(0, 255, 255);
-                    rect(b.x - 2, b.y - 10, 4, 20);
-                }
-            }
-
-            // チャージショット判定
-            if (isPress(KEY_C)) {
-                if (!isCharging) {
-                    chargeTime = 0;
-                    isCharging = true;
-                }
-                chargeTime++;
-            }
-            else if (isCharging) {
-                // Cキーを離したとき
-                isCharging = false;
-                if (chargeTime >= CHARGE_THRESHOLD) {
-                    // チャージ完了 → 強弾発射
-                    bullets.push_back({ playerX, playerY, 0.0f, -10.0f, true });
-                }
-                else {
-                    // チャージ足りない → 通常弾5連射
-                    for (int i = 0; i < 5; i++) {
-                        float angle = -90 + (i - 2) * 10;
-                        float rad = angle * 3.14159f / 180.0f;
-                        float vx = cos(rad) * 6.0f;
-                        float vy = sin(rad) * 6.0f;
-                        bullets.push_back({ playerX, playerY, vx, vy, false });
-                    }
-                }
-            }
-
-            spawnTimer++;
-                if (spawnTimer == 30) {
-                    enemies.clear();
-                        enemies.push_back({ 50, 100, 1.0f, 0.0f, true ,3 });
-                        enemies.push_back({ 50, 200, 1.5f, 0.0f, true ,3 });
-                        enemies.push_back({ 50, 300, 2.0f, 0.0f, true ,3 });
-                        enemies.push_back({ 1870, 300, -2.0f, 0.0f, true ,3 });
-                        enemies.push_back({ 1870, 400, -1.5f, 0.0f, true ,3 });
-                        enemies.push_back({ 1870, 500, -1.0f, 0.0f, true ,3 });
-                }
-                if (spawnTimer >= 300 && spawnTimer <= 1000) {
-                    if (spawnTimer % 200 == 0) {
-                        float x = (rand() % 1800) + 60;
-                        float y = (rand() % 100) + 10;
-                        float vx = (rand() % 1) + 0.5f;
-                        float vy = (rand() % 1) + 0.5f;
-                        enemies.push_back({ x, y, vx, 0, true , 3 });
-                    }
-                }
-                if (spawnTimer > 1000 && spawnTimer <= 2000) {
-                    if (spawnTimer % 175 == 0) {
-                        float x = (rand() % 1800) + 60;
-                        float y = (rand() % 110) + 10;
-                        float vx = (rand() % 3) + 0.5f;
-                        float vy = (rand() % 3) + 0.5;
-                        enemies.push_back({ x, y, vx, 0, true , 3 });
-                    }
-                }
-                if (spawnTimer > 2000 && spawnTimer <= 3000) {
-                    if (spawnTimer % 150 == 0) {
-                        float x = (rand() % 1800) + 60;
-                        float y = (rand() % 150) + 10;
-                        float vx = (rand() % 3) + 0.5f;
-                        float vy = (rand() % 3) + 0.5;
-                        enemies.push_back({ x, y, vx, 0, true , 3 });
-                    }
-                }
-                if (spawnTimer > 3000 && spawnTimer <= 4000) {
-                    if (spawnTimer % 125 == 0) {
-                        float x = (rand() % 1800) + 60;
-                        float y = (rand() % 200) + 10;
-                        float vx = (rand() % 2) + 0.5f;
-                        float vy = (rand() % 2) + 0.5f;
-                        enemies.push_back({ x, y, vx, 0, true , 3 });
-                    }
-                }
-                if (spawnTimer > 4000 && spawnTimer <= 5000) {
-                    if (spawnTimer % 75 == 0) {
-                        float x = (rand() % 1800) + 60;
-                        float y = (rand() % 300) + 10;
-                        float vx = (rand() % 3) + 0.5f;
-                        float vy = (rand() % 3) + 0.5f;
-                        enemies.push_back({ x, y, vx, 0, true , 3 });
-                    }
-                }
-
-            for (auto& e : enemies) {
-                if (!e.alive) continue;
-
-                e.x += e.vx;
-                e.y += e.vy;
-
-                // 横端で跳ね返る処理（画面端 0 ～ 1920）
-                if (e.x < 0 || e.x > 1920) {
-                    e.vx *= -1;
-                    e.x += e.vx; // はみ出し修正
-                }
-
-                // 下まで行ったら上から出す（1080が画面下）
-                if (e.y > 1080) {
-                    e.y = -40; // 画面上に戻す（敵のサイズ分オフセット）
-                }
-
-                fill(255, 0, 0);
-                rect(e.x - 20, e.y - 20, 40, 40);
-            }
-
-            enemyShotTimer++;
-            if (enemyShotTimer >= 300) {
-                enemyShotTimer = 0;
-                for (auto& e : enemies) {
-                    if (!e.alive) continue;
-                    for (int i = -1; i <= 16; i++) {
-                        float angle = 90 + i * 20;
-                        float rad = angle * 3.14159f / 180.0f;
-                        float vx = cos(rad);
-                        float vy = sin(rad);
-                        enemyBullets.push_back({ e.x, e.y, vx, vy, true });
-                    }
-                }
-            }
-
-            for (auto& e : enemies) {
-                if (!e.alive) continue;
-
-                float barWidth = 40.0f;
-                float barHeight = 6.0f;
-                float hpRatio = (float)e.hp / 3.0f;
-
-                fill(0, 0, 0);
-                rect(e.x - barWidth / 2, e.y + 25, barWidth, barHeight);
-
-                if (e.hp == 3) fill(0, 255, 0);
-                else if (e.hp == 2) fill(255, 255, 0);
-                else if (e.hp == 1) fill(255, 0, 0);
-
-                rect(e.x - barWidth / 2, e.y + 25, barWidth * hpRatio, barHeight);
-            }
-
-            for (auto& eb : enemyBullets) {
-                if (!eb.active) continue;
-                eb.x += eb.vx;
-                eb.y += eb.vy;
-                fill(255, 128, 0);
-                circle(eb.x, eb.y, 10);
-            }
-
-            // 敵との当たり判定（敵に当たったらHP1減らす）
-            for (auto& e : enemies) {
-                if (!e.alive) continue;
-                float dx = e.x - playerX;
-                float dy = e.y - playerY;
-                if (dx * dx + dy * dy < (20 + 20) * (20 + 20)) {
-                    playerHP--;        // HP1減る
-                    e.alive = false;
-                    if (playerHP <= 0) {
-                        state = STATE_GAME_OVER;
-                    }
-                }
-            }
-            for (auto& eb : enemyBullets) {
-                if (!eb.active) continue;
-                float dx = eb.x - playerX;
-                float dy = eb.y - playerY;
-                if (dx * dx + dy * dy < (20 + 10) * (20 + 10)) { // 半径20と10
-                    eb.active = false;
-                    playerHP--;
-                    if (playerHP <= 0) {
-                        state = STATE_GAME_OVER;
-                    }
-                }
-            }
-
-            enemyBullets.erase(std::remove_if(enemyBullets.begin(), enemyBullets.end(),
-                [](const EnemyBullet& b) {
-                    return b.x < -20 || b.x > 1940 || b.y < -20 || b.y > 1100;
-                }), enemyBullets.end());
-
-            for (auto& e : enemies) {
-                if (!e.alive) continue;
-                for (auto& b : bullets) {
-                    if (abs(b.x - e.x) < 20 && abs(b.y - e.y) < 20) {
-                        if (b.isCharged) {
-                            e.hp -= 3;  // チャージ弾は一気に3ダメージ
-                        }
-                        else {
-                            e.hp--;
-                        }
-                        b.y = -9999; // 弾を消す
-                        if (e.hp <= 0) {
-                            killPoint++;
-                            e.alive = false;
-                        }
-                    }
-                }
-
-            }
-            if (spawnTimer == 5000) {
-                spawnTimer = 0;
-                state = STATE_CLEAR;
-            }
-
-            bullets.erase(std::remove_if(bullets.begin(), bullets.end(),
-                [](const Bullet& b) {
-                    return b.y < -20 || b.x < -20 || b.x > 1940;
-                }), bullets.end());
-
-            if (playerY < 0 || playerY > 1080 || playerX < 0 || playerX > 1920) {
-                state = STATE_GAME_OVER;
-            }
-
-        }
-                       break;
-
-        case STATE_GAME_OVER:
-            textSize(50);
-            fill(255, 0, 0);
-            text("GAME OVER", 400, 400);
-            fill(255);
-            text("Press ENTER to return to Menu", 300, 480);
-            if (isTrigger(KEY_ENTER)) {
-                main()->backToMenu();
-            }
+        case GameState::FADE_OUT:
+            updateFadeOut();
+            drawWorld();
             break;
 
-        case STATE_CLEAR:
-            textSize(150);
-            fill(0, 255, 0);
-            text("CLEAR! 君は生き残った！", 50, 300);
-            textSize(50);
-            fill(0, 255, 0);
-            text("倒したエネミー", 300, 700);
-            fill(0, 255, 0);
-            text(killPoint, 700, 700);
-            fill(0, 255, 0);
-            text("残ったHP", 300, 900);
-            fill(0, 255, 0);
-            text(playerHP, 700, 900);
-            fill(255);
-            text("Press ENTER to return to Title", 1000, 980);
-            if (isTrigger(KEY_ENTER)) {
-                state = STATE_TITLE;
-            }
+        case GameState::RESULT_WAIT:
+            updateResultWait();
+            drawWorld();
             break;
-
         }
 
+        drawFade();
+        drawResultUI();
     }
+
+
+
 }

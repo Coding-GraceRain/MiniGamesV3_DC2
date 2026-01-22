@@ -133,10 +133,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CourseData.cpp" />
+    <ClCompile Include="CourseManager.cpp" />
     <ClCompile Include="GAME00.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CourseData.h" />
+    <ClInclude Include="CourseManager.h" />
+    <ClInclude Include="Courses.h" />
     <ClInclude Include="GAME00.h" />
+    <ClInclude Include="GoalData.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="PlatformData.h" />
+    <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game00\title.txt" />

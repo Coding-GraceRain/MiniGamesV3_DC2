@@ -2,9 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME00.cpp" />
+    <ClCompile Include="CourseData.cpp" />
+    <ClCompile Include="CourseManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME00.h" />
+    <ClInclude Include="CourseData.h" />
+    <ClInclude Include="CourseManager.h" />
+    <ClInclude Include="Courses.h" />
+    <ClInclude Include="GoalData.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="PlatformData.h" />
+    <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game00\title.txt" />

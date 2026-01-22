@@ -46,19 +46,23 @@ namespace GAME02{
 	//サイコロ画像
 	const int diceall = 6;
 	int diceimg[diceall];
-	//自分のダイスの目
+	//ダイスの目
 	int diceME[5] = { 0,0,0,0,0 };
 	//相手のダイスの目
-	int diceME2[5] = { 0,0,0,0,0 };
+	//int diceME2[5] = { 0,0,0,0,0 };
 	//出たダイスの目の数
 	int diceSU[6] = { 0,0,0,0,0,0 };
+	//ロックされたダイスの保存場所
+	int diceHOZ[5] = { 0,0,0,0,0 };
+	//保存をするかどうかの判断
+	int diceHOZYN[5] = { 0,0,0,0,0 };
 	//仮保存場所
 	int diceKARI[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
-	//点数
+	//自分の点数
 	int tensuME[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
 	int sumME123456 = 0;
 	int sumMEall = 0;
-	//相手
+	//相手の点数
 	int tensuME2[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
 	int sumME2123456 = 0;
 	int sumME2all = 0;
@@ -145,7 +149,9 @@ namespace GAME02{
 		maingame = 0;
 		re = 0;
 		for (int i = 0; i < 5; i++){
-			diceME[i] = 0;}
+			diceME[i] = 0;
+			diceHOZ[i] = 0;
+		}
 		for (int i = 0; i < 6; i++) {
 			diceSU[i] = 0;
 		}
@@ -175,12 +181,13 @@ namespace GAME02{
 	}
 	void GAME::diceroll() {
 			yotreset();
-		if (isTrigger(KEY_ENTER) && pull == 0 && role != 0) {
+		if (isTrigger(KEY_ENTER) && pull == 0 && role != 0 && tarn !=24) {
 			for (int i = 0; i < 6; i++) {
 				diceSU[i] = 0;
 			}
 			for (int i = 0; i < 5; i++) {
 				diceME[i] = rand() % 6 + 1;
+				
 			}
 			for (int i = 0; i < 12; i++) {
 				diceKARI[i] = 0;
@@ -243,28 +250,28 @@ namespace GAME02{
 			}
 			//フォーダイス
 			if (isfour == 1) {
-				text("フォーダイス！",800,800);
+				text("フォーダイス！",1000,550);
 				diceKARI[7] = 25;
 			}
 			//フルハウス
 			if (is3 == 1 && is2 == 1) {
-				text("フルハウス！", 800, 800);
+				text("フルハウス！", 1000, 550);
 				diceKARI[8] = (w3 * 3) + (w2 * 2);
 			}
 
 			//Sストレート
 			if (isss == 1 &&isbs != 1) {
-				text("Sストレート！", 800, 800);
+				text("Sストレート！", 1000, 550);
 				diceKARI[9] = 15;
 			}
 			//Bストレート
 			if (isbs == 1) {
-				text("Bストレート！", 800, 800);
+				text("Bストレート！", 1000, 550);
 				diceKARI[10] = 30;
 			}
 			//ヨット
 			if (isyot == 1) {
-				text("ヨット！！！", 800, 800);
+				text("ヨット！！！", 1000, 550);
 				diceKARI[11] = 50;
 			}
 		}
@@ -514,10 +521,30 @@ namespace GAME02{
 			warning = 0;
 		}
 	}
+	void GAME::lock() {
+		if (isTrigger(KEY_Z)) {
+			diceHOZYN[0] = 1;
+		}
+		if (isTrigger(KEY_X)) {
+			diceHOZYN[1] = 1;
+		}
+		if (isTrigger(KEY_C)) {
+			diceHOZYN[2] = 1;
+		}
+		if (isTrigger(KEY_V)) {
+			diceHOZYN[3] = 1;
+		}
+		if (isTrigger(KEY_B)) {
+			diceHOZYN[4] = 1;
+		}
+	}
 	void GAME::yotreset() {
 		
 		for (int i = 0; i < 12; i++) {
 			diceKARI[i] = 0;
+		}
+		for (int i = 0; i < 5; i++) {
+			diceHOZ[i] = 0;
 		}
 		isfour = 0;
 		isfull = 0;
@@ -573,6 +600,10 @@ namespace GAME02{
 		text("Ｂストレート", 1618, 900);//bs
 		text("ヨット", 1780, 900);//yot
 		textSize(70);
+		text(sumME123456, 100, 200);
+		text(sumMEall, 100, 400);
+		text(sumME2123456, 300, 200);
+		text(sumME2all, 300, 400);
 		text("Q", 202, 1030);
 		text("W", 350, 1030);
 		text("E", 495, 1030);
@@ -585,6 +616,11 @@ namespace GAME02{
 		text("P", 1530, 1030);
 		text("A", 1670, 1030);
 		text("S", 1820, 1030);
+		text("Z", 900, 600);
+		text("X", 1000, 600);
+		text("C", 1100, 600);
+		text("V", 1200, 600);
+		text("B", 1300, 600);
 		if (warning == 1) {
 			text("既に数が入っています", 600, 600);
 		}
@@ -688,17 +724,17 @@ namespace GAME02{
 				image(cardimg[randME3], 1300, 50);
 				image(cardimg[randME4], 1400, 50);
 				image(cardimg[randME5], 1500, 50);
-				textSize(50);
-				text("ディーラーの数", 100, 600);
+				textSize(70);
+				text("ディーラーの数", 100, 560);
 				text(GDE, 100, 650);
-				text("自分の数", 1100, 600);
+				text("自分の数", 1100, 560);
 				text(GME, 1100, 650);
 				textSize(200);
 				text("VS", 850, 400);
 				if (Scount == 0) {    //勝負が決まっていない間
 					textSize(50);
-					text("ヒットなら方向キー上･スタンドならenterキー", 850, 1070);
-					text("＊カードは5枚まで", 1475, 1000);
+					text("ヒットなら方向キー上･スタンドならenterキー", 850, 1080);
+					text("＊カードは5枚まで", 1475, 1020);
 				}
 				//ヒット
 				if (isTrigger(KEY_UP)) {
@@ -828,16 +864,18 @@ namespace GAME02{
 			}
 			if (gamest != 0) {
 				UI();
+				//サイコロを振る回数表示
 				if (pull == 0) { 
 					text("引ける回数:", 600, 100);
 					text(role, 1000, 100);
 				}
+				//サイコロを振る前のロール状態
 				if (role == 3) {
-					diceME[0] = rand() % 6;
-					diceME[1] = rand() % 6;
-					diceME[2] = rand() % 6;
-					diceME[3] = rand() % 6;
-					diceME[4] = rand() % 6;
+					diceME[0] = rand() % 6 + 1;
+					diceME[1] = rand() % 6 + 1;
+					diceME[2] = rand() % 6 + 1;
+					diceME[3] = rand() % 6 + 1;
+					diceME[4] = rand() % 6 + 1;
 				}
 				//数を入れる
 				diceroll();
@@ -847,17 +885,19 @@ namespace GAME02{
 					//数の処理
 					yaku();
 					kakutei();
+					lock();
 				}
-				//syori = 0;
+				
+				//12回ずつ行動したあと勝利者発表
 				if (tarn == 24){
 					if (sumMEall > sumME2all) {
-						text("1Pの勝利！", 1000, 200);
+						text("1Pの勝利！", 1100, 400);
 					}
 					if (sumMEall < sumME2all) {
-						text("2Pの勝利！", 1000, 200);
+						text("2Pの勝利！", 1100, 400);
 					}
 					if (sumMEall == sumME2all) {
-						text("DRAW", 1000, 200);
+						text("DRAW", 1100, 400);
 					}
 				}
 			}

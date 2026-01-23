@@ -146,6 +146,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlatformData.h" />
     <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="Rect.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game00\title.txt" />

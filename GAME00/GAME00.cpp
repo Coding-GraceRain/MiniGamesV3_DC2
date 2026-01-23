@@ -68,7 +68,10 @@ namespace GAME00 {
     void GAME::updateStageSelect() {
         if (isTrigger(KEY_A)) selectedStage = (selectedStage + 2) % 3;
         if (isTrigger(KEY_D)) selectedStage = (selectedStage + 1) % 3;
-
+        if (isTrigger(KEY_M)) {
+            fadeAlpha = 0;
+            main()->backToMenu();
+        }
         if (isTrigger(KEY_ENTER)) {
             switch (selectedStage) {
             case 0: courseManager.load(COURSE_1, player); break;
@@ -91,7 +94,7 @@ namespace GAME00 {
             if (i == selectedStage) { fill(255, 255, 0); text("> ", 650, 350 + i * 80); text(names[i], 690, 350 + i * 80); }
             else { fill(180); text(names[i], 680, 350 + i * 80); }
         }
-        fill(200); textSize(28); text("A/D Select   ENTER Confirm", 620, 650);
+        fill(200); textSize(28); text("A/D Select   ENTER Confirm   M Back Main", 620, 650);
     }
 
     void GAME::updatePlaying()
@@ -154,7 +157,7 @@ namespace GAME00 {
             fadeAlpha = 0;
             state = GameState::STAGE_SELECT;
         }
-        if (isTrigger(KEY_ESCAPE)) {
+        if (isTrigger(KEY_M)) {
             fadeAlpha = 0;
             main()->backToMenu();
         }
@@ -166,7 +169,7 @@ namespace GAME00 {
         fill(255);
         textSize(32);
         text("ENTER : ステージセレクト", 580, 520);
-        text("ESC   : メインメニュー", 580, 560);
+        text("M   : メインメニュー", 580, 560);
     }
 
     void GAME::drawWorld() {

@@ -8,23 +8,6 @@ namespace GAME01
 {
 	int GAME::create()  //1回限り
 	{
-		file();
-		return 0;
-	}
-
-	int GAME::file()
-	{
-		FILE* file2;
-		if (fopen_s(&file2, "playcount.txt", "r") != 0) {
-			return 0;
-		}
-		else {
-			if (fscanf_s(file2, "%d", &c2) != 1) {
-				fclose(file2);
-				return 0;
-			}
-			fclose(file2);
-		}
 		return 0;
 	}
 
@@ -43,18 +26,6 @@ namespace GAME01
 	{
 		static KANJI kanjiInstance;
 		return &kanjiInstance;
-	}
-
-	void GAME::counter()
-	{
-		FILE* file2;
-		//総プレイ回数カウント
-		c2++;
-		// 結果をファイルに書き込む
-		if (fopen_s(&file2, "playcount.txt", "w") == 0) {
-			fprintf_s(file2, "%d", c2);  // 新しい値をファイルに書き込む
-			fclose(file2);  // ファイルを閉じ
-		}
 	}
 
 	void GAME::draw()
@@ -87,7 +58,7 @@ namespace GAME01
 		if (KANJI::cont == 1) {
 			textSize(50);
 			fill(255);
-			text("漢字:コンテニュー", 520, 1080);
+			text("漢字:コンテニュー", 1220, 1080);
 		}
 		return;
 	}
@@ -99,10 +70,13 @@ namespace GAME01
 				currentScene = 1;
 			}
 			if (isTrigger(KEY_K)) {
+				KANJI* k = KANJI::kanji1();
+				k->initialize();
 				currentScene = 2;
 			}
 			if (isTrigger(KEY_ENTER)) {
-				counter();
+				MATH::cont = 0;
+				KANJI::cont = 0;
 				main()->backToMenu();
 			}
 		}

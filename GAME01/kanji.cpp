@@ -17,7 +17,7 @@ namespace GAME01 {
 		fill(255, 255, 255);
 		text("難易度を選んでください。※「」内のキーを入力すると進みます。", 20, 200);
 		text("", 20, 280);
-		text("[＜]キーでメニューに戻る", 90, 1000);
+		text("[←]キーでメニューに戻る", 90, 1000);
 		fill(100, 120, 105);
 		rect(10, 400, 970, 200);
 		/*fill(120, 110, 60);
@@ -28,7 +28,7 @@ namespace GAME01 {
 		rect(1510, 400, 370, 200);*/
 		textSize(45);
 		fill(0, 0, 0);
-		text("★☆☆☆☆「>」", 20, 530);
+		text("★☆☆☆☆「→」", 20, 530);
 		/*text("★★☆☆☆「O」", 520, 530);
 		text("★★★☆☆「I」", 1020, 530);
 		text("★★★★☆「U」", 1520, 530);
@@ -47,10 +47,10 @@ namespace GAME01 {
 		clear(0, 0, 64);
 		textSize(80);
 		text("上の漢字の読み方を答えてください。", 20, 700);
-		text("※回答を入力しないと次に戻れません※", 20, 800);
-		text(kanji[currentKanji].yomi, 700, 600); //debug
+		text("※回答を入力しないと次に進めません※", 20, 800);
 		textSize(55);
-		text("[＜]キーで中断", 90, 1000);
+		text("[←]キーで中断", 90, 1000);
+		text("[↓]キーで1文字削除", 600, 1000);
 		fill(255, 255, 0);
 		if (kanjiCount > 0) {
 			image(kanji[currentKanji].img, 120, 100);
@@ -102,16 +102,6 @@ namespace GAME01 {
 		fill(255, 255, 0);
 		text("test6", 730, 100);
 	}*/
-	//void KANJI::romajiToKana(const char* src, char* dst) {
-
-	//	if (strcmp(src, "hi") == 0) {
-	//		strcpy_s(dst,64, "ひ");
-	//		return;
-	//	}
-
-	//	// 未変換はそのまま
-	//	strcpy_s(dst,64, src);
-	//}
 	void KANJI::romajiToKana(const char* src, char* dst) {
 
 		struct RomajiKana {
@@ -169,6 +159,7 @@ namespace GAME01 {
 		// 未変換はそのまま
 		strcpy_s(dst, 64, src);
 	}
+
 	void KANJI::loadKanjiImages() {
 		if ( kanjiCount > 0) return;
 		kanji[0] = { loadImage("..\\MAIN\\assets\\game01\\kanji1.png"), "zigoku" };
@@ -181,6 +172,35 @@ namespace GAME01 {
 		kanji[7] = { loadImage("..\\MAIN\\assets\\game01\\kanji8.png"), "haguku" };
 		kanjiCount = 8;
 	}
+
+	/*void KANJI::loadKanjiImages() {
+		if (kanjiCount > 0) return;
+
+		kanji[0].img = loadImage("..\\MAIN\\assets\\game01\\kanji1.png");
+		strcpy_s(kanji[0].yomi, "zigoku");
+
+		kanji[1].img = loadImage("..\\MAIN\\assets\\game01\\kanji2.png");
+		strcpy_s(kanji[1].yomi, "ekohiiki");
+
+		kanji[2].img = loadImage("..\\MAIN\\assets\\game01\\kanji3.png");
+		strcpy_s(kanji[2].yomi, "shinrei");
+
+		kanji[3].img = loadImage("..\\MAIN\\assets\\game01\\kanji4.png");
+		strcpy_s(kanji[3].yomi, "iseki");
+
+		kanji[4].img = loadImage("..\\MAIN\\assets\\game01\\kanji5.png");
+		strcpy_s(kanji[4].yomi, "tukigime");
+
+		kanji[5].img = loadImage("..\\MAIN\\assets\\game01\\kanji6.png");
+		strcpy_s(kanji[5].yomi, "doutoku");
+
+		kanji[6].img = loadImage("..\\MAIN\\assets\\game01\\kanji7.png");
+		strcpy_s(kanji[6].yomi, "unpan");
+
+		kanji[7].img = loadImage("..\\MAIN\\assets\\game01\\kanji8.png");
+		strcpy_s(kanji[7].yomi, "haguku");
+		kanjiCount = 8;
+	}*/
 	KANJI* KANJI::kanji1() {
 		static KANJI kanjiinstance1;
 		kanjiinstance1.loadKanjiImages();
@@ -206,6 +226,33 @@ namespace GAME01 {
 		static KANJI kanjiInstance1;
 		return &kanjiInstance1;
 	}*/
+
+	void KANJI::triming(char* s) {
+		int len = strlen(s);
+		while (len > 0 && (s[len - 1] < 'a' || s[len - 1] > 'z')) {
+			s[len - 1] = '\0';
+			len--;
+		}
+	}
+
+	void KANJI::initialize() {
+
+		// 問題状態
+		currentKanji = 0;
+		Kanser1Generated = false;
+
+		// 入力状態
+		memset(inputStrB, 0, sizeof(inputStrB));
+		memset(displayStr, 0, sizeof(displayStr));
+		inputLenB = 0;
+
+		// 判定状態
+		KanswerChecked = false;
+		KanswerCorrect = false;
+
+		kanjiCount = 0;
+	}
+
 	void KANJI::proc() {
 		if (kanjiCount == 0) {
 			loadKanjiImages();
@@ -249,12 +296,14 @@ namespace GAME01 {
 			text(inputStrB, 200, 300);
 			/*text(displayStr, 200, 400);*/
 			if (isTrigger(KEY_LEFT)) {
+				memset(inputStrB, 0, sizeof(inputStrB));
 				cont = 1;
 			}
 			if (!KanswerChecked) {
 				// まだ判定していない
 				if (isTrigger(KEY_SPACE)) {
 					if (inputStrB[0] != '\0') {
+						triming(inputStrB);
 						KanswerCorrect = strcmp(inputStrB, kanji[currentKanji].yomi) == 0;
 						KanswerChecked = true;
 					}
@@ -270,7 +319,7 @@ namespace GAME01 {
 					text("Shiftでメニューに戻る", 700, 600);
 					cont = 0;
 				}
-				else {
+				else  {
 					text("不正解！", 700, 400);
 					text("Enterで次の問題へ", 700, 500);
 					text("Shiftでメニューに戻る", 700, 600);
@@ -279,19 +328,17 @@ namespace GAME01 {
 				// 次の問題
 				if (isTrigger(KEY_ENTER)) {
 					KANJI::kanji1()->Kanser1Generated = false;
+					//currentKanji = random(0, kanjiCount - 1); // ★追加
 					memset(inputStrB, 0, sizeof(inputStrB));
 					inputLenB = 0;
 					KanswerChecked = false;
 					KanswerCorrect = false;
-					decided = false;
-					kanjiCount = 0;
 				}
 
-				// メニューへ戻る
+				// 漢字メニューへ戻る
 				if (isTrigger(KEY_SHIFT)) {
+					KANJI::kanji1()->initialize();
 					memset(inputStrB, 0, sizeof(inputStrB));
-					inputLenB = 0;
-					KanswerChecked = false;
 					KanswerCorrect = false;
 					select2 = 0;   // ← KANJIメニューに戻る
 				}
@@ -338,6 +385,14 @@ namespace GAME01 {
 		}
 
 		void KANJI::key() {
+			//1文字削除（KEY_DOWN）
+			if (isTrigger(KEY_DOWN)) {
+				if (inputLenB > 0) {
+					inputLenB--;
+					inputStrB[inputLenB] = '\0';
+				}
+				return;
+			}
 			if (inputLenB >= 31) return;
 
 			// キーコードと文字の対応表

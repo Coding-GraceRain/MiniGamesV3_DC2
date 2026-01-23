@@ -70,9 +70,7 @@ namespace GAME02{
 	int isfour = 0;
 	int isfull = 0;
 	int isss = 0;
-	int wss = 0;
 	int isbs = 0;
-	int wbs = 0;
 	int isyot = 0;
 	int is3 = 0;
 	int is2 = 0;
@@ -90,10 +88,6 @@ namespace GAME02{
 		//ここにはゲーム開始時に1回だけ行うものを記述する
 		BGM = 0;
 		srand(time(0));
-		/*for (int i = 0; i < cardall; i++) {
-			//char filename[64];
-			//sprintf_s(filename, "../MAIN/assets/game02/%d.png", i + 1);
-		}*/
 		//カードの画像ロード
 		cardimg[0] = loadImage("..\\MAIN\\assets\\game02\\0.png");
 		cardimg[1] = loadImage("..\\MAIN\\assets\\game02\\1.png");
@@ -182,7 +176,7 @@ namespace GAME02{
 		w4 = 0;
 		w3 = 0;
 		w2 = 0;
-
+		tarn = 0;
 	}
 	void GAME::diceroll() {
 			yotreset();
@@ -237,11 +231,68 @@ namespace GAME02{
 					w2 = i + 1;
 				}
 			}
+			//ストレートの判断
 			for (int i = 0; i < 6; i++) {
-				if (diceSU[i] == 1) { wss = diceSU[i]; }
+				if (diceME[i] == 1) {
+					for (int i = 0; i < 6; i++) {
+						if (diceME[i] == 2) {
+							for (int i = 0; i < 6; i++) {
+								if (diceME[i] == 3) {
+									for (int i = 0; i < 6; i++) {
+										if (diceME[i] == 4) {
+											isss = 1;
+											for (int i = 0; i < 6; i++) {
+												if (diceME[i] == 5) {
+													isbs = 1;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
-			if (wss == 4) { isss = 1; }
-			if (wss == 5) { isbs = 1; }
+			for (int i = 0; i < 6; i++) {
+				if (diceME[i] == 2) {
+					for (int i = 0; i < 6; i++) {
+						if (diceME[i] == 3) {
+							for (int i = 0; i < 6; i++) {
+								if (diceME[i] == 4) {
+									for (int i = 0; i < 6; i++) {
+										if (diceME[i] == 5) {
+											isss = 1;
+											for (int i = 0; i < 6; i++) {
+												if (diceME[i] == 6) {
+													isbs = 1;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			for (int i = 0; i < 6; i++) {
+				if (diceME[i] == 3) {
+					for (int i = 0; i < 6; i++) {
+						if (diceME[i] == 4) {
+							for (int i = 0; i < 6; i++) {
+								if (diceME[i] == 5) {
+									for (int i = 0; i < 6; i++) {
+										if (diceME[i] == 6) {
+											isss = 1;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			//チョイス
 			for (int i = 0; i < 5; i++) {
 				diceKARI[6] += diceME[i];
@@ -642,11 +693,13 @@ namespace GAME02{
 		text("P", 1530, 1030);
 		text("A", 1670, 1030);
 		text("S", 1820, 1030);
-		text("Z", 760, 510);
-		text("X", 1010, 510);
-		text("C", 1260, 510);
-		text("V", 1510, 510);
-		text("B", 1760, 510);
+		if (tarn != 24) {
+			text("Z", 760, 510);
+			text("X", 1010, 510);
+			text("C", 1260, 510);
+			text("V", 1510, 510);
+			text("B", 1760, 510);
+		}
 		if (warning == 1) {
 			text("既に数が入っています", 600, 600);
 		}
@@ -694,6 +747,45 @@ namespace GAME02{
 	}
 	void GAME::help() {
 		//マウスカーソルを合わせたら詳細が表示される
+		if (mouseY >= 600) {
+			textSize(45);
+			if (mouseX > 147 && mouseX < 294){
+				text("1のサイコロの出目の数", 0, 500);
+			}
+			if (mouseX > 294 && mouseX < 441) {
+				text("2のサイコロの出目の数", 0, 500);
+			}
+			if (mouseX > 441 && mouseX < 588) {
+				text("3のサイコロの出目の数", 0, 500);
+			}
+			if (mouseX > 588 && mouseX < 735) {
+				text("4のサイコロの出目の数", 0, 500);
+			}
+			if (mouseX > 735 && mouseX < 882) {
+				text("5のサイコロの出目の数", 0, 500);
+			}
+			if (mouseX > 882 && mouseX < 1029) {
+				text("6のサイコロの出目の数", 0, 500);
+			}
+			if (mouseX > 1029 && mouseX < 1176) {
+				text("全てのサイコロを足した数", 0, 500);
+			}
+			if (mouseX > 1176 && mouseX < 1323) {
+				text("4つ同じサイコロが揃った役", 0, 500);
+			}
+			if (mouseX > 1323 && mouseX < 1470) {
+				text("3つと2つのサイコロの役", 0, 500);
+			}
+			if (mouseX > 1470 && mouseX < 1617) {
+				text("サイコロの数が4つ並んだ役", 0, 500);
+			}
+			if (mouseX > 1617 && mouseX < 1764) {
+				text("サイコロの数が5つ並んだ役", 0, 500);
+			}
+			if (mouseX > 1764 && mouseX < 1920) {
+				text("5つ同じサイコロが揃った役", 0, 500);
+			}
+		}
 	}
 	void GAME::proc() {
 		stroke(255);
@@ -894,7 +986,8 @@ namespace GAME02{
 				UI();
 				help();
 				//サイコロを振る回数表示
-				if (pull == 0) { 
+				if (pull == 0 && tarn !=0) {
+					textSize(70);
 					text("引ける回数:", 600, 100);
 					text(role, 1000, 100);
 				}

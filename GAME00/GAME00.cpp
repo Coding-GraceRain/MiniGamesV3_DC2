@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "CourseManager.h"
 #include "CourseData.h"
-
+#include "Rect.h"
 
 namespace GAME00 {
 
@@ -56,22 +56,38 @@ namespace GAME00 {
         camX = camY = 0;
         startTimer = 0;
         camOffsetY = targetOffsetY = 920;
-        isGoal = false; fadeAlpha = 0;
+        fadeAlpha = 0;
         goalTimer = 0;
-        state = GameState::STAGE_SELECT;
+        state = GameState::TITLE;
         selectedStage = 0;
         return 0;
     }
 
     void GAME::destroy() {}
 
+    void GAME::updateTitle() {
+        if (isTrigger(KEY_ENTER)) {
+            state = GameState::STAGE_SELECT;
+        }
+        if (isTrigger(KEY_M)) {
+            main()->backToMenu();
+        }
+    }
+
+    void GAME::drawTitle() {
+        fill(255);
+        textSize(96);
+        text("2D GAME", 520, 350);
+
+        textSize(32);
+        text("PRESS ENTER to START   PRESS M to main", 760, 520);
+    }
+
+
     void GAME::updateStageSelect() {
         if (isTrigger(KEY_A)) selectedStage = (selectedStage + 2) % 3;
         if (isTrigger(KEY_D)) selectedStage = (selectedStage + 1) % 3;
-        if (isTrigger(KEY_M)) {
-            fadeAlpha = 0;
-            main()->backToMenu();
-        }
+
         if (isTrigger(KEY_ENTER)) {
             switch (selectedStage) {
             case 0: courseManager.load(COURSE_1, player); break;
@@ -80,8 +96,11 @@ namespace GAME00 {
             }
             camX = camY = 0;
             camOffsetY = targetOffsetY = 920;
-            isGoal = false; fadeAlpha = 0; goalTimer = 0;
+            fadeAlpha = 0; goalTimer = 0;
             state = GameState::PLAYING;
+        }
+        if (isTrigger(KEY_M)) {
+            main()->backToMenu();
         }
     }
 
@@ -94,7 +113,7 @@ namespace GAME00 {
             if (i == selectedStage) { fill(255, 255, 0); text("> ", 650, 350 + i * 80); text(names[i], 690, 350 + i * 80); }
             else { fill(180); text(names[i], 680, 350 + i * 80); }
         }
-        fill(200); textSize(28); text("A/D Select   ENTER Confirm   M Back Main", 620, 650);
+        fill(200); textSize(28); text("A/D Select   ENTER Confirm   M main", 620, 650);
     }
 
     void GAME::updatePlaying()
@@ -126,21 +145,15 @@ namespace GAME00 {
             player.y - player.height < courseManager.goal.y + courseManager.goal.h &&
             player.y > courseManager.goal.y
             ) {
+            isMiss = false;
             state = GameState::FADE_OUT;
             fadeAlpha = 0.0f;
-            goalTimer = 0.0f;
         }
-    }
-
-    void GAME::updateGoal()
-    {
-        goalTimer += 1.0f;
-        fadeAlpha += 5.0f;
-        if (fadeAlpha > 255) fadeAlpha = 255;
-        player.vx = 0;
-        player.vy = 0;
-        if (fadeAlpha >= 255 && goalTimer > 60 && isTrigger(KEY_ENTER)) {
-            main()->backToMenu();
+        // 落下判定
+        if (player.y > FALL_LIMIT_Y) {
+            isMiss = true;
+            state = GameState::FADE_OUT;
+            fadeAlpha = 0.0f;
         }
     }
 
@@ -148,9 +161,19 @@ namespace GAME00 {
         fadeAlpha += 4.0f;
         if (fadeAlpha >= 255) {
             fadeAlpha = 255;
-            state = GameState::RESULT_WAIT;
+
+            if (isMiss) {
+                courseManager.reload(player);
+                camX = camY = 0;
+                fadeAlpha = 0;
+                state = GameState::PLAYING;
+            }
+            else {
+                state = GameState::RESULT_WAIT;
+            }
         }
     }
+
 
     void GAME::updateResultWait() {
         if (isTrigger(KEY_ENTER)) {
@@ -190,8 +213,8 @@ namespace GAME00 {
         // プレイヤー
         player.draw(camX, camY);
 
-        // GOAL文字（演出用）
-        if (state == GameState::GOAL) {
+        // RESULT_WAIT 時の GOAL 演出
+        if (state == GameState::RESULT_WAIT && !isMiss) {
             fill(255, 255, 0);
             textSize(64);
             text("GOAL!", 600, 400);
@@ -211,6 +234,11 @@ namespace GAME00 {
         clear(0, 0, 64);
 
         switch (state) {
+        case GameState::TITLE:
+            updateTitle();
+            drawTitle();
+            break;
+
         case GameState::STAGE_SELECT:
             updateStageSelect();
             drawStageSelect();

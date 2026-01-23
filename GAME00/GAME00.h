@@ -9,9 +9,9 @@
 namespace GAME00 {
 
     enum class GameState {
+        TITLE,
         STAGE_SELECT,
         PLAYING,
-        GOAL,
         FADE_OUT,
         RESULT_WAIT
     };
@@ -31,19 +31,23 @@ namespace GAME00 {
         Player player;
         float camX = 0, camY = 0;
         float camOffsetY = 920, targetOffsetY = 920;
-        bool isGoal = false;
         float goalTimer = 0;
         float fadeAlpha = 0;
         float startTimer = 0;
+        const float FALL_LIMIT_Y = 2000.0f;
+        bool isMiss;
+
+
 
         CourseManager courseManager;
         int selectedStage = 0;
         GameState state = GameState::STAGE_SELECT;
 
+        void updateTitle();
+        void drawTitle();
         void updateStageSelect();
         void drawStageSelect();
         void updatePlaying();
-        void updateGoal();
         void drawResultUI();
         void updateResultWait();
         void updateFadeOut();

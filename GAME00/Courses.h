@@ -6,9 +6,9 @@ namespace GAME00 {
 
     struct Course {
         float startX, startY;
-        PlatformData* platforms;
+        const PlatformData* platforms;
         int platformCount;
-        GoalData goal;
+        Rect goal;
     };
 
 }

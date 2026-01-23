@@ -3,7 +3,6 @@
 #include "GAME02.h"
 #include<iostream>
 #include <time.h>
-#include<algorithm>
 extern bool EscapeKeyValid;
 namespace GAME02{
 	//こりゃあもう完全に遊び大全で良いでしょう
@@ -48,14 +47,12 @@ namespace GAME02{
 	int diceimg[diceall];
 	//ダイスの目
 	int diceME[5] = { 0,0,0,0,0 };
-	//相手のダイスの目
-	//int diceME2[5] = { 0,0,0,0,0 };
 	//出たダイスの目の数
 	int diceSU[6] = { 0,0,0,0,0,0 };
 	//ロックされたダイスの保存場所
 	int diceHOZ[5] = { 0,0,0,0,0 };
 	//保存をするかどうかの判断
-	int diceHOZYN[5] = { 0,0,0,0,0 };
+	unsigned int diceHOZYN[5] = { 0,0,0,0,0 };
 	//仮保存場所
 	int diceKARI[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
 	//自分の点数
@@ -66,11 +63,16 @@ namespace GAME02{
 	int tensuME2[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
 	int sumME2123456 = 0;
 	int sumME2all = 0;
+	//数が入っているかのフラグ
+	int fME[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
+	int fME2[12] = { 0,0,0,0,0,0,0,0,0,0,0,0 };
 	//役成立判定の変数
 	int isfour = 0;
 	int isfull = 0;
 	int isss = 0;
+	int wss = 0;
 	int isbs = 0;
+	int wbs = 0;
 	int isyot = 0;
 	int is3 = 0;
 	int is2 = 0;
@@ -151,6 +153,7 @@ namespace GAME02{
 		for (int i = 0; i < 5; i++){
 			diceME[i] = 0;
 			diceHOZ[i] = 0;
+			diceHOZYN[i] = 0;
 		}
 		for (int i = 0; i < 6; i++) {
 			diceSU[i] = 0;
@@ -159,6 +162,8 @@ namespace GAME02{
 			diceKARI[i] = 0;
 			tensuME[i] = 0;
 			tensuME2[i] = 0;
+			fME[i] = 0;
+			fME2[i] = 0;
 		}
 		sumME123456 = 0;
 		sumMEall = 0;
@@ -187,7 +192,10 @@ namespace GAME02{
 			}
 			for (int i = 0; i < 5; i++) {
 				diceME[i] = rand() % 6 + 1;
-				
+				if ((diceHOZYN[i] % 2) == 1) {
+					diceME[i] = diceHOZ[i];
+				}
+				diceHOZ[i] = diceME[i];
 			}
 			for (int i = 0; i < 12; i++) {
 				diceKARI[i] = 0;
@@ -229,49 +237,38 @@ namespace GAME02{
 					w2 = i + 1;
 				}
 			}
-			if (diceSU[0] == 1 && diceSU[1] == 1 && diceSU[2] == 1 && diceSU[3] == 1){
-				isss = 1;
+			for (int i = 0; i < 6; i++) {
+				if (diceSU[i] == 1) { wss = diceSU[i]; }
 			}
-			else if (diceSU[1] == 1 && diceSU[2] == 1 && diceSU[3] == 1 && diceSU[4] == 1) {
-				isss = 1;
-			}
-			else if (diceSU[2] == 1 && diceSU[3] == 1 && diceSU[4] == 1 && diceSU[5] == 1) {
-				isss = 1;
-			}
-			if (diceSU[0] == 1 && diceSU[1] == 1 && diceSU[2] == 1 && diceSU[3] == 1 && diceSU[4] == 1){
-				isbs = 1;
-			}
-			else if (diceSU[1] == 1 && diceSU[2] == 1 && diceSU[3] == 1 && diceSU[4] == 1 && diceSU[5] == 1) {
-				isbs = 1;
-			}
+			if (wss == 4) { isss = 1; }
+			if (wss == 5) { isbs = 1; }
 			//チョイス
 			for (int i = 0; i < 5; i++) {
 				diceKARI[6] += diceME[i];
 			}
 			//フォーダイス
 			if (isfour == 1) {
-				text("フォーダイス！",1000,550);
+				text("フォーダイス！",1000,200);
 				diceKARI[7] = 25;
 			}
 			//フルハウス
 			if (is3 == 1 && is2 == 1) {
-				text("フルハウス！", 1000, 550);
+				text("フルハウス！", 1000, 200);
 				diceKARI[8] = (w3 * 3) + (w2 * 2);
 			}
-
 			//Sストレート
 			if (isss == 1 &&isbs != 1) {
-				text("Sストレート！", 1000, 550);
+				text("Sストレート！", 1000, 200);
 				diceKARI[9] = 15;
 			}
 			//Bストレート
 			if (isbs == 1) {
-				text("Bストレート！", 1000, 550);
+				text("Bストレート！", 1000, 200);
 				diceKARI[10] = 30;
 			}
 			//ヨット
 			if (isyot == 1) {
-				text("ヨット！！！", 1000, 550);
+				text("ヨット！！！", 1000, 200);
 				diceKARI[11] = 50;
 			}
 		}
@@ -280,7 +277,7 @@ namespace GAME02{
 		//1Pの時
 		if ((tarn % 2) == 0) {
 			if (isTrigger(KEY_Q)) {
-				if (tensuME[0] == 0) {
+				if (fME[0] == 0) {
 				tensuME[0] = diceKARI[0]; yakuOK = 1;
 				sumME123456 += tensuME[0];
 				sumMEall += tensuME[0];
@@ -288,9 +285,10 @@ namespace GAME02{
 				else{
 					warning = 1;
 				}
+				fME[0] = 1;
 			}
 			if (isTrigger(KEY_W)) {
-				if (tensuME[1] == 0) {
+				if (fME[1] == 0) {
 					tensuME[1] = diceKARI[1]; yakuOK = 1;
 					sumME123456 += tensuME[1];
 					sumMEall += tensuME[1];
@@ -298,9 +296,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME[1] = 1;
 			}
 			if (isTrigger(KEY_E)) {
-				if (tensuME[2] == 0) {
+				if (fME[2] == 0) {
 					tensuME[2] = diceKARI[2]; yakuOK = 1;
 					sumME123456 += tensuME[2];
 					sumMEall += tensuME[2];
@@ -308,9 +307,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME[2] = 1;
 			}
 			if (isTrigger(KEY_R)) {
-				if (tensuME[3] == 0) {
+				if (fME[3] == 0) {
 					tensuME[3] = diceKARI[3]; yakuOK = 1;
 					sumME123456 += tensuME[3];
 					sumMEall += tensuME[3];
@@ -318,9 +318,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME[3] = 1;
 			}
 			if (isTrigger(KEY_T)) {
-				if (tensuME[4] == 0) {
+				if (fME[4] == 0) {
 					tensuME[4] = diceKARI[4]; yakuOK = 1;
 					sumME123456 += tensuME[4];
 					sumMEall += tensuME[4];
@@ -328,9 +329,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME[4] = 1;
 			}
 			if (isTrigger(KEY_Y)) {
-				if (tensuME[5] == 0) {
+				if (fME[5] == 0) {
 					tensuME[5] = diceKARI[5]; yakuOK = 1;
 					sumME123456 += tensuME[5];
 					sumMEall += tensuME[5];
@@ -338,66 +340,73 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME[5] = 1;
 			}
 			if (isTrigger(KEY_U)) {
-				if (tensuME[6] == 0) {
+				if (fME[6] == 0) {
 					tensuME[6] = diceKARI[6]; yakuOK = 1;
 					sumMEall += tensuME[6];
 				}
 				else {
 					warning = 1;
 				}
+				fME[6] = 1;
 			}
 			if (isTrigger(KEY_I)) {
-				if (tensuME[7] == 0) {
+				if (fME[7] == 0) {
 					tensuME[7] = diceKARI[7]; yakuOK = 1;
 					sumMEall += tensuME[7];
 				}
 				else {
 					warning = 1;
 				}
+				fME[7] = 1;
 			}
 			if (isTrigger(KEY_O)) {
-				if (tensuME[8] == 0) {
+				if (fME[8] == 0) {
 					tensuME[8] = diceKARI[8]; yakuOK = 1;
 					sumMEall += tensuME[8];
 				}
 				else {
 					warning = 1;
 				}
+				fME[8] = 1;
 			}
 			if (isTrigger(KEY_P)) {
-				if (tensuME[9] == 0) {
+				if (fME[9] == 0) {
 					tensuME[9] = diceKARI[9]; yakuOK = 1;
 					sumMEall += tensuME[9];
 				}
 				else {
 					warning = 1;
 				}
+				fME[9] = 1;
 			}
 			if (isTrigger(KEY_A)) {
-				if (tensuME[10] == 0) {
+				if (fME[10] == 0) {
 					tensuME[10] = diceKARI[10]; yakuOK = 1;
 					sumMEall += tensuME[10];
 				}
 				else {
 					warning = 1;
 				}
+				fME[10] = 1;
 			}
 			if (isTrigger(KEY_S)) {
-				if (tensuME[11] == 0) {
+				if (fME[11] == 0) {
 					tensuME[11] = diceKARI[11]; yakuOK = 1;
 					sumMEall += tensuME[11];
 				}
 				else {
 					warning = 1;
 				}
+				fME[11] = 1;
 			}
 		}
 		//2Pの時
 		if ((tarn % 2) == 1) {
 			if (isTrigger(KEY_Q)) {
-				if (tensuME2[0] == 0) {
+				if (fME2[0] == 0) {
 					tensuME2[0] = diceKARI[0]; yakuOK = 1;
 					sumME2123456 += tensuME2[0];
 					sumME2all += tensuME2[0];
@@ -405,9 +414,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME2[0] = 1;
 			}
 			if (isTrigger(KEY_W)) {
-				if (tensuME2[1] == 0) {
+				if (fME2[1] == 0) {
 					tensuME2[1] = diceKARI[1]; yakuOK = 1;
 					sumME2123456 += tensuME2[1];
 					sumME2all += tensuME2[1];
@@ -415,9 +425,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME2[1] = 1;
 			}
 			if (isTrigger(KEY_E)) {
-				if (tensuME2[2] == 0) {
+				if (fME2[2] == 0) {
 					tensuME2[2] = diceKARI[2]; yakuOK = 1;
 					sumME2123456 += tensuME2[2];
 					sumME2all += tensuME2[2];
@@ -425,9 +436,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME2[2] = 1;
 			}
 			if (isTrigger(KEY_R)) {
-				if (tensuME2[3] == 0) {
+				if (fME2[3] == 0) {
 					tensuME2[3] = diceKARI[3]; yakuOK = 1;
 					sumME2123456 += tensuME2[3];
 					sumME2all += tensuME2[3];
@@ -435,9 +447,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME2[3] = 1;
 			}
 			if (isTrigger(KEY_T)) {
-				if (tensuME2[4] == 0) {
+				if (fME2[4] == 0) {
 					tensuME2[4] = diceKARI[4]; yakuOK = 1;
 					sumME2123456 += tensuME2[4];
 					sumME2all += tensuME2[4];
@@ -445,9 +458,10 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME2[4] = 1;
 			}
 			if (isTrigger(KEY_Y)) {
-				if (tensuME2[5] == 0) {
+				if (fME2[5] == 0) {
 					tensuME2[5] = diceKARI[5]; yakuOK = 1;
 					sumME2123456 += tensuME2[5];
 					sumME2all += tensuME2[5];
@@ -455,60 +469,67 @@ namespace GAME02{
 				else {
 					warning = 1;
 				}
+				fME2[5] = 1;
 			}
 			if (isTrigger(KEY_U)) {
-				if (tensuME2[6] == 0) {
+				if (fME2[6] == 0) {
 					tensuME2[6] = diceKARI[6]; yakuOK = 1;
 					sumME2all += tensuME2[6];
 				}
 				else {
 					warning = 1;
 				}
+				fME2[6] = 1;
 			}
 			if (isTrigger(KEY_I)) {
-				if (tensuME2[7] == 0) {
+				if (fME2[7] == 0) {
 					tensuME2[7] = diceKARI[7]; yakuOK = 1;
 					sumME2all += tensuME2[7];
 				}
 				else {
 					warning = 1;
 				}
+				fME2[7] = 1;
 			}
 			if (isTrigger(KEY_O)) {
-				if (tensuME2[8] == 0) {
+				if (fME2[8] == 0) {
 					tensuME2[8] = diceKARI[8]; yakuOK = 1;
 					sumME2all += tensuME2[8];
 				}
 				else {
 					warning = 1;
 				}
+				fME2[8] = 1;
 			}
 			if (isTrigger(KEY_P)) {
-				if (tensuME2[9] == 0) {
+				if (fME2[9] == 0) {
 					tensuME2[9] = diceKARI[9]; yakuOK = 1;
 					sumME2all += tensuME2[9];
 				}
 				else {
 					warning = 1;
 				}
+				fME2[9] = 1;
 			}
 			if (isTrigger(KEY_A)) {
-				if (tensuME2[10] == 0) {
+				if (fME2[10] == 0) {
 					tensuME2[10] = diceKARI[10]; yakuOK = 1;
 					sumME2all += tensuME2[10];
 				}
 				else {
 					warning = 1;
 				}
+				fME2[10] = 1;
 			}
 			if (isTrigger(KEY_S)) {
-				if (tensuME2[11] == 0) {
+				if (fME2[11] == 0) {
 					tensuME2[11] = diceKARI[11]; yakuOK = 1;
 					sumME2all += tensuME2[11];
 				}
 				else {
 					warning = 1;
 				}
+				fME2[11] = 1;
 			}
 		}
 		if (yakuOK == 1){
@@ -519,32 +540,31 @@ namespace GAME02{
 			tarn++;
 			yakuOK = 0;
 			warning = 0;
+			for (int i = 0; i < 5; i++){
+				diceHOZYN[i] = 0;
+			}
 		}
 	}
 	void GAME::lock() {
 		if (isTrigger(KEY_Z)) {
-			diceHOZYN[0] = 1;
+			diceHOZYN[0] += 1;
 		}
 		if (isTrigger(KEY_X)) {
-			diceHOZYN[1] = 1;
+			diceHOZYN[1] += 1;
 		}
 		if (isTrigger(KEY_C)) {
-			diceHOZYN[2] = 1;
+			diceHOZYN[2] += 1;
 		}
 		if (isTrigger(KEY_V)) {
-			diceHOZYN[3] = 1;
+			diceHOZYN[3] += 1;
 		}
 		if (isTrigger(KEY_B)) {
-			diceHOZYN[4] = 1;
+			diceHOZYN[4] += 1;
 		}
 	}
 	void GAME::yotreset() {
-		
 		for (int i = 0; i < 12; i++) {
 			diceKARI[i] = 0;
-		}
-		for (int i = 0; i < 5; i++) {
-			diceHOZ[i] = 0;
 		}
 		isfour = 0;
 		isfull = 0;
@@ -570,8 +590,9 @@ namespace GAME02{
 		strokeWeight(10);
 		stroke(255);
 		line(0, 600, 1920, 600);
+		line(294, 0, 294, 330);
 		line(588, 0, 588, 600);
-		line(294, 0, 294, 600);
+		line(0, 330, 588, 330);
 		line(147, 600, 147, 1080);
 		line(294, 600, 294, 1080);
 		line(441, 600, 441, 1080);
@@ -599,11 +620,16 @@ namespace GAME02{
 		text("Ｓストレート", 1473, 900);//ss
 		text("Ｂストレート", 1618, 900);//bs
 		text("ヨット", 1780, 900);//yot
+		textSize(50);
+		text("1～6の小計", 0, 140);
+		text("合計", 0, 250);
+		text("1～6の小計", 300, 140);
+		text("合計", 300, 250);
 		textSize(70);
-		text(sumME123456, 100, 200);
-		text(sumMEall, 100, 400);
+		text(sumME123456, 0, 200);
+		text(sumMEall, 0, 320);
 		text(sumME2123456, 300, 200);
-		text(sumME2all, 300, 400);
+		text(sumME2all, 300, 320);
 		text("Q", 202, 1030);
 		text("W", 350, 1030);
 		text("E", 495, 1030);
@@ -616,11 +642,11 @@ namespace GAME02{
 		text("P", 1530, 1030);
 		text("A", 1670, 1030);
 		text("S", 1820, 1030);
-		text("Z", 900, 600);
-		text("X", 1000, 600);
-		text("C", 1100, 600);
-		text("V", 1200, 600);
-		text("B", 1300, 600);
+		text("Z", 760, 510);
+		text("X", 1010, 510);
+		text("C", 1260, 510);
+		text("V", 1510, 510);
+		text("B", 1760, 510);
 		if (warning == 1) {
 			text("既に数が入っています", 600, 600);
 		}
@@ -666,6 +692,9 @@ namespace GAME02{
 		}
 		fill(255);
 	}
+	void GAME::help() {
+		//マウスカーソルを合わせたら詳細が表示される
+	}
 	void GAME::proc() {
 		stroke(255);
 		strokeWeight(10);
@@ -676,7 +705,6 @@ namespace GAME02{
 		text("ヨット→", 1400, 300);
 		textSize(70);
 		//ゲームの説明を入力する
-		//text("")
 		if (isTrigger(KEY_LEFT) && gameselect == 0) { gameselect = 1; }
 		if (isTrigger(KEY_RIGHT) && gameselect == 0) { gameselect = 2; }
 		//ゲーム１
@@ -864,6 +892,7 @@ namespace GAME02{
 			}
 			if (gamest != 0) {
 				UI();
+				help();
 				//サイコロを振る回数表示
 				if (pull == 0) { 
 					text("引ける回数:", 600, 100);
@@ -887,7 +916,6 @@ namespace GAME02{
 					kakutei();
 					lock();
 				}
-				
 				//12回ずつ行動したあと勝利者発表
 				if (tarn == 24){
 					if (sumMEall > sumME2all) {

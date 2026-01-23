@@ -18,5 +18,6 @@ namespace GAME02
         void yotreset();
         void UI();
         void lock();
+        void help();
     };
 }

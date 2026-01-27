@@ -1,4 +1,4 @@
-#include "../../libOne/inc/libOne.h"
+ï»¿#include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME06.h"
 #include <cstdlib>
@@ -7,20 +7,16 @@
 #include <string>
 #include <windows.h>
 
-// ƒ}ƒEƒX¶ƒNƒŠƒbƒN‚ğŒŸo‚·‚éŠÖ”
 bool isMouseLeftPressed() {
     return (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
 }
 
-// ƒ}ƒEƒXXÀ•W
 int getMouseX() {
     POINT p;
     GetCursorPos(&p);
     ScreenToClient(GetForegroundWindow(), &p);
     return p.x;
 }
-
-// ƒ}ƒEƒXYÀ•W
 int getMouseY() {
     POINT p;
     GetCursorPos(&p);
@@ -33,87 +29,185 @@ using namespace std::chrono;
 namespace GAME06 {
 
     static int circleX, circleY;
+    static int radius = 50;
+
     static int score = 0;
-    static const int RADIUS = 50;
+    static int highScore = 0;
+
     static long long lastUpdateTime = 0;
-    // ƒQ[ƒ€ŠJnŠÔ
     static long long startTime = 0;
-    // §ŒÀŠÔ
+
     static const int TIME_LIMIT_MS = 60000;
+
+    static const int MAX_LIFE = 3;
+    static int life = MAX_LIFE;
+
+    static bool prevMouse = false;
+
+    // GREATè¡¨ç¤º
+    static bool showGreat = false;
+    static long long greatTime = 0;
+    static const int GREAT_DISPLAY_MS = 500;
+
+    // MISSè¡¨ç¤º
+    static bool showMiss = false;
+    static long long missTime = 0;
+    static const int MISS_DISPLAY_MS = 500;
+
+    static bool gameStarted = false;
 
     int GAME::create() {
         srand((unsigned int)time(nullptr));
-        
-        // ‰ŠúˆÊ’u
-        circleX = rand() % (1920 - 2 * RADIUS) + RADIUS;
-        circleY = rand() % (1080 - 2 * RADIUS) + RADIUS;
 
-        // Œ»İŠÔ
-        lastUpdateTime = duration_cast<milliseconds>(
-            steady_clock::now().time_since_epoch()).count();
+        radius = rand() % 71 + 30;
+        circleX = rand() % (1920 - 2 * radius) + radius;
+        circleY = rand() % (1080 - 2 * radius) + radius;
 
-        // ƒQ[ƒ€ŠJnŠÔ
-        startTime = lastUpdateTime;
+        score = 0;
+        life = MAX_LIFE;
+
+        showGreat = false;
+        showMiss = false;
+        gameStarted = false;
+        prevMouse = false;
 
         return 0;
     }
 
-    void GAME::destroy() {
-        
-    }
+    void GAME::destroy() {}
 
     void GAME::proc() {
-        // ”wŒiF
-        clear(0, 60, 100); 
 
-        // Œ»İ
+        clear(173,216,230);
+
+        // ã‚¹ã‚¿ãƒ¼ãƒˆç”»é¢
+        if (!gameStarted) {
+            fill(255, 255, 0);
+            textSize(48);
+            text("å‡ºç¾ã™ã‚‹ç·‘ã®å††ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦", 520, 340);
+            text("ã‚¹ã‚³ã‚¢ã‚’åŠ ç®—ã—ã‚ˆã†ï¼", 600, 400);
+            text("ãƒŸã‚¹ã™ã‚‹ã¨ãƒ©ã‚¤ãƒ•ãŒæ¸›ã‚‹ãï¼", 560, 460);
+
+            textSize(32);
+            text("Aã‚­ãƒ¼ã§ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆ", 650, 540);
+
+            if (isTrigger(KEY_A)) {
+                gameStarted = true;
+                long long now = duration_cast<milliseconds>(
+                    steady_clock::now().time_since_epoch()).count();
+                startTime = now;
+                lastUpdateTime = now;
+            }
+            return;
+        }
+
         long long currentTime = duration_cast<milliseconds>(
             steady_clock::now().time_since_epoch()).count();
 
-        // Œo‰ßŠÔ
         long long elapsed = currentTime - startTime;
-
-        // c‚èŠÔ
         int remainingTime = max(0, (TIME_LIMIT_MS - (int)elapsed) / 1000);
 
-        // ƒXƒRƒA•\¦
-        fill(255);
-        textSize(32);
-        text((std::string("ƒXƒRƒA: ") + std::to_string(score)).c_str(), 50, 50);
+        // ãƒªã‚¶ãƒ«ãƒˆ
+        if (elapsed >= TIME_LIMIT_MS || life <= 0) {
+            if (score > highScore) highScore = score;
 
-        // c‚èŠÔ•\¦
-        text((std::string("c‚èŠÔ: ") + std::to_string(remainingTime) + "•b").c_str(), 50, 90);
+            clear(173, 216, 230);
+            fill(255);
+            textSize(64);
 
-        // §ŒÀŠÔ‚ğ’´‚¦‚½‚çI—¹
-        if (elapsed >= TIME_LIMIT_MS) {
-            fill(255, 0, 0);
-            textSize(60);
-            text("TIME UP!", 700, 500);
-            return; 
+            if (life <= 0)
+                text("GAME OVER", 720, 260);
+            else
+                text("TIME UP", 760, 260);
+
+            textSize(36);
+            text(("æœ€çµ‚ã‚¹ã‚³ã‚¢: " + std::to_string(score)).c_str(), 700, 340);
+            text(("ãƒã‚¤ã‚¹ã‚³ã‚¢: " + std::to_string(highScore)).c_str(), 700, 390);
+
+            textSize(28);
+            text("ENTERã‚­ãƒ¼ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«æˆ»ã‚‹", 650, 460);
+            text("Zã‚­ãƒ¼ã§å†ãƒ—ãƒ¬ã‚¤", 650, 500);
+
+            if (isTrigger(KEY_ENTER)) main()->backToMenu();
+            if (isTrigger(KEY_Z)) create();
+            return;
         }
 
-        // 2•b‚²‚Æ‚É‰~‚ğˆÚ“®
-        if (currentTime - lastUpdateTime > 2000) {
-            circleX = rand() % (1920 - 2 * RADIUS) + RADIUS;
-            circleY = rand() % (1080 - 2 * RADIUS) + RADIUS;
+        // UI
+        fill(255);
+        textSize(32);
+        text(("ã‚¹ã‚³ã‚¢: " + std::to_string(score)).c_str(), 50, 50);
+        text(("æ®‹ã‚Šæ™‚é–“: " + std::to_string(remainingTime) + "ç§’").c_str(), 50, 90);
+        text(("LIFE: " + std::to_string(life)).c_str(), 50, 130);
+
+        // å††ç§»å‹•
+        if (currentTime - lastUpdateTime >= 3000) {
+            radius = rand() % 71 + 30;
+            circleX = rand() % (1920 - 2 * radius) + radius;
+            circleY = rand() % (1080 - 2 * radius) + radius;
             lastUpdateTime = currentTime;
         }
 
-        // ‰~
+        // å††æç”»
         fill(0, 255, 0);
-        circle((float)circleX, (float)circleY, (float)RADIUS);
+        circle((float)circleX, (float)circleY, (float)radius);
 
-        // ƒ}ƒEƒXƒNƒŠƒbƒN‚Å‰~‚É“–‚½‚Á‚½‚çƒXƒRƒA‰ÁZ
-        if (isMouseLeftPressed()) {
+        // GREATè¡¨ç¤º
+        if (showGreat) {
+            if (currentTime - greatTime <= GREAT_DISPLAY_MS) {
+                fill(255, 255, 0);
+                textSize(48);
+                text("GREAT!", circleX - 70, circleY - radius - 20);
+            }
+            else {
+                showGreat = false;
+            }
+        }
+
+        // MISSè¡¨ç¤º
+        if (showMiss) {
+            if (currentTime - missTime <= MISS_DISPLAY_MS) {
+                fill(128, 128, 128); 
+                textSize(48);
+                text("MISS", circleX - 50, circleY - radius - 20);
+            }
+            else {
+                showMiss = false;
+            }
+        }
+
+        // ã‚¯ãƒªãƒƒã‚¯åˆ¤å®š
+        bool nowMouse = isMouseLeftPressed();
+
+        if (nowMouse && !prevMouse) {
             int mx = getMouseX();
             int my = getMouseY();
             int dx = mx - circleX;
             int dy = my - circleY;
-            if (dx * dx + dy * dy <= RADIUS * RADIUS) {
-                score++;
-                circleX = rand() % (1920 - 2 * RADIUS) + RADIUS;
-                circleY = rand() % (1080 - 2 * RADIUS) + RADIUS;
+
+            if (dx * dx + dy * dy <= radius * radius) {
+                // å½“ãŸã‚Š
+                if (radius >= 70) score += 1;
+                else if (radius >= 50) score += 2;
+                else score += 3;
+
+                showGreat = true;
+                greatTime = currentTime;
+
+                radius = rand() % 71 + 30;
+                circleX = rand() % (1920 - 2 * radius) + radius;
+                circleY = rand() % (1080 - 2 * radius) + radius;
+                lastUpdateTime = currentTime;
+            }
+            else {
+                // ãƒã‚ºãƒ¬
+                life--;
+                showMiss = true;
+                missTime = currentTime;
             }
         }
+
+        prevMouse = nowMouse;
     }
 }
+

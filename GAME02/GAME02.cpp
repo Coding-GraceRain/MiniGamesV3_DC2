@@ -786,7 +786,7 @@ namespace GAME02{
 				text("5‚Â“¯‚¶ƒTƒCƒRƒ‚ª‘µ‚Á‚½–ğ", 0, 500);
 			}
 		}
-	}
+	}	 
 	void GAME::proc() {
 		stroke(255);
 		strokeWeight(10);

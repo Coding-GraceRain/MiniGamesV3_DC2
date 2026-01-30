@@ -21,12 +21,21 @@ namespace GAME09
         bool gameClear = false;
         bool saved = false; 
         bool phaseChanging = false;
+        bool bgmPlaying = false;
+
 
         int score = 0;
         int highScore = 0;
         int backImg;
         int phaseStartTimer = 0;
         int currentPhase = 1;
+        int bgm;
+        int bgmTimer = 0;
+        int clearBonus = 0;
+
+        float playTime = 0.0f;
+
+        const int BGM_LENGTH = 60 * 98;
 
         PLAYER player;
         INVADER_MANAGER invaderManager;

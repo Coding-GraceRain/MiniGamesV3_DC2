@@ -8,7 +8,6 @@ namespace GAME01 {
 	struct KanjiData {
 		int img;                // 画像ID
 		const char* yomi;       // 正解の読み
-		//char yomi[32];   // ← ★固定配列にする
 	};
 	class KANJI {
 	private:
@@ -21,7 +20,7 @@ namespace GAME01 {
 		char displayStr[64] = "";
 		int inputLenB = 0;
 		void loadKanjiImages();
-		void romajiToKana(const char* src, char* dst);
+		bool romajiToKana(const char* src, char* dst);
 		bool Kanser1Generated = false;
 		bool Kanser2Generated;
 		bool Kanser3Generated;
@@ -30,27 +29,29 @@ namespace GAME01 {
 		bool Kanser6Generated;
 		bool KanswerChecked = false;
 		bool KanswerCorrect = false;
+		bool Meter = false;
 		int correctCount = 0;   // 今回の10問用カウンタ (0?10)
 		int point = 0;          // 累計ポイント（保存される
+		char fixedKana[128];     // 確定したひらがな
+		char pendingRoma[8];     // 未確定ローマ字（最大3で足りる）
+		char inputRoma[128];     // ローマ字全文（判定用）
+		bool rewardGiven;
 	public:
 		static int cont;
 		void game();
 		void Kanser1();
-		void Kanser2();
-		void Kanser3();
-		void Kanser4();
-		void Kanser5();
-		void Kanser6();
+		void updateDisplay();
 		void key();
 		void proc();
 		void initialize();
-		void triming(char* s);
+		void Leftinitialize();
+		void savePoint();
+		void loadPoint();
+		void drawMeter(float x,float y);
 		static KANJI* kanji1();
-		KANJI* kanji2();
-		KANJI* kanji3();
-		KANJI* kanji4();
-		KANJI* kanji5();
-		KANJI* kanji6();
 		int kanjiImg;   // ← 追加：漢字画像ID
+		int correctStreak;   // 現在の正解数（0～10）
+		int totalPoint;     // 所持ポイント
+		int Kans = 0;
 	};
 }

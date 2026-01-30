@@ -71,7 +71,7 @@ namespace GAME01
 			}
 			if (isTrigger(KEY_K)) {
 				KANJI* k = KANJI::kanji1();
-				k->initialize();
+				/*k->initialize();*/
 				currentScene = 2;
 			}
 			if (isTrigger(KEY_ENTER)) {

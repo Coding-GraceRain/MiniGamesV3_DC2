@@ -1,14 +1,8 @@
-#include "Board.h"
 #include "GAME08.h"
-#include "../MAIN/MAIN.h"
 #include "../../libOne/inc/libOne.h"
-
-
 
 namespace GAME08
 {
-	using namespace GAME08;
-
 	GAME::GAME(MAIN* main)
 		: GAME_BASE(main)
 		, board()

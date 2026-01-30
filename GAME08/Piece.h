@@ -23,13 +23,14 @@ namespace GAME08
     public:
         PieceType type;
         PieceColor color;
+        bool hasMoved; // キャスリング用
 
         // 空マス用コンストラクタ
-        Piece() : type(NONE), color(NONE_COLOR) {}
+        Piece() : type(NONE), color(NONE_COLOR), hasMoved(false) {}
 
         // 通常駒用
         Piece(PieceType t, PieceColor c)
-            : type(t), color(c) {}
+            : type(t), color(c), hasMoved(false) {}
 
         bool isEmpty() const {
             return type == NONE;

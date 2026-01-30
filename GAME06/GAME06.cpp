@@ -8,20 +8,28 @@
 #include <windows.h>
 
 bool isMouseLeftPressed() {
-    return (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
+    return isPress(MOUSE_LBUTTON);
 }
 
 int getMouseX() {
+#if 0
     POINT p;
     GetCursorPos(&p);
     ScreenToClient(GetForegroundWindow(), &p);
     return p.x;
+#else
+    return mouseX;
+#endif
 }
 int getMouseY() {
+#if 0
     POINT p;
     GetCursorPos(&p);
     ScreenToClient(GetForegroundWindow(), &p);
     return p.y;
+#else
+    return mouseY;
+#endif
 }
 
 using namespace std::chrono;
@@ -78,7 +86,7 @@ namespace GAME06 {
 
     void GAME::proc() {
 
-        clear(173,216,230);
+        clear(0,0,0);
 
         // スタート画面
         if (!gameStarted) {
@@ -111,7 +119,7 @@ namespace GAME06 {
         if (elapsed >= TIME_LIMIT_MS || life <= 0) {
             if (score > highScore) highScore = score;
 
-            clear(173, 216, 230);
+            clear(0,0,0);
             fill(255);
             textSize(64);
 

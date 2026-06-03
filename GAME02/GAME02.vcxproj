@@ -133,10 +133,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BBULLET.cpp" />
+    <ClCompile Include="BULLET.cpp" />
+    <ClCompile Include="BULLET_BASE.cpp" />
+    <ClCompile Include="EBULLET.cpp" />
+    <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="ENEMY2.cpp" />
+    <ClCompile Include="ENEMY_BASE.cpp" />
     <ClCompile Include="GAME02.cpp" />
+    <ClCompile Include="haikei.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="Saveload.cpp" />
+    <ClCompile Include="SHOT_POINT.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BBULLET.h" />
+    <ClInclude Include="BULLET.h" />
+    <ClInclude Include="BULLET_BASE.h" />
+    <ClInclude Include="DEFINES.h" />
+    <ClInclude Include="EBULLET.h" />
+    <ClInclude Include="ENEMY.h" />
+    <ClInclude Include="ENEMY2.h" />
+    <ClInclude Include="ENEMY_BASE.h" />
     <ClInclude Include="GAME02.h" />
+    <ClInclude Include="haikei.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="PLAYER.H" />
+    <ClInclude Include="Saveload.h" />
+    <ClInclude Include="SHOT_POINT.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game02\title.txt" />

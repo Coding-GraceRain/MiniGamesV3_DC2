@@ -5,12 +5,13 @@
 #include"haikei.h"
 #include"BULLET.h"
 #include"DEFINES.h"
-#include"item.h"
+#include"ITEM.h"
 #include "EBULLET.h"
 #include "SHOT_POINT.h"
 #include"Saveload.h"
 #include "ENEMY2.h"
 #include "BBULLET.h"
+#include "SOUNDS.h"
 
 namespace GAME02
 {
@@ -19,7 +20,7 @@ namespace GAME02
     {  
   
     private:
-        enum { TITLE, PLAY,OPTION, SIBARI, SIBARIOVER, GAMEOVER, CLEAR };
+        enum { TITLE, PLAY,OPTION, HARD, HARDOVER, GAMEOVER, CLEAR };
         int State;
         float ShotDelay;
         float Delay;
@@ -38,7 +39,9 @@ namespace GAME02
         {
             50, 50, 0, 0
         };
-
+        int Cur = 0;
+        int Choose[3];
+        POINT mouse;
         PLAYER Player;
         ITEM Item[ITEM_NUM];
         ENEMY Enemy[ENEMY_NUM];
@@ -49,6 +52,7 @@ namespace GAME02
         SHOTPOINT Shotpoint[SHOT_POINT];
         SAVELOAD Save;
         BBULLET Bbullet[BULLET_BNUM];
+        SOUNDS Sound;
     public:
         GAME(class MAIN* main) :GAME_BASE(main) {};
         ~GAME() {};  
@@ -57,9 +61,10 @@ namespace GAME02
         void Title();
         void Play();
         void GameOver();
-        void SibariOver();
+        void HardOver();
         void GameClear();
-        void Sibarimode();
+        void Hardmode();
+        void Option();
         void Init();
         bool AllDead();
         void Bossshot();

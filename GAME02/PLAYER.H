@@ -4,16 +4,19 @@ namespace GAME02
 {
 	class PLAYER {
 	private:
-		int Img;
+		int Img=0;
+		int Now=1;
 	public:
 		float Px, Py, Vx, Vy;
 		int Bom;
 		int Shotlevel;
+		int ControlMode[2]{1,1};
+		int i=1;
 		void create();
 		void init();
 		void update();
 		void draw();
-		void sibariupdate();
+		void hardupdate();
 		
 		float left();
 		float right();

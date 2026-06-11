@@ -2,7 +2,7 @@
 namespace GAME02{
 	int SAVELOAD::loadscore() {
 		int HighScore = 0;
-		std::ifstream fin("save.txt");
+		std::ifstream fin("saveee.txt");
 		if (fin)fin >> HighScore;
 		fin.close();
 		return HighScore;
@@ -11,7 +11,7 @@ namespace GAME02{
 	void SAVELOAD::savescore(int i) {
 		int HighScore = loadscore();
 		if (i > HighScore) {
-			std::ofstream fout("save.txt");
+			std::ofstream fout("saveee.txt");
 			if (fout)
 			{
 				fout << i;

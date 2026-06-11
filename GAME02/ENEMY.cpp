@@ -8,7 +8,7 @@ namespace GAME02 {
 		srand((unsigned)time(NULL));
 	}
 	void ENEMY::init() {
-			Px = rand()% 639 + 639;
+			Px = 664 + rand()% 1227;
 			Py = rand() % 400;
 			Vx = 2.0f;
 			Vy = 0.1f;
@@ -34,7 +34,7 @@ namespace GAME02 {
 		else
 			Px += Vx;
 
-		if (Px< width / 3 || Px>width - 640) { Vx *= -1; }
+		if (Px< width / 3+24 || Px>width-24) { Vx *= -1; }
 	
 		if (Py < 24) {
 			init();
@@ -49,7 +49,7 @@ namespace GAME02 {
 	bool ENEMY::drop() {
 		return rand() % 100 < 15;
 	}
-	bool ENEMY::sibaridrop() {
+	bool ENEMY::harddrop() {
 		return rand() % 100 < 5;
 	}
 	float ENEMY::left() { return Px-24; }

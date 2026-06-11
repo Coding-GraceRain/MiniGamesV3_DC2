@@ -10,7 +10,7 @@ namespace GAME02 {
 		void update();
 		void draw();
 		bool drop();
-		bool sibaridrop();
+		bool harddrop();
 
 		float left();
 		float right();

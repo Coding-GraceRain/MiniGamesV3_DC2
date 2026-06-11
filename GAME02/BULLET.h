@@ -1,11 +1,7 @@
 #pragma once
 #include"ENEMY.h"
 #include"BULLET_BASE.h"
-#include <cmath>
-
-
 #include "../../libOne/inc/graphic.h"
-
 namespace GAME02 {
 	class BULLET:public BULLET_BASE
 	{

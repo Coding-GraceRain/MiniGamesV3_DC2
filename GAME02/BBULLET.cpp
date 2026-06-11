@@ -31,10 +31,10 @@ namespace GAME02 {
 		if (By < 0) {
 			Alive = false;
 		}
-		if (Bx > 1240) {
+		if (Bx > 1920) {
 			Alive = false;
 		}
-		if (Bx < 640) {
+		if (Bx < 640+24) {
 			Alive = false;
 		}
 	}

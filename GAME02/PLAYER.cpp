@@ -8,36 +8,78 @@ namespace GAME02 {
 		Img = loadImage("../main\\assets\\game02\\reimu.png");
 	}
 	void PLAYER::init() {
-		Px = width / 2 ;
+		Px = width-width/3;
 		Py = height -220;
 		Bom = 1;
-		Shotlevel = 4;
+		Shotlevel = 1;
+		i = 1;
 	}
 
-	void PLAYER::update() {
-		Vx = 4.0f;
-		Vy = 4.0f;
-		if (isPress(KEY_SHIFT)) {
-			Vx = 1.5f;
-			Vy = 1.5f;
+	void PLAYER::update() {	
+		if (ControlMode[0] == 1) {
+			Vx = 4.0f;
+			Vy = 4.0f;
+			if (isPress(KEY_SHIFT)) {
+				Vx = 1.5f;
+				Vy = 1.5f;
+			}
+			if (isPress(MOUSE_RBUTTON)) {
+				Vx = 1.5f;
+				Vy = 1.5f;
+			}
 		}
-		if (isPress(KEY_A)) {
-			Px -= Vx;
+		if (ControlMode[0] == 2) {
+			if (Now == 1) {
+				Vx = 4.0f;
+				Vy = 4.0f;
+			}
+			if (isTrigger(KEY_SHIFT)) {
+				Vx = 1.5f;
+				Vy = 1.5f;
+				Now *= -1;
+			}
+			if (isTrigger(MOUSE_RBUTTON)) {
+				Vx = 1.5f;
+				Vy = 1.5f;
+				Now *= -1;
+			}
 		}
-		if (isPress(KEY_D)) {
-			Px += Vx;
+		
+		if (ControlMode[1] == 1) {
+			if (isPress(KEY_A)) {
+				Px -= Vx;
+			}
+			if (isPress(KEY_D)) {
+				Px += Vx;
+			}
+			if (isPress(KEY_W)) {
+				Py -= Vy;
+			}
+			if (isPress(KEY_S)) {
+				Py += Vy;
+			}
+			if (isPress(KEY_LEFT)) {
+				Px -= Vx;
+			}
+			if (isPress(KEY_RIGHT)) {
+				Px += Vx;
+			}
+			if (isPress(KEY_UP)) {
+				Py -= Vy;
+			}
+			if (isPress(KEY_DOWN)) {
+				Py += Vy;
+			}
 		}
-		if (isPress(KEY_W)) {
-			Py -= Vy;
+		if (ControlMode[1] == 2) {
+			Px = MouseX;
+			Py = MouseY;
 		}
-		if (isPress(KEY_S)) {
-			Py += Vy;
+		if (Px < 640+24) {
+			Px = 641+24;
 		}
-		if (Px < 642) {
-			Px = 643;
-		}
-		if (Px > 1278){
-			Px = 1277;
+		if (Px > 1920-24){
+			Px = 1895;
 		}
 		if (Py < 0) {
 			Py = 1;
@@ -47,30 +89,52 @@ namespace GAME02 {
 		}
 
 	}
-	void PLAYER::sibariupdate() {
+	void PLAYER::hardupdate() {
 		Vx = 5.0f;
 		Vy = 5.0f;
 		if (isPress(KEY_SHIFT)) {
 			Vx = 2.5f;
 			Vy = 2.5f;
 		}
-		if (isPress(KEY_A)) {
-			Px -= Vx;
+		if (isTrigger(KEY_SHIFT)) {
+			Vx = 2.5f;
+			Vy = 2.5f;
 		}
-		if (isPress(KEY_D)) {
-			Px += Vx;
+		if (ControlMode[1] == 1) {
+			if (isPress(KEY_A)) {
+				Px -= Vx;
+			}
+			if (isPress(KEY_D)) {
+				Px += Vx;
+			}
+			if (isPress(KEY_W)) {
+				Py -= Vy;
+			}
+			if (isPress(KEY_S)) {
+				Py += Vy;
+			}
+			if (isPress(KEY_LEFT)) {
+				Px -= Vx;
+			}
+			if (isPress(KEY_RIGHT)) {
+				Px += Vx;
+			}
+			if (isPress(KEY_UP)) {
+				Py -= Vy;
+			}
+			if (isPress(KEY_DOWN)) {
+				Py += Vy;
+			}
 		}
-		if (isPress(KEY_W)) {
-			Py -= Vy;
+		if (ControlMode[1] == 2) {
+			Px = MouseX;
+			Py = MouseY;
 		}
-		if (isPress(KEY_S)) {
-			Py += Vy;
+		if (Px < 640 + 24) {
+			Px = 641 + 24;
 		}
-		if (Px < 642) {
-			Px = 643;
-		}
-		if (Px > 1278) {
-			Px = 1277;
+		if (Px > 1920 - 24) {
+			Px = 1895;
 		}
 		if (Py < 0) {
 			Py = 1;
@@ -84,7 +148,7 @@ namespace GAME02 {
 		rectMode(CENTER);
 		image(Img, Px, Py);
 	}
-	float PLAYER::left() { return Px-1; }
+	float PLAYER::left() { return Px-0.5f; }
 	float PLAYER::right() { return Px + 1; }
 	float PLAYER::top() { return Py-1; }
 	float PLAYER::bottom() { return Py + 1; }

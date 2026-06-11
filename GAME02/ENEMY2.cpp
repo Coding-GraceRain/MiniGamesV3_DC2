@@ -5,12 +5,13 @@ namespace GAME02 {
 		Img = loadImage("../main\\assets\\game02\\boss.png");
 	}
 	void BOSS::init() {
-		Px = width / 2;
+		Px = width - width / 3;
 		Py = -100;
 		Vx = 2.0f;
 		Vy = 2.0f;
 		Vy2 = 8.0f;
 		Hp = 5000;
+		//Hp = 0;
 		Deg = 0;
 		Cnt1 = 120;
 		Cnt2 = 300;
@@ -18,7 +19,7 @@ namespace GAME02 {
 		Cnt4 = 200;
 
 		Delay = rand() % 30 + 60;
-		Alive = true; 47;
+		Alive = true;
 		Pattern = Pop;
 		LimitTime = 6000;
 	}
@@ -45,7 +46,7 @@ namespace GAME02 {
 			}
 			if (Cnt2 == 0) {
 				Px += Vx;
-				if (Px > 1280 || Px < 640) {
+				if (Px > 1920-72 || Px < 640+72) {
 					Vx *= -1;
 				}
 			}
@@ -57,7 +58,7 @@ namespace GAME02 {
 	}
 	void BOSS::bossPattern2(){
 		Px += Vx;
-		if (Px > 1280 || Px < 640) {
+		if (Px > 1920-72 || Px < 640+72) {
 			Vx *= -1;
 		}
 
@@ -70,7 +71,7 @@ namespace GAME02 {
 	void BOSS::bossPattern3(){
 		
 		Px += Vx;
-		if (Px > 1280 || Px < 640) {
+		if (Px > 1920-72 || Px < 640+72) {
 			Vx *= -1;
 		}
 
@@ -108,7 +109,8 @@ namespace GAME02 {
 		image(Img, Px, Py, 0, 3);
 		rectMode(CORNER);
 		if (Hp > 0) {
-			rect(640, 0, Hp / 9, 10);
+			fill(0, 255, 0);
+			rect(642, 0, Hp / 4, 10);
 		}
 	}
 

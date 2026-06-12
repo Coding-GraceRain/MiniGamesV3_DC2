@@ -2,7 +2,7 @@
 #include "../../libOne/inc/input.h"
 #include"ENEMY.h"
 #include "PLAYER.h"
-
+#include "../../libOne/inc/window.h"
 namespace GAME02 {
 	void PLAYER::create() {
 		Img = loadImage("../main\\assets\\game02\\reimu.png");
@@ -76,6 +76,7 @@ namespace GAME02 {
 			Py = MouseY;
 		}
 		if (Px < 640+24) {
+			SetCursorPos(641 + 24, MouseY);
 			Px = 641+24;
 		}
 		if (Px > 1920-24){
@@ -131,6 +132,7 @@ namespace GAME02 {
 			Py = MouseY;
 		}
 		if (Px < 640 + 24) {
+			SetCursorPos(641+24,MouseY);
 			Px = 641 + 24;
 		}
 		if (Px > 1920 - 24) {
@@ -149,9 +151,9 @@ namespace GAME02 {
 		image(Img, Px, Py);
 	}
 	float PLAYER::left() { return Px-0.5f; }
-	float PLAYER::right() { return Px + 1; }
-	float PLAYER::top() { return Py-1; }
-	float PLAYER::bottom() { return Py + 1; }
+	float PLAYER::right() { return Px + 1.0f; }
+	float PLAYER::top() { return Py-1.0f; }
+	float PLAYER::bottom() { return Py + 1.0f; }
 	bool PLAYER::hit(ENEMY& enemy) {
 		if (left() > enemy.right() ||
 			right() < enemy.left() ||

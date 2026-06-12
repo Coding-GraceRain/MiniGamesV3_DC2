@@ -22,10 +22,10 @@ namespace GAME02 {
 		}
 	}
 
-	float ITEM::left() { return Px - 28; }
-	float ITEM::right() { return Px + 28; }
-	float ITEM::top() { return Py - 28; }
-	float ITEM::bottom() { return Py + 28; }
+	float ITEM::left() { return Px - 28.0f; }
+	float ITEM::right() { return Px + 28.0f; }
+	float ITEM::top() { return Py - 28.0f; }
+	float ITEM::bottom() { return Py + 28.0f; }
 	bool ITEM::hit(PLAYER& p) {
 		if (left() > p.right() ||
 			right() < p.left() ||

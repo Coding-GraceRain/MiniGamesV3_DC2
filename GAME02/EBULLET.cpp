@@ -45,10 +45,10 @@ namespace GAME02 {
 		}
 
 	}
-	float EBULLET::left() { return Bx - 8; }
-	float EBULLET::right() { return Bx + 8; }
-	float EBULLET::top() { return By - 8; }
-	float EBULLET::bottom() { return By + 8; }
+	float EBULLET::left() { return Bx - 8.0f; }
+	float EBULLET::right() { return Bx + 8.0f; }
+	float EBULLET::top() { return By - 8.0f; }
+	float EBULLET::bottom() { return By + 8.0f; }
 
 	bool EBULLET::hit(PLAYER& player) {
 		if (left() > player.right() ||

@@ -1,5 +1,6 @@
 #include "ENEMY2.h"
 #include "../../libOne/inc/graphic.h"
+#include "../../libOne/inc/mathUtil.h"
 namespace GAME02 {
 	void BOSS::create() {
 		Img = loadImage("../main\\assets\\game02\\boss.png");
@@ -23,7 +24,7 @@ namespace GAME02 {
 		Pattern = Pop;
 		LimitTime = 6000;
 	}
-	
+
 	void BOSS::bosspop() {
 		if (Cnt1 > 0) {
 			Py += Vy;
@@ -118,10 +119,10 @@ namespace GAME02 {
 		return rand() % 100 < 100;
 	}
 
-	float BOSS::left() { return Px - 72; }
-	float BOSS::right() { return Px + 72; }
-	float BOSS::top() { return Py - 72; }
-	float BOSS::bottom() { return Py + 72; }
+	float BOSS::left() { return Px - 72.0f; }
+	float BOSS::right() { return Px + 72.0f; }
+	float BOSS::top() { return Py - 72.0f; }
+	float BOSS::bottom() { return Py + 72.0f; }
 	bool BOSS::hit(BULLET& bullet) {
 		if (left() > bullet.right() ||
 			right() < bullet.left() ||

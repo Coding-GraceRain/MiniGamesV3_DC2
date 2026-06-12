@@ -1,8 +1,9 @@
 #pragma once
 #include"ENEMY_BASE.h"
 #include "ENEMY.h"
-#include "DEFINES.h"
 #include "BULLET.h"
+#include"PLAYER.H"
+#include "BBULLET.h"
 namespace GAME02 {
     class BOSS :
         public ENEMY_BASE
@@ -29,7 +30,6 @@ namespace GAME02 {
 		void update();
 		void draw();
 		bool drop();
-
 		void bosspop();
 		void bossPattern1();
 		void bossPattern2();

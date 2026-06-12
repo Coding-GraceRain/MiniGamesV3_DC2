@@ -39,10 +39,10 @@ namespace GAME02 {
 			}
 			
 		}
-		float BULLET::left() { return Bx - 15; }
-		float BULLET::right() { return Bx + 15; }
-		float BULLET::top() { return By - 15; }
-		float BULLET::bottom() { return By + 15; }
+		float BULLET::left() { return Bx - 15.0f; }
+		float BULLET::right() { return Bx + 15.0f; }
+		float BULLET::top() { return By - 15.0f; }
+		float BULLET::bottom() { return By + 15.0f; }
 
 		bool BULLET::hit(ENEMY& enemy) {
 			if (left() > enemy.right() ||

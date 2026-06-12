@@ -12,16 +12,14 @@
 #include "ENEMY2.h"
 #include "BBULLET.h"
 #include "SOUNDS.h"
-
 namespace GAME02
 {
     class GAME :
         public GAME_BASE
     {  
-  
-    private:
-        enum { TITLE, PLAY,OPTION, HARD, HARDOVER, GAMEOVER, CLEAR };
+    protected:
         int State;
+        enum { TITLE, PLAY, OPTION, HARD, HARDOVER, GAMEOVER, CLEAR };
         float ShotDelay;
         float Delay;
         float Hdelay;
@@ -69,7 +67,7 @@ namespace GAME02
         bool AllDead();
         void Bossshot();
     public:
-    
+      
         int create();
         void proc();
         void destroy();

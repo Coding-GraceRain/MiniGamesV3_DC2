@@ -19,6 +19,7 @@ namespace GAME02 {
 		Alive = true;
 
 	}
+	
 	void BBULLET::update() {
 		if (!Alive) {
 			return;
@@ -45,10 +46,10 @@ namespace GAME02 {
 		
 
 	}
-	float BBULLET::left() { return Bx - 8; }
-	float BBULLET::right() { return Bx + 8; }
-	float BBULLET::top() { return By - 8; }
-	float BBULLET::bottom() { return By + 8; }
+	float BBULLET::left() { return Bx - 8.0f; }
+	float BBULLET::right() { return Bx + 8.0f; }
+	float BBULLET::top() { return By - 8.0f; }
+	float BBULLET::bottom() { return By + 8.0f; }
 
 	bool BBULLET::hit(PLAYER& player) {
 		if (left() > player.right() ||

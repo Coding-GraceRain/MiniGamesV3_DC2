@@ -52,10 +52,10 @@ namespace GAME02 {
 	bool ENEMY::harddrop() {
 		return rand() % 100 < 5;
 	}
-	float ENEMY::left() { return Px-24; }
-	float ENEMY::right() { return Px + 24; }
-	float ENEMY::top() { return Py-24; }
-	float ENEMY::bottom() { return Py + 24; }
+	float ENEMY::left() { return Px-24.0f; }
+	float ENEMY::right() { return Px + 24.0f; }
+	float ENEMY::top() { return Py-24.0f; }
+	float ENEMY::bottom() { return Py + 24.0f; }
 	bool ENEMY::hit(ENEMY& enemy) {
 		if (left() > enemy.right() ||
 			right() < enemy.left() ||

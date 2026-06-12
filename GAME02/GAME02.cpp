@@ -48,6 +48,9 @@ namespace GAME02
 					}
 				}
 				Boss.Delay = 25;
+				if (Boss.Hp < 2500) {
+					Boss.Delay = 23;
+				}
 			}
 			if (Player.ControlMode[1] == 2) {
 				static float offset = 0;
@@ -69,9 +72,12 @@ namespace GAME02
 					}
 				}
 				Boss.Delay = 25;
+				if (Boss.Hp < 2500) {
+					Boss.Delay = 23;
+				}
 			}
 			if (State == HARD) {
-				Boss.Delay = 20;
+				Boss.Delay = 23;
 			}
 			
 		}
@@ -171,6 +177,7 @@ namespace GAME02
 					}
 				} while (retry);
 			}
+			GetCursorPos(&mouse);
 			ClientToScreen(HWnd, &mouse);
 			SetCursorPos(1280, 880);
 			State = PLAY;
@@ -204,6 +211,8 @@ namespace GAME02
 				bool retry;
 				do
 				{
+
+
 					retry = false;
 					Enemy[i].init();
 
@@ -235,13 +244,16 @@ namespace GAME02
 		clear();
 		Background.titledraw();
 		fill(0, 0, 0);
-		text("操作をマウスにすると難易度が上がります(簡単すぎたので)", 0, 1070);
+		text("操作をマウスにすると難易度が上がります(簡単すぎたので)", 0, 50);
 		if (Choose[0] == 0) {
 			text("低速移動:長押し", width / 2 - 150, 450);
 			Player.ControlMode[0] = 1;
 		}
 		if (Choose[1] == 0) {
 			text("操作モード:WASD/矢印キー", width / 2 - 150, 550);
+		}
+		if (Choose[2] == 0) {
+			text("オーディオ:あり", 0, 1080);
 		}
 		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 220 && MouseY > 400 && MouseY < 450 && Choose[0] == 0) {
 			fill(255, 255, 255);
@@ -250,17 +262,25 @@ namespace GAME02
 		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 220 && MouseY > 400 && MouseY < 450 && isTrigger(MOUSE_LBUTTON)) {
 			Sound.clicksound();
 			Cur = 1;
+			if (Choose[0] == 0)
 			Choose[0] = 1;
 		}
 		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 180 && MouseY > 500 && MouseY < 550 && isTrigger(MOUSE_LBUTTON)) {
 			Sound.clicksound();
 			Cur = 2;
+			if (Choose[1] == 0)
 			Choose[1] = 1;
+		}
+		if (MouseX < 375 && MouseY > 1030 && isTrigger(MOUSE_LBUTTON)) {
+			Sound.clicksound();
+			Cur = 3;
+			if(Choose[2]==0)
+			Choose[2] = 1;
 		}
 		if (isTrigger(KEY_ENTER)||isTrigger(MOUSE_RBUTTON)) {
 			Cur = 0;
 		}
-		if (Cur == 0||Cur == 2) {
+		if (Cur != 1) {
 			fill(0, 0, 0);
 			if (Choose[0] == 1) {
 				text("低速移動:長押し", width / 2 - 150, 450);
@@ -289,7 +309,7 @@ namespace GAME02
 				Choose[0] = 1;
 			}
 		}
-		if (Cur == 0 || Cur == 1) {
+		if (Cur != 2) {
 			fill(0, 0, 0);
 			if (Choose[1] == 1) {
 				text("操作モード:WASD/矢印キー", width / 2 - 150, 550);
@@ -318,7 +338,47 @@ namespace GAME02
 				Choose[1] = 1;
 			}
 		}
-		
+		if (Cur != 3) {
+			fill(0, 0, 0);
+			if (Choose[2] == 1) {
+				text("オーディオ:あり", 0, 1080);
+			}
+			else if (Choose[2] == 2) {
+				text("オーディオ:半分", 0, 1080);
+			}
+			else if (Choose[2] == 3) {
+				text("オーディオ:なし", 0, 1080);
+			}
+		}
+		if (Cur == 3) {
+			if (Choose[2] == 1) {
+				fill(255, 0, 0);
+				text("オーディオ:あり", 0, 1080);
+			}
+			else if (Choose[2] == 2) {
+				fill(255, 0, 0);
+				text("オーディオ:半分", 0, 1080);
+			}
+			else if (Choose[2] == 3) {
+				fill(255, 0, 0);
+				text("オーディオ:なし", 0, 1080);
+			}
+			if (Choose[2] == 1 && (isTrigger(KEY_UP) || isTrigger(KEY_DOWN))) {
+				Sound.clicksound();
+				Sound.halfsound();
+				Choose[2] = 2;
+			}
+			else if (Choose[2] == 2 && (isTrigger(KEY_UP) || isTrigger(KEY_DOWN))) {
+				Sound.clicksound();
+				Sound.mutesound();
+				Choose[2] = 3;
+			}
+			else if (Choose[2] == 3 && (isTrigger(KEY_UP) || isTrigger(KEY_DOWN))) {
+				Sound.clicksound();
+				Sound.setsound();
+				Choose[2] = 1;
+			}
+		}
 		text((let)"" + Player.ControlMode[0], 0, 100);
 		text((let)"" + Cur, 0, 150);
 		if (isTrigger(KEY_B)) {
@@ -555,6 +615,7 @@ namespace GAME02
 			if (Boss.Cnt4 < 0) {
 				Bossshot();
 			}
+
 			
 		}
 		if (Boss.Hp <= 0) {
@@ -895,6 +956,7 @@ namespace GAME02
 			}
 			for (int i = 0; i < ENEMY_NUM; i++)
 			{
+				
 				bool retry;
 				do
 				{

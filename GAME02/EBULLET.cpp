@@ -51,13 +51,13 @@ namespace GAME02 {
 	float EBULLET::bottom() { return By + 8.0f; }
 
 	bool EBULLET::hit(PLAYER& player) {
-		if (left() > player.right() ||
-			right() < player.left() ||
-			top() > player.bottom() ||
-			bottom() < player.top()) {
-			return false;
+		if (left() <= player.right() &&
+			right() >= player.left() &&
+			top() <= player.bottom() &&
+			bottom() >= player.top()) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 

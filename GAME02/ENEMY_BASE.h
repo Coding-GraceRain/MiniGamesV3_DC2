@@ -7,7 +7,7 @@ namespace GAME02 {
 	public:
 		float Px, Py, Vx, Vy;
 		int Cum, Rnd;
-		int Hp;
+		int Hp,Buf;
 		bool Alive;
 		float Delay;
 	};

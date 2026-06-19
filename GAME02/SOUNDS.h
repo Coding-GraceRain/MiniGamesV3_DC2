@@ -4,18 +4,21 @@ namespace GAME02 {
 	{
 	private:
 		int TitleSound;
-		int PlaySounds;
+		int PlaySound;
 		int GameoverSound;
 		int ClearSound;
 		int ClickSound;
 		int GetitemSound;
+		int BossSound;
 	public:
 		int vol;
 		void create();
 		void titlesound();
 		void playsound();
-		void getitemsound();
 		void playstopsound();
+		void bosssound();
+		void bossStopSound();
+		void getitemsound();
 		void gameoversound();
 		void clearsound();
 		void clicksound();

@@ -15,6 +15,7 @@ namespace GAME02
 		Delay = 10;
 		Hdelay = 15;
 		Deg = 0;
+		BossState = NOPOP;
 	}
 	//全滅判定
 	bool GAME::AllDead() {
@@ -82,8 +83,7 @@ namespace GAME02
 			
 		}
 		Boss.Delay--;
-	}
-	
+	}	
 	int GAME::create()
 	{
 		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -113,10 +113,7 @@ namespace GAME02
 		HighScore = Save.loadscore();
 		return 0;
 	}
-		
-
 	
-
 	void GAME::Title() {
 		showCursor();
 		clear(255, 0, 255);
@@ -206,6 +203,7 @@ namespace GAME02
 			{
 				Bbullet[i].init();
 			}
+			//敵同士を比較して、重なったらやり直しする
 			for (int i = 0; i < ENEMY_NUM; i++)
 			{
 				bool retry;
@@ -244,6 +242,7 @@ namespace GAME02
 		clear();
 		Background.titledraw();
 		fill(0, 0, 0);
+		text("Bでタイトルに戻る", 0, 100);
 		text("操作をマウスにすると難易度が上がります(簡単すぎたので)", 0, 50);
 		if (Choose[0] == 0) {
 			text("低速移動:長押し", width / 2 - 150, 450);
@@ -259,6 +258,8 @@ namespace GAME02
 			fill(255, 255, 255);
 			text("低速移動:長押し", width / 2 - 150, 450);
 		}
+		
+
 		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 220 && MouseY > 400 && MouseY < 450 && isTrigger(MOUSE_LBUTTON)) {
 			Sound.clicksound();
 			Cur = 1;
@@ -289,6 +290,14 @@ namespace GAME02
 				text("低速移動:切り替え", width / 2 - 150, 450);
 			}
 		}
+		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 220 && MouseY > 400 && MouseY < 450 && Choose[0] == 1) {
+			fill(255, 255, 255);
+			text("低速移動:長押し", width / 2 - 150, 450);
+		}
+		else if (MouseX > width / 2 - 150 && MouseX < width / 2 + 220 && MouseY > 400 && MouseY < 450 && Choose[0] == 2) {
+			fill(255, 255, 255);
+			text("低速移動:切り替え", width / 2 - 150, 450);
+		}
 		if (Cur == 1) {
 			if (Choose[0] == 1) {
 				fill(255, 0, 0);
@@ -317,6 +326,19 @@ namespace GAME02
 			if (Choose[1] == 2) {
 				text("操作モード:マウス", width / 2 - 150, 550);
 			}
+		}
+		//
+		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 180 && MouseY > 500 && MouseY < 550 && Choose[1] == 0) {
+			fill(255, 255, 255);
+			text("操作モード:WASD/矢印キー", width / 2 - 150, 550);
+		}
+		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 180 && MouseY > 500 && MouseY < 550 && Choose[1] == 1) {
+			fill(255, 255, 255);
+			text("操作モード:WASD/矢印キー", width / 2 - 150, 550);
+		}
+		else if (MouseX > width / 2 - 150 && MouseX < width / 2 + 180 && MouseY > 500 && MouseY < 550 && Choose[1] == 2) {
+			fill(255, 255, 255);
+			text("操作モード:マウス", width / 2 - 150, 550);
 		}
 		if (Cur == 2) {
 			if (Choose[1] == 1) {
@@ -350,6 +372,23 @@ namespace GAME02
 				text("オーディオ:なし", 0, 1080);
 			}
 		}
+
+		if (MouseX < 375 && MouseY > 1030 && Choose[2] == 0) {
+			fill(255, 255, 255);
+			text("オーディオ:あり", 0, 1080);
+		}
+		if (MouseX < 375 && MouseY > 1030 && Choose[2] == 1) {
+			fill(255, 255, 255);
+			text("オーディオ:あり", 0, 1080);
+		}
+		else if (MouseX < 375 && MouseY > 1030 && Choose[2] == 2) {
+			fill(255, 255, 255);
+			text("オーディオ:半分", 0, 1080);
+		}
+		else if (MouseX < 375 && MouseY > 1030 && Choose[2] == 3) {
+			fill(255, 255, 255);
+			text("オーディオ:なし", 0, 1080);
+		}
 		if (Cur == 3) {
 			if (Choose[2] == 1) {
 				fill(255, 0, 0);
@@ -379,10 +418,9 @@ namespace GAME02
 				Choose[2] = 1;
 			}
 		}
-		text((let)"" + Player.ControlMode[0], 0, 100);
-		text((let)"" + Cur, 0, 150);
 		if (isTrigger(KEY_B)) {
 			State = TITLE;
+			Cur = 0;
 		}
 	}
 	//メイン
@@ -392,6 +430,7 @@ namespace GAME02
 		fill(255, 255, 255);
 		HighScore = Save.loadscore();
 		//更新と表示
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		Background.draw();
 		Player.update();
 		Player.draw();
@@ -424,6 +463,7 @@ namespace GAME02
 	
 
 		//弾処理
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		ShotCount = 0;
 		ShotPoint = 0;
 		
@@ -480,7 +520,11 @@ namespace GAME02
 			}
 		}
 		
-		//当たったら～{
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		// 当たったら～
+
+
+		//自分の弾が敵に当たったら
 		for (int b = 0; b < BULLET_NUM; b++) 
 		{
 			if (!Bullet[b].Alive) 
@@ -517,8 +561,10 @@ namespace GAME02
 						
 					}
 
-			}
 		}
+
+			}
+		//敵本体に当たったら
 		for (int i = 0; i < ENEMY_NUM; i++) {
 			if (Enemy[i].Alive) {
 				if (Player.hit(Enemy[i])) {
@@ -528,6 +574,7 @@ namespace GAME02
 				}
 			}
 		}
+		//敵弾と自分
 		for (int i = 0; i < BULLET_ENUM;i++) {
 			if (Ebullet[i].Alive) {
 				if (Ebullet[i].hit(Player)) {
@@ -537,7 +584,7 @@ namespace GAME02
 				}
 			}
 		}
-		
+		//アイテム
 		for (int i = 0; i < ITEM_NUM; i++) {
 			if (Item[i].Alive) {
 				if (Item[i].hit(Player)) {
@@ -553,6 +600,7 @@ namespace GAME02
 				}
 			}
 		}
+		//ボス
 		for (int i = 0; i < BULLET_BNUM; i++) {
 			if (Bbullet[i].Alive) {
 				if (Bbullet[i].hit(Player)) {
@@ -569,11 +617,12 @@ namespace GAME02
 				}
 			}
 		}
-	    //}
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		//ウェーブ
 		if (Wave > 0) {
 			if (AllDead()) {
 				Wave -= 1;
+				Enemy->Buf += 5;
 				for (int i = 0; i < ENEMY_NUM; i++)
 				{
 					if (Wave == 0) {
@@ -593,20 +642,31 @@ namespace GAME02
 								break;
 							}
 						}
+
 					} while (retry);
-					Enemy[i].Hp += 5;
+					Enemy[i].Hp += Enemy->Buf;
 					if (Enemy[i].Delay > 10) {
 						Enemy[i].Delay -= 2;
 					}
 				}
+				
 
 			}
 		}
-		
+	
 		text((let)"Player" + Player.i, 0, 1055);
-		text((let)"Player" + Player.i, 0, 1055);
+		//音楽切り替えのために一度だけ繰り返される文です
 		if (Wave == 0) {
-			//敵の弾消してからボス召喚
+			if (BossState == NOPOP) {
+				Sound.playstopsound();
+				Sound.bosssound();
+				BossState = BOSSPOP;
+			}
+		}
+		///////////////////////////////////////////////
+		//ボス
+		if (BossState == BOSSPOP) {
+		
 			for (int i = 0; i < BULLET_ENUM; i++) {
 				Ebullet[i].Alive = false;
 			}
@@ -615,18 +675,18 @@ namespace GAME02
 			if (Boss.Cnt4 < 0) {
 				Bossshot();
 			}
-
-			
 		}
 		if (Boss.Hp <= 0) {
 			Score += 100000000;
 			Save.savescore(Score);
 			State = CLEAR;
+			Sound.bossStopSound();
 		}
 		if (isTrigger(KEY_T)) {
 			Save.savescore(Score);
 			State = TITLE;
 			Sound.playstopsound();
+			Sound.bossStopSound();
 		}
 		Background.secdraw();
 		fill(255, 255, 255);
@@ -645,6 +705,7 @@ namespace GAME02
 		fill(255, 255, 255);
 		HighScore = Save.loadscore();
 		//更新と表示
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		Background.draw();
 		Player.hardupdate();
 		Player.draw();
@@ -674,9 +735,8 @@ namespace GAME02
 			Enemy[i].update();
 			Enemy[i].draw();
 		}
-
-
 		//弾処理
+		/////////////////////////////////////////////////////////////////////////////////////////////
 		ShotCount = 0;
 		ShotPoint = 0;
 
@@ -733,7 +793,9 @@ namespace GAME02
 			}
 		}
 
-		//当たったら～{
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//当たったら～
+
 		for (int b = 0; b < BULLET_NUM; b++)
 		{
 			if (!Bullet[b].Alive)
@@ -803,7 +865,7 @@ namespace GAME02
 						Player.Shotlevel++;
 					}
 					else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
-						Delay -= 3.0f;
+						Hdelay -= 1.0f;
 					}
 				}
 			}
@@ -825,11 +887,12 @@ namespace GAME02
 				}
 			}
 		}
-		//}
+		//////////////////////////////////////////////////////////////////////////////////////////////
 		//ウェーブ
 		if (Wave > 0) {
 			if (AllDead()) {
 				Wave -= 1;
+				Enemy->Buf += 5;
 				for (int i = 0; i < ENEMY_NUM; i++)
 				{
 					if (Wave == 0) {
@@ -850,7 +913,7 @@ namespace GAME02
 							}
 						}
 					} while (retry);
-					Enemy[i].Hp += 5;
+					Enemy[i].Hp += Enemy->Buf;
 					if (Enemy[i].Delay > 10) {
 						Enemy[i].Delay -= 3;
 					}
@@ -858,9 +921,15 @@ namespace GAME02
 
 			}
 		}
-
-
-
+		///////////////////////////////////////////////
+	    //ボス
+		if (Wave == 0) {
+			if (BossState == NOPOP) {
+				Sound.playstopsound();
+				Sound.bosssound();
+				BossState = BOSSPOP;
+			}
+		}
 		if (Wave == 0) {
 			//敵の弾消してからボス召喚
 			for (int i = 0; i < BULLET_ENUM; i++) {
@@ -874,7 +943,7 @@ namespace GAME02
 
 		}
 		if (Boss.Hp <= 0) {
-			Score += 10000000;
+			Score += 15000000;
 			Save.savescore(Score);
 			State = CLEAR;
 		}
@@ -898,6 +967,7 @@ namespace GAME02
 		clear(0,0,0);
 		HighScore = Save.loadscore();
 		Background.gameoverdraw();
+		Sound.bossStopSound();
 		Sound.playstopsound();
 		fill(128, 128, 128);
 		text((let)"Score " + Score, 0, 100);
@@ -973,7 +1043,7 @@ namespace GAME02
 					}
 				} while (retry);
 			}
-
+			Enemy->Buf = 0;
 			Init();
 			ClientToScreen(HWnd, &mouse);
 			SetCursorPos(1280, 880);
@@ -991,6 +1061,7 @@ namespace GAME02
 		clear(0, 0, 0);
 		HighScore = Save.loadscore();
 		Background.gameoverdraw();
+		Sound.bossStopSound();
 		fill(128, 128, 128);
 		text((let)"Score " + Score, 0, 100);
 		text((let)"HighScore " + HighScore, 0, 150);
@@ -1018,6 +1089,14 @@ namespace GAME02
 				Enemy[i].draw();
 			}
 		}
+		for (int i = 0; i < BULLET_BNUM; i++) {
+			if (Bbullet[i].Alive) {
+				Bbullet[i].draw();
+			}
+		}
+		if (Wave == 0) {
+			Boss.draw();
+		}
 		//すべて初期化してリトライ
 		if (isTrigger(KEY_R)) {
 			Player.init();
@@ -1027,12 +1106,16 @@ namespace GAME02
 			for (int i = 0; i < BULLET_ENUM; i++) {
 				Ebullet[i].init();
 			}
+			for (int i = 0; i < BULLET_BNUM; i++) {
+				Bbullet[i].init();
+			}
 			for (int i = 0; i < SHOT_POINT; i++) {
 				Shotpoint[i].init();
 			}
 			for (int i = 0; i < ITEM_NUM; i++) {
 				Item[i].init();
 			}
+
 			for (int i = 0; i < ENEMY_NUM; i++)
 			{
 				bool retry;
@@ -1051,6 +1134,7 @@ namespace GAME02
 					}
 				} while (retry);
 			}
+			Enemy->Buf = 0;
 			Init();
 			ClientToScreen(HWnd, &mouse);
 			SetCursorPos(1280, 880);

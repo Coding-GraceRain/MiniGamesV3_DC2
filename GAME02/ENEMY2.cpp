@@ -3,7 +3,7 @@
 #include "../../libOne/inc/mathUtil.h"
 namespace GAME02 {
 	void BOSS::create() {
-		Img = loadImage("../main\\assets\\game02\\boss.png");
+		Img = loadImage("../main\\assets\\game02\\Fran.png");
 	}
 	void BOSS::init() {
 		Px = width - width / 3;

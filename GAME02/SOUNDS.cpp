@@ -3,19 +3,20 @@
 
 namespace GAME02 {
 	void SOUNDS::create() {
-		 //TitleSound=loadSound();
-		 PlaySounds= loadSound("../main\\assets\\game02\\play.wav");
+		 //TitleSound=loadSound("../main\\assets\\game02\\");
+		 PlaySound= loadSound("../main\\assets\\game02\\play.wav");
+		 BossSound = loadSound("../main\\assets\\game02\\boss.wav");
 		 GetitemSound = loadSound("../main\\assets\\game02\\getitem.wav");
 		 GameoverSound=loadSound("../main\\assets\\game02\\gameover.wav");
-		 ClearSound;
+		 //ClearSound=loadSound("../main\\assets\\game02\\");
 		 ClickSound = loadSound("../main\\assets\\game02\\click.wav");
 		 setsound();
 	}
 	void SOUNDS::setsound() {
-		vol = -2200;
+		vol = -2000;
 	}
 	void SOUNDS::halfsound() {
-		vol = -3600;
+		vol = -3400;
 	}
 	void SOUNDS::mutesound() {
 		vol = -10000;
@@ -23,13 +24,22 @@ namespace GAME02 {
 	void SOUNDS::titlesound() {
 
 	}
+	
 	void SOUNDS::playsound() {
-		setVolume(PlaySounds,vol);
-		playLoopSound(PlaySounds);
+		setVolume(PlaySound,vol);
+		playLoopSound(PlaySound);
 	}
 	void SOUNDS::playstopsound() {
-		stopSound(PlaySounds);
+		stopSound(PlaySound);
 	}
+	void SOUNDS::bosssound() {
+		setVolume(BossSound, vol);
+		playLoopSound(BossSound);
+	}
+	void SOUNDS::bossStopSound() {
+		stopSound(BossSound);
+	}
+
 	void SOUNDS::getitemsound() {
 		setVolume(GetitemSound, vol);
 		playSound(GetitemSound);

@@ -19,7 +19,9 @@ namespace GAME02
     {  
     protected:
         int State;
+        int BossState;
         enum { TITLE, PLAY, OPTION, HARD, HARDOVER, GAMEOVER, CLEAR };
+        enum { NOPOP, BOSSPOP };
         float ShotDelay;
         float Delay;
         float Hdelay;

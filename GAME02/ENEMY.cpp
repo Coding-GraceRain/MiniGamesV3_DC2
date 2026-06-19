@@ -6,6 +6,7 @@ namespace GAME02 {
 	void ENEMY::create() {
 		Img = loadImage("../main\\assets\\game02\\ster.png");
 		srand((unsigned)time(NULL));
+		Buf = 0;
 	}
 	void ENEMY::init() {
 			Px = 664 + rand()% 1227;
@@ -13,7 +14,7 @@ namespace GAME02 {
 			Vx = 2.0f;
 			Vy = 0.1f;
 			Cum = 1000;
-			Hp = 3;
+			Hp = 5;
 			Delay = 0;
 			Alive = true;
 	}

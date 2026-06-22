@@ -41,7 +41,7 @@ namespace GAME02 {
 	}
 	void EBULLET::draw() {
 		if (Alive) {
-			image(Img, Bx, By,-90);
+			image(Img, Bx, By, -90);
 		}
 
 	}

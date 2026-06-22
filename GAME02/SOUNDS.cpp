@@ -10,10 +10,11 @@ namespace GAME02 {
 		 GameoverSound=loadSound("../main\\assets\\game02\\gameover.wav");
 		 //ClearSound=loadSound("../main\\assets\\game02\\");
 		 ClickSound = loadSound("../main\\assets\\game02\\click.wav");
+		 Boom = loadSound("../main\\assets\\game02\\boom.wav");
 		 setsound();
 	}
 	void SOUNDS::setsound() {
-		vol = -2000;
+		vol = -1600;
 	}
 	void SOUNDS::halfsound() {
 		vol = -3400;
@@ -39,7 +40,10 @@ namespace GAME02 {
 	void SOUNDS::bossStopSound() {
 		stopSound(BossSound);
 	}
-
+	void SOUNDS::boom() {
+		setVolume(Boom, vol);
+		playSound(Boom);
+	}
 	void SOUNDS::getitemsound() {
 		setVolume(GetitemSound, vol);
 		playSound(GetitemSound);

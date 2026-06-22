@@ -155,12 +155,21 @@ namespace GAME02 {
 	float PLAYER::top() { return Py-1.0f; }
 	float PLAYER::bottom() { return Py + 1.0f; }
 	bool PLAYER::hit(ENEMY& enemy) {
-		if (left() > enemy.right() ||
-			right() < enemy.left() ||
-			top() > enemy.bottom() ||
-			bottom() < enemy.top()) {
-			return false;
+		if (left() < enemy.right() &&
+			right() > enemy.left() &&
+			top() < enemy.bottom() &&
+			bottom() > enemy.top()) {
+			return true;
 		}
-		return true;
+		return false;
+	}
+	bool PLAYER::hit(ENEMY3& enemy) {
+		if (left() < enemy.right() &&
+			right() > enemy.left() &&
+			top() < enemy.bottom() &&
+			bottom() > enemy.top()) {
+			return true;
+		}
+		return false;
 	}
 }

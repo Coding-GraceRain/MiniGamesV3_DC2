@@ -27,13 +27,13 @@ namespace GAME02 {
 	float ITEM::top() { return Py - 28.0f; }
 	float ITEM::bottom() { return Py + 28.0f; }
 	bool ITEM::hit(PLAYER& p) {
-		if (left() > p.right() ||
-			right() < p.left() ||
-			top() > p.bottom() ||
-			bottom() < p.top()) {
-			return false;
+		if (left() < p.right() &&
+			right() > p.left() &&
+			top() < p.bottom() &&
+			bottom() > p.top()) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	void ITEM::draw() {

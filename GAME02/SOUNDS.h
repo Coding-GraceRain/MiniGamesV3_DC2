@@ -10,6 +10,7 @@ namespace GAME02 {
 		int ClickSound;
 		int GetitemSound;
 		int BossSound;
+		int Boom;
 	public:
 		int vol;
 		void create();
@@ -22,6 +23,8 @@ namespace GAME02 {
 		void gameoversound();
 		void clearsound();
 		void clicksound();
+		void boom();
+
 		void setsound();
 		void halfsound();
 		void mutesound();

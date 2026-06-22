@@ -14,7 +14,7 @@ namespace GAME02 {
 			Vx = 2.0f;
 			Vy = 0.1f;
 			Cum = 1000;
-			Hp = 5;
+			Hp = 3;
 			Delay = 0;
 			Alive = true;
 	}
@@ -58,12 +58,12 @@ namespace GAME02 {
 	float ENEMY::top() { return Py-24.0f; }
 	float ENEMY::bottom() { return Py + 24.0f; }
 	bool ENEMY::hit(ENEMY& enemy) {
-		if (left() > enemy.right() ||
-			right() < enemy.left() ||
-			top() > enemy.bottom() ||
-			bottom() < enemy.top()) {
-			return false;
+		if (left() < enemy.right() &&
+			right() > enemy.left() &&
+			top() < enemy.bottom() &&
+			bottom() > enemy.top()) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

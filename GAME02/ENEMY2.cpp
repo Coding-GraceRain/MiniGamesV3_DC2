@@ -12,7 +12,6 @@ namespace GAME02 {
 		Vy = 2.0f;
 		Vy2 = 8.0f;
 		Hp = 5000;
-		//Hp = 0;
 		Deg = 0;
 		Cnt1 = 120;
 		Cnt2 = 300;
@@ -124,13 +123,14 @@ namespace GAME02 {
 	float BOSS::top() { return Py - 72.0f; }
 	float BOSS::bottom() { return Py + 72.0f; }
 	bool BOSS::hit(BULLET& bullet) {
-		if (left() > bullet.right() ||
-			right() < bullet.left() ||
-			top() > bullet.bottom() ||
-			bottom() < bullet.top()) {
-			return false;
+		if (left() < bullet.right() &&
+			right() > bullet.left() &&
+			top() < bullet.bottom() &&
+			bottom() > bullet.top()) {
+			Hp -= 2;
+			return true;
+			
 		}
-		Hp-=2;
-		return true;
+		return false;
 	}
 }

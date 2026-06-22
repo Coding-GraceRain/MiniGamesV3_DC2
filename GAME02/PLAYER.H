@@ -1,5 +1,6 @@
 #pragma once
 #include"ENEMY.h"
+#include "ENEMY3.h"
 namespace GAME02
 {
 	class PLAYER {
@@ -23,6 +24,7 @@ namespace GAME02
 		float top();
 		float bottom();
 
-		bool hit(ENEMY& enemy);
+		bool hit(ENEMY&);
+		bool hit(ENEMY3&);
 	};
 }

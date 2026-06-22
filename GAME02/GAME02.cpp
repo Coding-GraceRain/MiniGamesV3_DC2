@@ -4,90 +4,66 @@
 #include "../../libOne/inc/mathUtil.h"
 #include "../MAIN/MAIN.h"
 #include "GAME02.h"
-#include <crtdbg.h>
-//ネストの深い場所{}のライン合わせてます
 namespace GAME02
 {
+	//本当なら全部別のところに移したいけど時間的に怖いので断念
 	void GAME::Init() {
 		ShotDelay = 0;
 		Wave = 5;
 		Score = 0;
 		Delay = 10;
 		Hdelay = 15;
-		Deg = 0;
 		BossState = NOPOP;
 	}
-	//全滅判定
-	bool GAME::AllDead() {
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (Enemy[i].Alive) {
-				return false;
-			}
-		}
-		return true;
+
+	//Text全般。一部例外あり
+	void GAME::TitleMainText() {
+		fill(0, 0, 0);
+		text("Title", 0, 50);
+		textSize(50);
+		text("PLAY", width / 2 - 50, 450);
+		text("HARD", width / 2 - 50, 550);
+		text("OPTION", width / 2 - 50, 650);
+		text("WASD/矢印キー : 移動", 2, 975);
+		text("SHIFTキー : 低速移動", 0, 1020);
+		text("左クリック/SPACEキー : 射撃", 0, 1075);
+		text(" Mキー : メニュー画面に戻る ", 1240, 50);
 	}
-	void GAME::Bossshot() {
-		if (Boss.Delay <= 0)
-		{
-			if (Player.ControlMode[1] == 1) {
-				static float offset = 0;
-				for (int i = 0; i < 16; i++) {
-					float angle = (360.0f / 16.0f) * i + offset;
-					Deg = angle;
-					Deg += 1;
-					float Vx = Sin(Deg) * 3;
-					float Vy = -Cos(Deg) * 3;
-					for (int j = 0; j < BULLET_BNUM; j++)
-					{
-						if (!Bbullet[j].Alive)
-						{
-							Bbullet[j].set(Boss.Px, Boss.Py, Vx, Vy);
-							offset += 1;
-							break;
-						}
-
-					}
-				}
-				Boss.Delay = 25;
-				if (Boss.Hp < 2500) {
-					Boss.Delay = 23;
-				}
-			}
-			if (Player.ControlMode[1] == 2) {
-				static float offset = 0;
-				for (int i = 0; i < 48; i++) {
-					float angle = (360.0f / 48.0f) * i + offset;
-					Deg = angle;
-					Deg += 1;
-					float Vx = Sin(Deg) * 3;
-					float Vy = -Cos(Deg) * 3;
-					for (int j = 0; j < BULLET_BNUM; j++)
-					{
-						if (!Bbullet[j].Alive)
-						{
-							Bbullet[j].set(Boss.Px, Boss.Py, Vx, Vy);
-							offset += 1;
-							break;
-						}
-
-					}
-				}
-				Boss.Delay = 25;
-				if (Boss.Hp < 2500) {
-					Boss.Delay = 23;
-				}
-			}
-			if (State == HARD) {
-				Boss.Delay = 23;
-			}
-			
+	void GAME::PlayTexts() {
+		fill(255, 255, 255);
+		text((let)"Score " + Score, 0, 50);
+		text((let)"HighScore " + HighScore, 0, 100);
+		text((let)"Delay " + ShotDelay, 0, 150);
+		if (State == PLAY) {
+			text("GameMode:Normal ", 0, 200);
 		}
-		Boss.Delay--;
-	}	
-	int GAME::create()
-	{
-		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-		State = TITLE;
+		if (State == HARD) {
+			text("GameMode:HARD", 0, 200);
+		}
+		text((let)"Wave" + Wave, 0, 250);
+	}
+	void GAME::GameOverTexts() {
+		fill(255,0,0);
+		text((let)"Score " + Score, 0, 100);
+		text((let)"HighScore " + HighScore, 0, 150);
+		text("GameOver", 0, 50); textSize(50);
+		if (BossState == BOSSPOP) {
+			text((let)"BossHp " + Boss.Hp, 0, 200);
+		}
+	}
+	void GAME::GameClearTexts() {
+		rectMode(CENTER);
+		fill(0, 255, 0);
+		strokeWeight(10);
+		text((let)"Score " + Score, 0, 50);
+		text((let)"HighScore " + HighScore, 0, 100);
+
+		text("GAMECLEAR", width / 3, height / 3);
+		text("ENTERでタイトルに戻る", width / 3, height / 2);
+	}
+
+	//Allとか書いてるけど一部は別処理
+	void GAME::AllCreate() {
 		Player.create();
 		Boss.create();
 		Background.create();
@@ -104,141 +80,460 @@ namespace GAME02
 		for (int i = 0; i < ENEMY_NUM; i++) {
 			Enemy[i].create();
 		}
+		for (int i = 0; i < ENEMY3_NUM; i++) {
+			Enemy3[i].create();
+		}
+		for (int i = 0; i < ZIKINERAI_NUM; i++) {
+			Zikinerai[i].create();
+		}
 		for (int i = 0; i < SHOT_POINT; i++) {
 			Shotpoint[i].create();
 		}
 		for (int i = 0; i < BULLET_BNUM; i++) {
 			Bbullet[i].create();
+			Bbullet2[i].create();
 		}
+
 		HighScore = Save.loadscore();
-		return 0;
 	}
-	
-	void GAME::Title() {
-		showCursor();
-		clear(255, 0, 255);
-		Background.titledraw();
-		fill(0,0,0);
-		text("Title", 0, 50);
-		textSize(50);
-		text("PLAY", width / 2 - 50, 450);
-		text("HARD", width / 2 - 50, 550);
-		text("OPTION", width / 2 - 50, 650);
-		text("WASD/矢印キー : 移動", 2, 975);
-		text("SHIFTキー : 低速移動", 0, 1020);
-		text("左クリック/SPACEキー : 射撃", 0, 1075);
-		text(" Mキー : メニュー画面に戻る ", 1240,50);
-		text((let)"" + Player.ControlMode[0], 0, 100);
-		Init();
+	bool GAME::AllDead() {
+		for (int i = 0; i < ENEMY_NUM; i++) {
+			if (Enemy[i].Alive) {
+				return false;
+			}
+		}
+		for (int i = 0; i < ENEMY3_NUM; i++) {
+			if (Enemy3[i].Alive) {
+				return false;
+			}
+		}
+		return true;
+	}
+	void GAME::AllInit() {
 		Player.init();
 		Boss.init();
-		
+		for (int i = 0; i < BULLET_NUM; i++) {
+			Bullet[i].init();
+		}
+		for (int i = 0; i < BULLET_ENUM; i++) {
+			Ebullet[i].init();
+		}
+		for (int i = 0; i < BULLET_BNUM; i++) {
+			Bbullet[i].init();
+			Bbullet2[i].init();
+		}
+		for (int i = 0; i < ZIKINERAI_NUM; i++) {
+			Zikinerai[i].init();
+		}
+		for (int i = 0; i < SHOT_POINT; i++) {
+			Shotpoint[i].init();
+		}
+		for (int i = 0; i < ITEM_NUM; i++) {
+			Item[i].init();
+		}
 
-		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 50 && MouseY > 400 && MouseY < 450) {
-			fill(255, 255, 255);
-			text("PLAY", width / 2 - 50, 450);
-		}
-	
-		if (MouseX > width/2-50 && MouseX < width/2+50 && MouseY > 400 && MouseY < 450 && isTrigger(MOUSE_LBUTTON)){
-			Sound.clicksound();
-			for (int i = 0; i < ITEM_NUM; i++) {
-				Item[i].init();
-			}
-			for (int i = 0; i < BULLET_NUM; i++) {
-				Bullet[i].init();
-			}
-			for (int i = 0; i < SHOT_POINT; i++) {
-				Shotpoint[i].init();
-			}
-			for (int i = 0; i < BULLET_ENUM; i++) {
-				Ebullet[i].init();
-			}
-			for (int i = 0; i < BULLET_BNUM; i++){
-				Bbullet[i].init();
-			}
-			for (int i = 0; i < ENEMY_NUM; i++)
-			{
-				bool retry;
-				do
-				{
-					retry = false;
-					Enemy[i].init();
-
-					for (int j = 0; j < i; j++)
-					{
-						if (Enemy[i].hit(Enemy[j]))
-						{
-							retry = true;
-							break;
-						}
-					}
-				} while (retry);
-			}
-			GetCursorPos(&mouse);
-			ClientToScreen(HWnd, &mouse);
-			SetCursorPos(1280, 880);
-			State = PLAY;
-			Sound.playsound();
-		}
-		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 65 && MouseY > 500 && MouseY < 550) {
-			fill(255, 255, 255);
-			text("HARD", width / 2 - 50, 550);
-		}
-		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 65 && MouseY > 500 && MouseY < 550 && isTrigger(MOUSE_LBUTTON)) 
+		for (int i = 0; i < ENEMY_NUM; i++)
 		{
-			Sound.clicksound();
-			for (int i = 0; i < ITEM_NUM; i++) {
-				Item[i].init();
-			}
-			for (int i = 0; i < BULLET_NUM; i++) {
-				Bullet[i].init();
-			}
-			for (int i = 0; i < SHOT_POINT; i++) {
-				Shotpoint[i].init();
-			}
-			for (int i = 0; i < BULLET_ENUM; i++) {
-				Ebullet[i].init();
-			}
-			for (int i = 0; i < BULLET_BNUM; i++)
+			bool retry;
+			do
 			{
-				Bbullet[i].init();
-			}
-			//敵同士を比較して、重なったらやり直しする
-			for (int i = 0; i < ENEMY_NUM; i++)
-			{
-				bool retry;
-				do
+				retry = false;
+				Enemy[i].init();
+
+				for (int j = 0; j < i; j++)
 				{
-
-
-					retry = false;
-					Enemy[i].init();
-
-					for (int j = 0; j < i; j++)
+					if (Enemy[i].hit(Enemy[j]))
 					{
-						if (Enemy[i].hit(Enemy[j]))
+						retry = true;
+						break;
+					}
+				}
+			} while (retry);
+		}
+		bool retry;
+		for (int i = 0; i < ENEMY3_NUM; i++)
+		{
+			do
+			{
+				retry = false;
+				Enemy3[i].init();
+				for (int j = 0; j < i; j++)
+				{
+					if (Enemy3[i].hit(Enemy3[j]))
+					{
+						retry = true;
+						break;
+					}
+				}
+				if (!retry) {
+					for (int e = 0; e < ENEMY_NUM; e++) 
+					{
+						if (Enemy3[i].hit(Enemy[e]))
 						{
 							retry = true;
 							break;
 						}
 					}
-				} while (retry);
+				}
+			} while (retry);
+		}
+		/*for (int i = 0; i < ENEMY3_NUM; i++)
+		{
+			bool retry;
+			do
+			{
+				retry = false;
+				Enemy3[i].init();
+
+				for (int j = 0; j < i; j++)
+				{
+					if (Enemy3[i].hit(Enemy3[j]))
+					{
+						retry = true;
+						break;
+					}
+				}
+			} while (retry);
+		}*/
+		Enemy->Buf = 0;
+		Init();
+		GetCursorPos(&mouse);
+		ClientToScreen(HWnd, &mouse);
+		SetCursorPos(1280, 880);
+	}
+	void GAME::AllDraw(){
+		Player.draw();
+		for (int i = 0; i < BULLET_NUM; i++) {
+			Bullet[i].draw();
+		}
+		for (int i = 0; i < SHOT_POINT; i++) {
+			Shotpoint[i].draw();
+		}
+		for (int i = 0; i < BULLET_ENUM; i++) {
+			Ebullet[i].draw();
+		}
+		for (int i = 0; i < ZIKINERAI_NUM; i++) {
+			Zikinerai[i].draw();
+		}
+		for (int i = 0; i < BULLET_BNUM; i++) {
+			Bbullet[i].draw();
+			Bbullet2[i].draw();
+		}
+		for (int i = 0; i < ITEM_NUM; i++) {
+			Item[i].draw();
+		}
+		for (int i = 0; i < ENEMY_NUM; i++) {
+			if (!Enemy[i].Alive) {
+				continue;
 			}
-			ClientToScreen(HWnd, &mouse);
-			SetCursorPos(1280, 880);
-			State = HARD;
-			Sound.playsound();
+			Enemy[i].draw();
 		}
-		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 100 && MouseY > 600 && MouseY < 650) {
-			fill(255, 255, 255);
-			text("OPTION", width / 2 - 50, 650);
+		for (int i = 0; i < ENEMY3_NUM; i++) {
+			if (!Enemy3[i].Alive) {
+				continue;
+			}
+			Enemy3[i].draw();
 		}
-		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 100 && MouseY > 600 && MouseY < 650&&isTrigger(MOUSE_LBUTTON)) {
-			Sound.clicksound();
-			State = OPTION;
+		if (BossState == BOSSPOP) {
+			Boss.draw();
 		}
 	}
-	void GAME::Option() {
+	void GAME::AllUpdate(){
+		if (State == PLAY) {
+			Player.update();
+		}
+		if (State == HARD) {
+			Player.hardupdate();
+		}
+		for (int i = 0; i < BULLET_NUM; i++) {
+			Bullet[i].update();
+		}
+		for (int i = 0; i < BULLET_ENUM; i++) {
+			Ebullet[i].update();
+		}
+		for (int i = 0; i < ZIKINERAI_NUM; i++) {
+			Zikinerai[i].update();
+		}
+		for (int i = 0; i < BULLET_BNUM; i++) {
+			Bbullet[i].update();
+			Bbullet2[i].update();
+		}
+		for (int i = 0; i < ITEM_NUM; i++) {
+			Item[i].update();
+		}
+		for (int i = 0; i < ENEMY_NUM; i++) {
+			if (!Enemy[i].Alive) {
+				continue;
+			}
+			Enemy[i].update();
+		}
+		for (int i = 0; i < ENEMY3_NUM; i++) {
+			if (!Enemy3[i].Alive) {
+				continue;
+			}
+			Enemy3[i].update();
+		}
+
+	}
+
+	//当たり判定とウェーブ
+	void GAME::Hits() {
+
+		//自分の弾が敵に当たったら
+		for (int b = 0; b < BULLET_NUM; b++)
+		{
+			if (!Bullet[b].Alive)
+			{
+				continue;
+			}
+			for (int e = 0; e < ENEMY_NUM; e++)
+			{
+				if (!Enemy[e].Alive)
+				{
+					continue;
+				}
+				if (Bullet[b].hit(Enemy[e]))
+				{
+					Enemy[e].Hp--;
+					if (Enemy[e].Hp == 0)
+					{
+						Enemy[e].Alive = false;
+						Score += 1000;
+						if (Enemy[e].drop())
+						{
+							for (int i = 0; i < ITEM_NUM; i++)
+							{
+								if (!Item[i].Alive)
+								{
+									Item[i].set(Enemy[e].Px, Enemy[e].Py);
+									break;
+								}
+							}
+						}
+					}
+					Bullet[b].Alive = false;
+					ShotCount--;
+
+				}
+
+			}
+
+		}
+		for (int b = 0; b < BULLET_NUM; b++)
+		{
+			if (!Bullet[b].Alive)
+			{
+				continue;
+			}
+			for (int e = 0; e < ENEMY3_NUM; e++)
+			{
+				if (!Enemy3[e].Alive)
+				{
+					continue;
+				}
+				if (Bullet[b].hit(Enemy3[e]))
+				{
+					Enemy3[e].Hp--;
+					if (Enemy3[e].Hp == 0)
+					{
+						Enemy3[e].Alive = false;
+						Score += 1000;
+						if (Enemy3[e].drop())
+						{
+							for (int i = 0; i < ITEM_NUM; i++)
+							{
+								if (!Item[i].Alive)
+								{
+									Item[i].set(Enemy3[e].Px, Enemy3[e].Py);
+									break;
+								}
+							}
+						}
+					}
+					Bullet[b].Alive = false;
+					ShotCount--;
+
+				}
+
+			}
+
+		}
+		//敵本体に当たったら
+		for (int i = 0; i < ENEMY_NUM; i++) {
+			if (Enemy[i].Alive) {
+				if (Player.hit(Enemy[i])) {
+					Sound.gameoversound();
+					Save.savescore(Score);
+					if (State == PLAY) {
+						State = GAMEOVER;
+					}
+					else if (State == HARD) {
+						State = HARDOVER;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < ENEMY3_NUM; i++) {
+			if (Enemy3[i].Alive) {
+				if (Player.hit(Enemy3[i])) {
+					Sound.gameoversound();
+					Save.savescore(Score);
+					if (State == PLAY) {
+						State = GAMEOVER;
+					}
+					else if (State == HARD) {
+						State = HARDOVER;
+					}
+				}
+			}
+		}
+		//敵弾と自分
+		for (int i = 0; i < BULLET_ENUM; i++) {
+			if (Ebullet[i].Alive) {
+				if (Ebullet[i].hit(Player)) {
+					Save.savescore(Score);
+					Sound.gameoversound();
+					if (State == PLAY) {
+						State = GAMEOVER;
+					}
+					else if (State == HARD) {
+						State = HARDOVER;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < ZIKINERAI_NUM; i++) {
+			if (Zikinerai[i].Alive) {
+				if (Zikinerai[i].hit(Player)) {
+					Save.savescore(Score);
+					Sound.gameoversound();
+					if (State == PLAY) {
+						State = GAMEOVER;
+					}
+					else if (State == HARD) {
+						State = HARDOVER;
+					}
+				}
+			}
+		}
+		//アイテム
+		for (int i = 0; i < ITEM_NUM; i++) {
+			if (Item[i].Alive) {
+				if (Item[i].hit(Player)) {
+					Sound.getitemsound();
+					Item[i].Alive = false;
+					Player.i++;
+					if (Player.Shotlevel < 4) {
+						Player.Shotlevel++;
+					}
+					else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
+						Delay -= 0.5f;
+					}
+				}
+			}
+		}
+		//ボス
+		for (int i = 0; i < BULLET_BNUM; i++) {
+			if (Bbullet[i].Alive) {
+				if (Bbullet[i].hit(Player)) {
+					Save.savescore(Score);
+					Sound.gameoversound();
+					if (State == PLAY) {
+						State = GAMEOVER;
+					}
+					else if (State == HARD) {
+						State = HARDOVER;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < BULLET_BNUM; i++) {
+			if (Bbullet2[i].Alive) {
+				if (Bbullet2[i].hit(Player)) {
+					Save.savescore(Score);
+					Sound.gameoversound();
+					if (State == PLAY) {
+						State = GAMEOVER;
+					}
+					else if (State == HARD) {
+						State = HARDOVER;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < BULLET_NUM; i++) {
+			if (Bullet[i].Alive) {
+				if (Boss.hit(Bullet[i])) {
+					Bullet[i].Alive = false;
+				}
+			}
+		}
+	}
+	void GAME::Waves(){
+			if (Wave > 0) {
+				if (AllDead()) {
+					Wave -= 1;
+					Enemy->Buf += 5;
+					for (int i = 0; i < ENEMY_NUM; i++)
+					{
+						if (Wave == 0) {
+							break;
+						}
+						bool retry;
+						do
+						{
+							retry = false;
+							Enemy[i].init();
+	
+							for (int j = 0; j < i; j++)
+							{
+								if (Enemy[i].hit(Enemy[j]))
+								{
+									retry = true;
+									break;
+								}
+							}
+
+						} while (retry);
+						Enemy[i].Hp += Enemy->Buf;
+						if (Enemy[i].Delay > 10) {
+							Enemy[i].Delay -= 2;
+						}
+					}
+
+					Enemy3->Buf += 5;
+					for (int i = 0; i < ENEMY3_NUM; i++)
+					{
+						if (Wave == 0) {
+							break;
+						}
+						bool retry;
+						do
+						{
+							retry = false;
+							Enemy3[i].init();
+
+							for (int j = 0; j < i; j++)
+							{
+								if (Enemy3[i].hit(Enemy3[j]))
+								{
+									retry = true;
+									break;
+								}
+							}
+
+						} while (retry);
+						Enemy3[i].Hp += Enemy3->Buf;
+						if (Enemy3[i].Delay > 10) {
+							Enemy3[i].Delay -= 2;
+						}
+					}
+				}
+			}
+	}
+
+	//それぞれの処理達
+	void GAME::OptionProcess() {
 		clear();
 		Background.titledraw();
 		fill(0, 0, 0);
@@ -258,27 +553,27 @@ namespace GAME02
 			fill(255, 255, 255);
 			text("低速移動:長押し", width / 2 - 150, 450);
 		}
-		
+
 
 		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 220 && MouseY > 400 && MouseY < 450 && isTrigger(MOUSE_LBUTTON)) {
 			Sound.clicksound();
 			Cur = 1;
 			if (Choose[0] == 0)
-			Choose[0] = 1;
+				Choose[0] = 1;
 		}
 		if (MouseX > width / 2 - 150 && MouseX < width / 2 + 180 && MouseY > 500 && MouseY < 550 && isTrigger(MOUSE_LBUTTON)) {
 			Sound.clicksound();
 			Cur = 2;
 			if (Choose[1] == 0)
-			Choose[1] = 1;
+				Choose[1] = 1;
 		}
 		if (MouseX < 375 && MouseY > 1030 && isTrigger(MOUSE_LBUTTON)) {
 			Sound.clicksound();
 			Cur = 3;
-			if(Choose[2]==0)
-			Choose[2] = 1;
+			if (Choose[2] == 0)
+				Choose[2] = 1;
 		}
-		if (isTrigger(KEY_ENTER)||isTrigger(MOUSE_RBUTTON)) {
+		if (isTrigger(KEY_ENTER) || isTrigger(MOUSE_RBUTTON)) {
 			Cur = 0;
 		}
 		if (Cur != 1) {
@@ -423,320 +718,7 @@ namespace GAME02
 			Cur = 0;
 		}
 	}
-	//メイン
-	void GAME::Play() {
-		clear(20, 255, 255);
-		hideCursor();
-		fill(255, 255, 255);
-		HighScore = Save.loadscore();
-		//更新と表示
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		Background.draw();
-		Player.update();
-		Player.draw();
-		for (int i = 0; i < BULLET_NUM; i++) {
-			Bullet[i].update();
-			Bullet[i].draw();
-		}
-		for (int i = 0; i < SHOT_POINT; i++) {
-			Shotpoint[i].draw();
-		}
-		for (int i = 0; i < BULLET_ENUM; i++) {
-			Ebullet[i].update();
-			Ebullet[i].draw();
-		}
-		for (int i = 0; i < BULLET_BNUM; i++) {
-			Bbullet[i].update();
-			Bbullet[i].draw();
-		}
-		for (int i = 0; i < ITEM_NUM; i++) {
-			Item[i].update();
-			Item[i].draw();
-		}
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (!Enemy[i].Alive) {
-				continue;
-			}
-			Enemy[i].update();
-			Enemy[i].draw();
-		}
-	
-
-		//弾処理
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		ShotCount = 0;
-		ShotPoint = 0;
-		
-		if (ShotDelay > 0) {
-			ShotDelay--;
-		}
-		if (ShotDelay <= 0) {
-			for (int i = 0; i < BULLET_NUM; i++)
-			{
-				if (!Bullet[i].Alive) 
-				{
-					if (isPress(KEY_SPACE)||isPress(MOUSE_LBUTTON))
-					{
-						Bullet[i].shoot(Player.Px+offsetx[ShotCount], Player.Py + offsety[ShotCount]);
-						ShotCount++;
-						if (ShotCount>=Player.Shotlevel) {
-							ShotDelay = Delay;
-							break;
-						}
-					}
-				}
-			}
-		}
-		for (int e = 0; e < ENEMY_NUM; e++) 
-		{
-			if (!Enemy[e].Alive) continue;
-
-			if (Enemy[e].Delay <= 0) 
-			{
-				for (int i = 0; i < BULLET_ENUM; i++)
-				{
-					if (!Ebullet[i].Alive)
-					{
-						Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
-						Enemy[e].Delay = rand() % 30 + 30;
-						break;
-
-					}
-				}
-			}
-			Enemy[e].Delay--;
-		}
-		for (int i = 0; i < SHOT_POINT; i++) {
-			Shotpoint[i].setPosition(Player.Px + offsetx[ShotPoint], Player.Py + offsety[ShotPoint]);
-			ShotPoint++;
-			if (ShotPoint >= Player.Shotlevel) {
-				break;
-			}
-		}
-
-		if (Player.Bom > 0 && isTrigger(KEY_B)) {
-			for (int i = 0; i < BULLET_ENUM; i++) {
-				Ebullet[i].Alive = false;
-			}
-		}
-		
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		// 当たったら～
-
-
-		//自分の弾が敵に当たったら
-		for (int b = 0; b < BULLET_NUM; b++) 
-		{
-			if (!Bullet[b].Alive) 
-			{
-				continue;
-			}
-			for (int e = 0; e < ENEMY_NUM; e++)
-			{
-				if (!Enemy[e].Alive)
-				{
-					continue;
-				}
-					if (Bullet[b].hit(Enemy[e]))
-					{
-						Enemy[e].Hp--;
-						if (Enemy[e].Hp == 0)
-						{
-							Enemy[e].Alive = false;
-							Score += 1000;
-							if (Enemy[e].drop())
-							{
-								for (int i = 0; i < ITEM_NUM; i++)
-								{
-									if (!Item[i].Alive)
-									{
-										Item[i].set(Enemy[e].Px, Enemy[e].Py);
-										break;
-									}
-								}
-							}
-						}
-						Bullet[b].Alive = false;
-						ShotCount--;
-						
-					}
-
-		}
-
-			}
-		//敵本体に当たったら
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (Enemy[i].Alive) {
-				if (Player.hit(Enemy[i])) {
-					Sound.gameoversound();
-					Save.savescore(Score);
-					State = GAMEOVER;
-				}
-			}
-		}
-		//敵弾と自分
-		for (int i = 0; i < BULLET_ENUM;i++) {
-			if (Ebullet[i].Alive) {
-				if (Ebullet[i].hit(Player)) {
-					Save.savescore(Score);
-					Sound.gameoversound();
-					State = GAMEOVER;
-				}
-			}
-		}
-		//アイテム
-		for (int i = 0; i < ITEM_NUM; i++) {
-			if (Item[i].Alive) {
-				if (Item[i].hit(Player)) {
-					Sound.getitemsound();
-					Item[i].Alive = false;
-					Player.i++;
-					if (Player.Shotlevel < 4) {
-						Player.Shotlevel++;
-					}
-					else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
-						Delay -= 0.5f;
-					}
-				}
-			}
-		}
-		//ボス
-		for (int i = 0; i < BULLET_BNUM; i++) {
-			if (Bbullet[i].Alive) {
-				if (Bbullet[i].hit(Player)) {
-					Save.savescore(Score);
-					Sound.gameoversound();
-					State = GAMEOVER;
-				}
-			}
-		}
-		for (int i = 0; i < BULLET_NUM; i++) {
-			if (Bullet[i].Alive) {
-				if (Boss.hit(Bullet[i])) {
-					Bullet[i].Alive = false;
-				}
-			}
-		}
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		//ウェーブ
-		if (Wave > 0) {
-			if (AllDead()) {
-				Wave -= 1;
-				Enemy->Buf += 5;
-				for (int i = 0; i < ENEMY_NUM; i++)
-				{
-					if (Wave == 0) {
-						break;
-					}
-					bool retry;
-					do
-					{
-						retry = false;
-						Enemy[i].init();
-
-						for (int j = 0; j < i; j++)
-						{
-							if (Enemy[i].hit(Enemy[j]))
-							{
-								retry = true;
-								break;
-							}
-						}
-
-					} while (retry);
-					Enemy[i].Hp += Enemy->Buf;
-					if (Enemy[i].Delay > 10) {
-						Enemy[i].Delay -= 2;
-					}
-				}
-				
-
-			}
-		}
-	
-		text((let)"Player" + Player.i, 0, 1055);
-		//音楽切り替えのために一度だけ繰り返される文です
-		if (Wave == 0) {
-			if (BossState == NOPOP) {
-				Sound.playstopsound();
-				Sound.bosssound();
-				BossState = BOSSPOP;
-			}
-		}
-		///////////////////////////////////////////////
-		//ボス
-		if (BossState == BOSSPOP) {
-		
-			for (int i = 0; i < BULLET_ENUM; i++) {
-				Ebullet[i].Alive = false;
-			}
-			Boss.update();
-			Boss.draw();
-			if (Boss.Cnt4 < 0) {
-				Bossshot();
-			}
-		}
-		if (Boss.Hp <= 0) {
-			Score += 100000000;
-			Save.savescore(Score);
-			State = CLEAR;
-			Sound.bossStopSound();
-		}
-		if (isTrigger(KEY_T)) {
-			Save.savescore(Score);
-			State = TITLE;
-			Sound.playstopsound();
-			Sound.bossStopSound();
-		}
-		Background.secdraw();
-		fill(255, 255, 255);
-		text((let)"Score " + Score, 0, 50);
-		text((let)"HighScore " + HighScore, 0, 100);
-		text((let)"Delay " + ShotDelay, 0, 150);
-		text("Normal ", 0, 200);
-		text((let)"Wave" + Wave, 0, 250);
-		text((let)"Limit" + Boss.LimitTime, 0, 300);
-		text((let)"" + Player.ControlMode[0], 0, 350);
-	}
-
-	void GAME::Hardmode() {
-		clear(20, 255, 255);
-		hideCursor();
-		fill(255, 255, 255);
-		HighScore = Save.loadscore();
-		//更新と表示
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		Background.draw();
-		Player.hardupdate();
-		Player.draw();
-		for (int i = 0; i < BULLET_NUM; i++) {
-			Bullet[i].update();
-			Bullet[i].draw();
-		}
-		for (int i = 0; i < SHOT_POINT; i++) {
-			Shotpoint[i].draw();
-		}
-		for (int i = 0; i < BULLET_ENUM; i++) {
-			Ebullet[i].update();
-			Ebullet[i].draw();
-		}
-		for (int i = 0; i < BULLET_BNUM; i++) {
-			Bbullet[i].update();
-			Bbullet[i].draw();
-		}
-		for (int i = 0; i < ITEM_NUM; i++) {
-			Item[i].update();
-			Item[i].draw();
-		}
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (!Enemy[i].Alive) {
-				continue;
-			}
-			Enemy[i].update();
-			Enemy[i].draw();
-		}
-		//弾処理
-		/////////////////////////////////////////////////////////////////////////////////////////////
+	void GAME::AmmoProcess() {
 		ShotCount = 0;
 		ShotPoint = 0;
 
@@ -752,9 +734,17 @@ namespace GAME02
 					{
 						Bullet[i].shoot(Player.Px + offsetx[ShotCount], Player.Py + offsety[ShotCount]);
 						ShotCount++;
-						if (ShotCount >= Player.Shotlevel) {
-							ShotDelay = Hdelay;
-							break;
+						if (State == PLAY) {
+							if (ShotCount >= Player.Shotlevel) {
+								ShotDelay = Delay;
+								break;
+							}
+						}
+						else if (State == HARD) {
+							if (ShotCount >= Player.Shotlevel) {
+								ShotDelay = Hdelay;
+								break;
+							}
 						}
 					}
 				}
@@ -770,14 +760,46 @@ namespace GAME02
 				{
 					if (!Ebullet[i].Alive)
 					{
-						Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
-						Enemy[e].Delay = rand() % 20 + 20;
-						break;
+						if (State == PLAY) {
+							Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
+							Enemy[e].Delay = rand() % 30 + 30;
+							break;
+						}
+						else if (State == HARD) {
+							Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
+							Enemy[e].Delay = rand() % 20 + 20;
+							break;
+						}
 
 					}
 				}
 			}
 			Enemy[e].Delay--;
+		}
+		for (int e = 0; e < ENEMY3_NUM; e++)
+		{
+			if (!Enemy3[e].Alive) continue;
+
+			if (Enemy3[e].Delay <= 0)
+			{
+				for (int i = 0; i < ZIKINERAI_NUM; i++)
+				{
+					if (!Zikinerai[i].Alive)
+					{
+						if (State == PLAY) {
+							Zikinerai[i].shoot(Player, Enemy3[e]);
+							Enemy3[e].Delay = rand() % 100 + 100;
+							break;
+						}
+						else if (State == HARD) {
+							Zikinerai[i].shoot(Player, Enemy3[e]);
+							Enemy3[e].Delay = rand() % 90 + 90;
+							break;
+						}
+					}
+				}
+			}
+			Enemy3[e].Delay--;
 		}
 		for (int i = 0; i < SHOT_POINT; i++) {
 			Shotpoint[i].setPosition(Player.Px + offsetx[ShotPoint], Player.Py + offsety[ShotPoint]);
@@ -793,136 +815,8 @@ namespace GAME02
 			}
 		}
 
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		//当たったら～
-
-		for (int b = 0; b < BULLET_NUM; b++)
-		{
-			if (!Bullet[b].Alive)
-			{
-				continue;
-			}
-			for (int e = 0; e < ENEMY_NUM; e++)
-			{
-				if (!Enemy[e].Alive)
-				{
-					continue;
-				}
-				if (Bullet[b].hit(Enemy[e]))
-				{
-					Enemy[e].Hp--;
-					if (Enemy[e].Hp == 0)
-					{
-						Enemy[e].Alive = false;
-						Score += 1800;
-						if (Enemy[e].drop())
-						{
-							for (int i = 0; i < ITEM_NUM; i++)
-							{
-								if (!Item[i].Alive)
-								{
-									Item[i].set(Enemy[e].Px, Enemy[e].Py);
-									break;
-								}
-							}
-						}
-					}
-					Bullet[b].Alive = false;
-					ShotCount--;
-
-				}
-
-			}
-		}
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (Enemy[i].Alive) {
-				if (Player.hit(Enemy[i])) {
-					Sound.playstopsound();
-					Save.savescore(Score);
-					Sound.gameoversound();
-					State = HARDOVER;
-				}
-			}
-		}
-		for (int i = 0; i < BULLET_ENUM; i++) {
-			if (Ebullet[i].Alive) {
-				if (Ebullet[i].hit(Player)) {
-					Sound.playstopsound();
-					Save.savescore(Score);
-					Sound.gameoversound();
-					State = HARDOVER;
-				}
-			}
-		}
-
-		for (int i = 0; i < ITEM_NUM; i++) {
-			if (Item[i].Alive) {
-				if (Item[i].hit(Player)) {
-					Sound.getitemsound();
-					Item[i].Alive = false;
-					Player.i++;
-					if (Player.Shotlevel < 4) {
-						Player.Shotlevel++;
-					}
-					else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
-						Hdelay -= 1.0f;
-					}
-				}
-			}
-		}
-		for (int i = 0; i < BULLET_BNUM; i++) {
-			if (Bbullet[i].Alive) {
-				if (Bbullet[i].hit(Player)) {
-					Save.savescore(Score);
-					Sound.playstopsound();
-					Sound.gameoversound();
-					State = HARDOVER;
-				}
-			}
-		}
-		for (int i = 0; i < BULLET_NUM; i++) {
-			if (Bullet[i].Alive) {
-				if (Boss.hit(Bullet[i])) {
-					Bullet[i].Alive = false;
-				}
-			}
-		}
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		//ウェーブ
-		if (Wave > 0) {
-			if (AllDead()) {
-				Wave -= 1;
-				Enemy->Buf += 5;
-				for (int i = 0; i < ENEMY_NUM; i++)
-				{
-					if (Wave == 0) {
-						break;
-					}
-					bool retry;
-					do
-					{
-						retry = false;
-						Enemy[i].init();
-
-						for (int j = 0; j < i; j++)
-						{
-							if (Enemy[i].hit(Enemy[j]))
-							{
-								retry = true;
-								break;
-							}
-						}
-					} while (retry);
-					Enemy[i].Hp += Enemy->Buf;
-					if (Enemy[i].Delay > 10) {
-						Enemy[i].Delay -= 3;
-					}
-				}
-
-			}
-		}
-		///////////////////////////////////////////////
-	    //ボス
+	}
+	void GAME::BossProcess() {
 		if (Wave == 0) {
 			if (BossState == NOPOP) {
 				Sound.playstopsound();
@@ -952,15 +846,226 @@ namespace GAME02
 			Sound.playstopsound();
 			State = TITLE;
 		}
-		Background.secdraw();
+
+	}
+
+	//ボスの弾
+	void GAME::Bossshot() {
+		if (Boss.Delay <= 0)
+		{
+			if (Player.ControlMode[1] == 1) {
+				static float offset = 0;
+				for (int i = 0; i < 16; i++) {
+					float angle = (360.0f / 16.0f) * i + offset;
+					Deg[0] = angle;
+					Deg[0] += 1;
+					float Vx = Sin(Deg[0]) * 3;
+					float Vy = -Cos(Deg[0]) * 3;
+					for (int j = 0; j < BULLET_BNUM; j++)
+					{
+						if (!Bbullet[j].Alive)
+						{
+							Bbullet[j].set(Boss.Px, Boss.Py, Vx, Vy);
+							offset += 1;
+							break;
+						}
+
+					}
+					if (Boss.Hp < 2500) {
+						if (Player.ControlMode[1] == 1) {
+							static float offset = 0;
+							for (int i = 0; i < 8; i++) {
+								float angle = (360.0f / 8.0f) * i + offset;
+								Deg[1] = angle;
+								Deg[1] += 1;
+								float Vx = Sin(Deg[1]) * 4;
+								float Vy = -Cos(Deg[1]) * 4;
+								for (int j = 0; j < BULLET_BNUM; j++)
+								{
+									if (!Bbullet2[j].Alive)
+									{
+										Bbullet2[j].set(Boss.Px, Boss.Py, Vx, Vy);
+										offset -= 3;
+										break;
+
+									}
+
+								}
+							}
+						}
+					}
+					Boss.Delay = 28;
+					if (Boss.Hp < 2500) {
+						Boss.Delay = 26;
+					}
+				}
+			}
+			if (Player.ControlMode[1] == 2) {
+				static float offset = 0;
+				for (int i = 0; i < 48; i++) {
+					float angle = (360.0f / 48.0f) * i + offset;
+					Deg[0] = angle;
+					Deg[0] += 1;
+					float Vx = Sin(Deg[0]) * 3;
+					float Vy = -Cos(Deg[0]) * 3;
+					for (int j = 0; j < BULLET_BNUM; j++)
+					{
+						if (!Bbullet[j].Alive)
+						{
+							Bbullet[j].set(Boss.Px, Boss.Py, Vx, Vy);
+							offset += 1;
+							break;
+						}
+
+					}
+				}
+				if (Boss.Hp < 2500) {
+					if (Player.ControlMode[1] == 2) {
+						static float offset = 0;
+						for (int i = 0; i < 8; i++) {
+							float angle = (360.0f / 8.0f) * i + offset;
+							Deg[1] = angle;
+							Deg[1] += 1;
+							float Vx = Sin(Deg[1]) * 4;
+							float Vy = -Cos(Deg[1]) * 4;
+							for (int j = 0; j < BULLET_BNUM; j++)
+							{
+								if (!Bbullet2[j].Alive)
+								{
+									Bbullet2[j].set(Boss.Px, Boss.Py, Vx, Vy);
+									offset -= 3;
+									break;
+
+								}
+
+							}
+						}
+					}
+				}
+					Boss.Delay = 28;
+					if (Boss.Hp < 2500) {
+						Boss.Delay = 26;
+					}
+				
+			}
+			if (State == HARD) {
+				Boss.Delay = 23;
+			}
+			
+		}
+		Boss.Delay--;
+	}	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	int GAME::create()
+	{
+		AllCreate();
+		return 0;
+	}
+	
+	void GAME::Title() {
+		showCursor();
+		clear(255, 0, 255);
+		Background.titledraw();
+		TitleMainText();
+		//PLAY
+		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 50 && MouseY > 400 && MouseY < 450) {
+			fill(255, 255, 255);
+			text("PLAY", width / 2 - 50, 450);
+		}
+		if (MouseX > width/2-50 && MouseX < width/2+50 && MouseY > 400 && MouseY < 450 && isTrigger(MOUSE_LBUTTON)){
+			Sound.clicksound();
+			AllInit();
+			State = PLAY;
+			Sound.playsound();
+		}
+		
+		//HARD
+		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 65 && MouseY > 500 && MouseY < 550) {
+			fill(255, 255, 255);
+			text("HARD", width / 2 - 50, 550);
+		}
+		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 65 && MouseY > 500 && MouseY < 550 && isTrigger(MOUSE_LBUTTON)) 
+		{
+			Sound.clicksound();
+			AllInit();
+			State = HARD;
+			Sound.playsound();
+		}
+	
+		//OPTION
+		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 100 && MouseY > 600 && MouseY < 650) {
+			fill(255, 255, 255);
+			text("OPTION", width / 2 - 50, 650);
+		}
+		if (MouseX > width / 2 - 50 && MouseX < width / 2 + 100 && MouseY > 600 && MouseY < 650&&isTrigger(MOUSE_LBUTTON)) {
+			Sound.clicksound();
+			State = OPTION;
+		}
+	}
+	void GAME::Option() {
+		OptionProcess();
+	}
+	//メイン
+	void GAME::Play() {
+		clear(20, 255, 255);
+		hideCursor();
 		fill(255, 255, 255);
-		text((let)"Score " + Score, 0, 50);
-		text((let)"HighScore " + HighScore, 0, 100);
-		text((let)"Delay " + ShotDelay, 0, 150);
-		text("Hard ", 0, 200);
-		text((let)"Wave" + Wave, 0, 250);
-		text((let)"Limit" + Boss.LimitTime, 0, 300);
-		text((let)"" + Player.ControlMode[0], 0, 350);
+		HighScore = Save.loadscore();
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//更新と表示
+		Background.draw();
+		AllDraw();
+		AllUpdate();
+
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//弾処理
+		AmmoProcess();
+
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//当たったら～
+		Hits();
+
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//ウェーブ
+		Waves();
+
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//ボス
+		BossProcess();
+
+		Background.secdraw();
+		PlayTexts();
+	
+	}
+
+	//HARD
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	void GAME::Hardmode() {
+		clear(20, 255, 255);
+		hideCursor();
+		fill(255, 255, 255);
+		HighScore = Save.loadscore();
+		//更新と表示
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		Background.draw();
+		AllDraw();
+		AllUpdate();
+		//弾処理
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		AmmoProcess();
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//当たったら～
+		Hits();
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		//ウェーブ
+		Waves();
+		//////////////////////////////////////////////////////////////////////////////////////////////
+	    //ボス
+		BossProcess();
+		//////////////////////////////////////////////////////////////////////////////////////////////
+		Background.secdraw();
+	
+		PlayTexts();
 	}
 
 	void GAME::GameOver() {
@@ -969,84 +1074,12 @@ namespace GAME02
 		Background.gameoverdraw();
 		Sound.bossStopSound();
 		Sound.playstopsound();
-		fill(128, 128, 128);
-		text((let)"Score " + Score, 0, 100);
-		text((let)"HighScore " + HighScore, 0, 150);
-		text("GameOver", 0, 50); textSize(50);
-		text((let)"BossHp " + Boss.Hp, 0, 200);
-		text((let)"Limit" + Boss.LimitTime, 0, 300);
-
-		Player.draw();
-
-		for (int i = 0; i < ITEM_NUM; i++) {
-			if (Item[i].Alive) {
-				Item[i].draw();
-			}
-		}
-		for (int i = 0; i < BULLET_NUM; i++) {
-			if (Bullet[i].Alive) {
-				Bullet[i].draw();
-			}
-		}
-		for (int i = 0; i < BULLET_ENUM; i++) {
-			if (Ebullet[i].Alive) {
-				Ebullet[i].draw();
-			}
-		}
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (Enemy[i].Alive)
-				Enemy[i].draw();
-		}
-		for (int i = 0; i < BULLET_BNUM; i++) {
-			if (Bbullet[i].Alive) {
-				Bbullet[i].draw();
-			}
-		}
-		if (Wave == 0) {
-			Boss.draw();
-		}
+		GameOverTexts();
+		AllDraw();
+		
 		//すべて初期化してリトライ
 		if (isTrigger(KEY_R)) {
-			Player.init();
-			Boss.init();
-			for (int i = 0; i < BULLET_NUM; i++) {
-				Bullet[i].init();
-			}
-			for (int i = 0; i < BULLET_ENUM; i++) {
-				Ebullet[i].init();
-			}
-			for (int i = 0; i < BULLET_BNUM; i++) {
-				Bbullet[i].init();
-			}
-			for (int i = 0; i < SHOT_POINT; i++) {
-				Shotpoint[i].init();
-			}
-			for (int i = 0; i < ITEM_NUM; i++) {
-				Item[i].init();
-			}
-			for (int i = 0; i < ENEMY_NUM; i++)
-			{
-				
-				bool retry;
-				do
-				{
-					retry = false;
-					Enemy[i].init();
-
-					for (int j = 0; j < i; j++)
-					{
-						if (Enemy[i].hit(Enemy[j]))
-						{
-							retry = true;
-							break;
-						}
-					}
-				} while (retry);
-			}
-			Enemy->Buf = 0;
-			Init();
-			ClientToScreen(HWnd, &mouse);
-			SetCursorPos(1280, 880);
+			AllInit();
 			Background.Take = 0;
 			State = PLAY;
 			Sound.playsound();
@@ -1062,82 +1095,12 @@ namespace GAME02
 		HighScore = Save.loadscore();
 		Background.gameoverdraw();
 		Sound.bossStopSound();
-		fill(128, 128, 128);
-		text((let)"Score " + Score, 0, 100);
-		text((let)"HighScore " + HighScore, 0, 150);
-		text("GameOver", 0, 50); textSize(50);
-		text((let)"BossHp " + Boss.Hp, 0, 200);
-		text((let)"Limit" + Boss.LimitTime, 0, 300);
-		Player.draw();
-		for (int i = 0; i < ITEM_NUM; i++) {
-			if (Item[i].Alive) {
-				Item[i].draw();
-			}
-		}
-		for (int i = 0; i < BULLET_NUM; i++) {
-			if (Bullet[i].Alive) {
-				Bullet[i].draw();
-			}
-		}
-		for (int i = 0; i < BULLET_ENUM; i++) {
-			if (Ebullet[i].Alive) {
-				Ebullet[i].draw();
-			}
-		}
-		for (int i = 0; i < ENEMY_NUM; i++) {
-			if (Enemy[i].Alive) {
-				Enemy[i].draw();
-			}
-		}
-		for (int i = 0; i < BULLET_BNUM; i++) {
-			if (Bbullet[i].Alive) {
-				Bbullet[i].draw();
-			}
-		}
-		if (Wave == 0) {
-			Boss.draw();
-		}
+		GameOverTexts();
+		AllDraw();
 		//すべて初期化してリトライ
 		if (isTrigger(KEY_R)) {
-			Player.init();
-			for (int i = 0; i < BULLET_NUM; i++) {
-				Bullet[i].init();
-			}
-			for (int i = 0; i < BULLET_ENUM; i++) {
-				Ebullet[i].init();
-			}
-			for (int i = 0; i < BULLET_BNUM; i++) {
-				Bbullet[i].init();
-			}
-			for (int i = 0; i < SHOT_POINT; i++) {
-				Shotpoint[i].init();
-			}
-			for (int i = 0; i < ITEM_NUM; i++) {
-				Item[i].init();
-			}
-
-			for (int i = 0; i < ENEMY_NUM; i++)
-			{
-				bool retry;
-				do
-				{
-					retry = false;
-					Enemy[i].init();
-
-					for (int j = 0; j < i; j++)
-					{
-						if (Enemy[i].hit(Enemy[j]))
-						{
-							retry = true;
-							break;
-						}
-					}
-				} while (retry);
-			}
-			Enemy->Buf = 0;
-			Init();
-			ClientToScreen(HWnd, &mouse);
-			SetCursorPos(1280, 880);
+			AllInit();
+			
 			Background.Take = 0;
 			State = HARD;
 			Sound.playsound();
@@ -1149,19 +1112,12 @@ namespace GAME02
 	}
 
 	void GAME::GameClear(){
-		clear(128, 228, 228);
+		clear(0, 255, 0);
 		HighScore = Save.loadscore();
 		Background.cleardraw();
 		Sound.playstopsound();
-		rectMode(CENTER);
-		fill(100,228,255);
-		strokeWeight(10);
-		text((let)"Score " + Score, 0, 50);
-		text((let)"HighScore " + HighScore, 0, 100);
-		text((let)"Limit" + Boss.LimitTime, 0, 150);
-
-		text("GAMECLEAR", width/3, height / 3);
-		text("ENTERでタイトルに戻る", width / 3, height / 2);
+		Sound.bossStopSound();
+		GameClearTexts();
 		if (isTrigger(KEY_ENTER)) {
 			State = TITLE;
 		}

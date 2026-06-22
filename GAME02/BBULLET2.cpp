@@ -1,16 +1,16 @@
-#include "BBULLET.h"
+#include "BBULLET2.h"
 #include "../../libOne/inc/graphic.h"
 #include "../../libOne/inc/mathUtil.h"
 #include <cmath>
 namespace GAME02 {
-	void BBULLET::create() {
-		Img = loadImage("../main\\assets\\game02\\bossdanmaku.png");
+	void BBULLET2::create() {
+		Img = loadImage("../main\\assets\\game02\\danmaku.png");
 
 	}
-	void BBULLET::init() {
+	void BBULLET2::init() {
 		Alive = false;
 	}
-	void BBULLET::set(float x, float y, float vx, float vy) {
+	void BBULLET2::set(float x, float y, float vx, float vy) {
 
 		Bx = x;
 		By = y;
@@ -19,8 +19,8 @@ namespace GAME02 {
 		Alive = true;
 
 	}
-	
-	void BBULLET::update() {
+
+	void BBULLET2::update() {
 		if (!Alive) {
 			return;
 		}
@@ -39,18 +39,18 @@ namespace GAME02 {
 			Alive = false;
 		}
 	}
-	void BBULLET::draw() {
+	void BBULLET2::draw() {
 		if (Alive) {
 			image(Img, Bx, By, -10);
 		}
 	}
-	
-	float BBULLET::left() { return Bx - 8.0f; }
-	float BBULLET::right() { return Bx + 8.0f; }
-	float BBULLET::top() { return By - 8.0f; }
-	float BBULLET::bottom() { return By + 8.0f; }
 
-	bool BBULLET::hit(PLAYER& player) {
+	float BBULLET2::left() { return Bx - 25; }
+	float BBULLET2::right() { return Bx + 25; }
+	float BBULLET2::top() { return By - 25; }
+	float BBULLET2::bottom() { return By + 25; }
+
+	bool BBULLET2::hit(PLAYER& player) {
 		if (left() < player.right() &&
 			right() > player.left() &&
 			top() < player.bottom() &&

@@ -1,27 +1,25 @@
 #pragma once
-#include"ENEMY.h"
 #include"BULLET_BASE.h"
-#include "../../libOne/inc/graphic.h"
+#include "PLAYER.H"
 #include "ENEMY3.h"
+#include "ENEMY.h"
 namespace GAME02 {
-	class BULLET:public BULLET_BASE
+	class ZIKINERAI :public BULLET_BASE
 	{
+	private:
+		float deg;
 	public:
-		float Delay;
 		void init();
 		void create();
 		void update();
 		void draw();
-		void shoot(int x, int y);
-		bool hit(ENEMY& enemy);
-		bool hit(ENEMY3& enemy);
+		void shoot(PLAYER&,ENEMY3&);
+		bool hit(PLAYER&);
 
 		float left();
 		float right();
 		float top();
 		float bottom();
-
 	};
 }
-
 

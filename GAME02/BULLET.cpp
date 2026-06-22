@@ -37,7 +37,6 @@ namespace GAME02 {
 			if (Alive) {
 				image(Img, Bx, By);
 			}
-			
 		}
 		float BULLET::left() { return Bx - 15.0f; }
 		float BULLET::right() { return Bx + 15.0f; }
@@ -45,12 +44,22 @@ namespace GAME02 {
 		float BULLET::bottom() { return By + 15.0f; }
 
 		bool BULLET::hit(ENEMY& enemy) {
-			if (left() > enemy.right() ||
-				right() < enemy.left() ||
-				top() > enemy.bottom() ||
-				bottom() < enemy.top()) {
-				return false;
+			if (left() < enemy.right() &&
+				right() > enemy.left() &&
+				top() < enemy.bottom() &&
+				bottom() > enemy.top()) {
+				return true;
 			}
-			return true;
+			return false;
 		}
+		bool BULLET::hit(ENEMY3& enemy) {
+			if (left() < enemy.right() &&
+				right() > enemy.left() &&
+				top() < enemy.bottom() &&
+				bottom() > enemy.top()) {
+				return true;
+			}
+			return false;
+		}
+		
 }

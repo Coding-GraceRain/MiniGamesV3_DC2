@@ -12,6 +12,9 @@
 #include "ENEMY2.h"
 #include "BBULLET.h"
 #include "SOUNDS.h"
+#include "BBULLET2.h"
+#include "ENEMY3.h"
+#include "ZIKINERAI.h"
 namespace GAME02
 {
     class GAME :
@@ -30,7 +33,7 @@ namespace GAME02
         int Wave;
         int Score;
         int HighScore;
-        float Deg;
+        float Deg[2]{};
         int offsetx[SHOT_POINT] =
         {
             30,-30,55,-55
@@ -45,13 +48,16 @@ namespace GAME02
         PLAYER Player;
         ITEM Item[ITEM_NUM];
         ENEMY Enemy[ENEMY_NUM];
+        ENEMY3 Enemy3[ENEMY3_NUM];
         BOSS Boss;
         BACK Background;
         BULLET Bullet[BULLET_NUM];
         EBULLET Ebullet[BULLET_ENUM];
+        ZIKINERAI Zikinerai[ZIKINERAI_NUM];
         SHOTPOINT Shotpoint[SHOT_POINT];
         SAVELOAD Save;
         BBULLET Bbullet[BULLET_BNUM];
+        BBULLET2 Bbullet2[BULLET_BNUM];
         SOUNDS Sound;
     public:
         GAME(class MAIN* main) :GAME_BASE(main) {};
@@ -62,11 +68,30 @@ namespace GAME02
         void Play();
         void GameOver();
         void HardOver();
+        
         void GameClear();
         void Hardmode();
         void Option();
+        
+        void TitleMainText();
+        void PlayTexts();
+        void GameOverTexts();
+        void GameClearTexts();
+
         void Init();
+
         bool AllDead();
+        void AllInit();
+        void AllDraw();
+        void AllUpdate();
+        void AllCreate();
+
+        void Hits();
+        void Waves();
+        void OptionProcess();
+        void AmmoProcess();
+        void BossProcess();
+
         void Bossshot();
     public:
       

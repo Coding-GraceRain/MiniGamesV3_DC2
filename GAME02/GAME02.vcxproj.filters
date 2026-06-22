@@ -15,6 +15,9 @@
     <ClCompile Include="SAVELOAD.cpp" />
     <ClCompile Include="SHOT_POINT.cpp" />
     <ClCompile Include="SOUNDS.cpp" />
+    <ClCompile Include="BBULLET2.cpp" />
+    <ClCompile Include="ENEMY3.cpp" />
+    <ClCompile Include="ZIKINERAI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME02.h" />
@@ -32,6 +35,9 @@
     <ClInclude Include="SAVELOAD.h" />
     <ClInclude Include="SHOT_POINT.h" />
     <ClInclude Include="SOUNDS.h" />
+    <ClInclude Include="BBULLET2.h" />
+    <ClInclude Include="ENEMY3.h" />
+    <ClInclude Include="ZIKINERAI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game02\title.txt" />

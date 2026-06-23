@@ -18,6 +18,7 @@
     <ClCompile Include="BBULLET2.cpp" />
     <ClCompile Include="ENEMY3.cpp" />
     <ClCompile Include="ZIKINERAI.cpp" />
+    <ClCompile Include="PROMANE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME02.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="BBULLET2.h" />
     <ClInclude Include="ENEMY3.h" />
     <ClInclude Include="ZIKINERAI.h" />
+    <ClInclude Include="PROMANE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game02\title.txt" />

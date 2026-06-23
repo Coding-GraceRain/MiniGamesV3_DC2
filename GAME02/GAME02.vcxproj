@@ -146,6 +146,7 @@
     <ClCompile Include="HAIKEI.cpp" />
     <ClCompile Include="ITEM.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="PROMANE.cpp" />
     <ClCompile Include="SAVELOAD.cpp" />
     <ClCompile Include="SHOT_POINT.cpp" />
     <ClCompile Include="SOUNDS.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="HAIKEI.h" />
     <ClInclude Include="ITEM.h" />
     <ClInclude Include="PLAYER.H" />
+    <ClInclude Include="PROMANE.h" />
     <ClInclude Include="SAVELOAD.h" />
     <ClInclude Include="SHOT_POINT.h" />
     <ClInclude Include="SOUNDS.h" />

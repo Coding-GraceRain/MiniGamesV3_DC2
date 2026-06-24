@@ -1,6 +1,5 @@
 #include"../../libOne/inc/graphic.h"
 #include "../../libOne/inc/input.h"
-#include"ENEMY.h"
 #include "PLAYER.h"
 #include "../../libOne/inc/window.h"
 namespace GAME02 {

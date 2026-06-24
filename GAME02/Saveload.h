@@ -1,5 +1,4 @@
 #pragma once
-#include <fstream>
 namespace GAME02
 {
 	class SAVELOAD

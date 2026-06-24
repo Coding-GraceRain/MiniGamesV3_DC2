@@ -1,11 +1,15 @@
 #include "PROMANE.h"
+#include "../../libOne/inc/graphic.h"
+#include "../../libOne/inc/input.h"
+#include "../../libOne/inc/mathUtil.h"
+
 namespace GAME02 {
 	void PROMANE::Init() {
 		ShotDelay = 0;
 		Wave = 5;
 		Score = 0;
 		Delay = 10;
-		Hdelay = 15;
+		Hdelay = 12;
 		BossState = NOPOP;
 	}
 
@@ -28,10 +32,10 @@ namespace GAME02 {
 		text((let)"HighScore " + HighScore, 0, 100);
 		text((let)"Delay " + ShotDelay, 0, 150);
 		if (State == PLAY) {
-			text("PROMANEMode:Normal ", 0, 200);
+			text("GameMode:Normal ", 0, 200);
 		}
 		if (State == HARD) {
-			text("PROMANEMode:HARD", 0, 200);
+			text("GameMode:HARD", 0, 200);
 		}
 		text((let)"Wave" + Wave, 0, 250);
 	}
@@ -39,7 +43,7 @@ namespace GAME02 {
 		fill(255, 0, 0);
 		text((let)"Score " + Score, 0, 100);
 		text((let)"HighScore " + HighScore, 0, 150);
-		text("PROMANEOver", 0, 50); textSize(50);
+		text("GameOer", 0, 50); textSize(50);
 		if (BossState == BOSSPOP) {
 			text((let)"BossHp " + Boss.Hp, 0, 200);
 		}
@@ -51,11 +55,11 @@ namespace GAME02 {
 		text((let)"Score " + Score, 0, 50);
 		text((let)"HighScore " + HighScore, 0, 100);
 
-		text("PROMANECLEAR", width / 3, height / 3);
+		text("GameClear", width / 3, height / 3);
 		text("ENTERでタイトルに戻る", width / 3, height / 2);
 	}
 
-	//Allとか書いてるけど一部は別処理
+	//Allとか書いてるけど一部は別
 	void PROMANE::AllCreate() {
 		Player.create();
 		Boss.create();
@@ -270,7 +274,7 @@ namespace GAME02 {
 	}
 
 
-	//当たり判定とウェーブ
+	//当たり判定とスコアとウェーブ
 	void PROMANE::Hits() {
 
 		//自分の弾が敵に当たったら
@@ -292,7 +296,12 @@ namespace GAME02 {
 					if (Enemy[e].Hp == 0)
 					{
 						Enemy[e].Alive = false;
-						Score += 1000;
+						if (State == PLAY) {
+							Score += 1000;
+						}
+						else if (State == HARD) {
+							Score += 1800;
+						}
 						if (Enemy[e].drop())
 						{
 							for (int i = 0; i < ITEM_NUM; i++)
@@ -331,7 +340,12 @@ namespace GAME02 {
 					if (Enemy3[e].Hp == 0)
 					{
 						Enemy3[e].Alive = false;
-						Score += 1000;
+						if (State == PLAY) {
+							Score += 1000;
+						}
+						else if (State == HARD) {
+							Score += 1800;
+						}
 						if (Enemy3[e].drop())
 						{
 							for (int i = 0; i < ITEM_NUM; i++)
@@ -417,12 +431,23 @@ namespace GAME02 {
 					Sound.getitemsound();
 					Item[i].Alive = false;
 					Player.i++;
-					if (Player.Shotlevel < 4) {
-						Player.Shotlevel++;
+					if (State == PLAY) {
+						if (Player.Shotlevel < 4) {
+							Player.Shotlevel++;
+						}
+						else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
+							Delay -= 0.5f;
+						}
 					}
-					else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
-						Delay -= 0.5f;
+					if (State == HARD) {
+						if (Player.Shotlevel < 4) {
+							Player.Shotlevel++;
+						}
+						else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
+							Hdelay -= 1;
+						}
 					}
+
 				}
 			}
 		}
@@ -633,7 +658,7 @@ namespace GAME02 {
 		Boss.Delay--;
 	}
 
-	//それぞれの処理達
+	//メイン処理群
 	void PROMANE::TitleProcess() {
 		showCursor();
 		clear(255, 0, 255);
@@ -939,7 +964,7 @@ namespace GAME02 {
 						}
 						else if (State == HARD) {
 							Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
-							Enemy[e].Delay = rand() % 20 + 20;
+							Enemy[e].Delay = rand() % 25 + 25;
 							break;
 						}
 
@@ -1009,7 +1034,17 @@ namespace GAME02 {
 
 		}
 		if (Boss.Hp <= 0) {
-			Score += 15000000;
+
+			if (Boss.Hp <= 0) {
+				if (State == PLAY) {
+					Score += 100000;
+				}
+				if (State == PLAY) {
+					Score += 200000;
+				}
+				Save.savescore(Score);
+				State = CLEAR;
+			}
 			Save.savescore(Score);
 			State = CLEAR;
 		}
@@ -1033,11 +1068,11 @@ namespace GAME02 {
 		if (isTrigger(KEY_R)) {
 			AllInit();
 			Background.Take = 0;
-			if (State = GAMEOVER) {
+			if (State == GAMEOVER) {
 				State = PLAY;
 				Sound.playsound();
 			}
-			if (State = HARDOVER) {
+			if (State == HARDOVER) {
 				State = HARD;
 				Sound.playsound();
 			}

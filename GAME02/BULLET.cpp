@@ -1,5 +1,5 @@
 #include "BULLET.h"
-#include "../../libOne/inc/mathUtil.h"
+#include "../../libOne/inc/graphic.h"
 
 namespace GAME02 {
 		void BULLET::create() {

@@ -1,7 +1,6 @@
 #pragma once
 #include"ENEMY.h"
 #include"BULLET_BASE.h"
-#include "../../libOne/inc/graphic.h"
 #include "ENEMY3.h"
 namespace GAME02 {
 	class BULLET:public BULLET_BASE

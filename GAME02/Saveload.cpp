@@ -1,4 +1,5 @@
 #include "Saveload.h"
+#include <fstream>
 namespace GAME02{
 	int SAVELOAD::loadscore() {
 		int HighScore = 0;

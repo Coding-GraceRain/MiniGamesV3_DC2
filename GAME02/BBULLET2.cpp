@@ -1,7 +1,5 @@
 #include "BBULLET2.h"
 #include "../../libOne/inc/graphic.h"
-#include "../../libOne/inc/mathUtil.h"
-#include <cmath>
 namespace GAME02 {
 	void BBULLET2::create() {
 		Img = loadImage("../main\\assets\\game02\\danmaku.png");

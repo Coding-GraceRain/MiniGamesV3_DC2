@@ -14,12 +14,10 @@
 #include "BBULLET2.h"
 #include "ENEMY3.h"
 #include "ZIKINERAI.h"
-#include "../../libOne/inc/graphic.h"
-#include "../../libOne/inc/input.h"
 #include "../../libOne/inc/window.h"
-#include "../../libOne/inc/mathUtil.h"
 namespace GAME02 {
-    class PROMANE
+    //Project Manager
+    class PROMANE 
     {
     private:
 

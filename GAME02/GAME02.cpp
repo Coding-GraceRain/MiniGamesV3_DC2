@@ -1,4 +1,6 @@
 #include "GAME02.h"
+#include "../MAIN/MAIN.h"
+#include "../../libOne/inc/input.h"
 namespace GAME02
 {
 	int GAME::create()
@@ -13,7 +15,6 @@ namespace GAME02
 	void GAME::Option() {
 		Promane.OptionProcess();
 	}
-	//ÉÅÉCÉì
 	void GAME::Play() {
 		Promane.PlayProcess();
 	}
@@ -51,12 +52,13 @@ namespace GAME02
 		else if (Promane.State == Promane.GAMEOVER) {
 			GameOver();
 		}
-		else if (Promane.State == Promane.CLEAR) {
-			GameClear();
-		}
 		else if (Promane.State == Promane.HARDOVER) {
 			GameOver();
 		}
+		else if (Promane.State == Promane.CLEAR) {
+			GameClear();
+		}
+		
 	}
 
 }

@@ -2,7 +2,6 @@
 #include"BULLET_BASE.h"
 #include "PLAYER.H"
 #include "ENEMY3.h"
-#include "ENEMY.h"
 namespace GAME02 {
 	class ZIKINERAI :public BULLET_BASE
 	{

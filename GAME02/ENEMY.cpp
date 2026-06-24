@@ -10,7 +10,7 @@ namespace GAME02 {
 	}
 	void ENEMY::init() {
 			Px = 664 + rand()% 1227;
-			Py = rand() % 400;
+			Py = 30 + rand() % 400;
 			Vx = 2.0f;
 			Vy = 0.1f;
 			Cum = 1000;
@@ -37,10 +37,6 @@ namespace GAME02 {
 
 		if (Px< width / 3+24 || Px>width-24) { Vx *= -1; }
 	
-		if (Py < 24) {
-			init();
-		}
-	
 	}
 	void ENEMY::draw() {
 		rectMode(CENTER);
@@ -58,10 +54,10 @@ namespace GAME02 {
 	float ENEMY::top() { return Py-24.0f; }
 	float ENEMY::bottom() { return Py + 24.0f; }
 	bool ENEMY::hit(ENEMY& enemy) {
-		if (left() < enemy.right() &&
-			right() > enemy.left() &&
-			top() < enemy.bottom() &&
-			bottom() > enemy.top()) {
+		if (left() <= enemy.right() &&
+			right() >= enemy.left() &&
+			top() <= enemy.bottom() &&
+			bottom() >= enemy.top()) {
 			return true;
 		}
 		return false;

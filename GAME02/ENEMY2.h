@@ -34,8 +34,6 @@ namespace GAME02 {
 		void bossPattern1();
 		void bossPattern2();
 		void bossPattern3();
-		void bossPattern4();
-
 
 
 		float left();

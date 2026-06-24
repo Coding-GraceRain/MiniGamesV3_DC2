@@ -25,6 +25,7 @@ namespace GAME02 {
 
         int BossState;
         float ShotDelay;
+        float Time;
         float Delay;
         float Hdelay;
         int ShotCount;

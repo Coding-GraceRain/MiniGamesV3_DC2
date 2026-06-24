@@ -76,8 +76,6 @@ namespace GAME02 {
 		}
 
 	}
-	void BOSS::bossPattern4(){}
-
 	void BOSS::update() {
 		LimitTime--;
 		Cnt4--;
@@ -94,9 +92,6 @@ namespace GAME02 {
 			break;
 		case Pattern3:
 			bossPattern3();
-			break;
-		case Pattern4:
-			bossPattern4();
 			break;
 		}
 		//Hp -= 1;

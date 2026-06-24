@@ -5,6 +5,7 @@
 
 namespace GAME02 {
 	void PROMANE::Init() {
+		Time = 0;
 		ShotDelay = 0;
 		Wave = 5;
 		Score = 0;
@@ -28,32 +29,35 @@ namespace GAME02 {
 	}
 	void PROMANE::PlayTexts() {
 		fill(255, 255, 255);
-		text((let)"Score " + Score, 0, 50);
-		text((let)"HighScore " + HighScore, 0, 100);
-		text((let)"Delay " + ShotDelay, 0, 150);
+		text((let)"Time " + Time, 0, 50);
+		text((let)"Score " + Score, 0, 100);
+		text((let)"HighScore " + HighScore, 0, 150);
+		text((let)"Delay " + ShotDelay, 0, 200);
 		if (State == PLAY) {
-			text("GameMode:Normal ", 0, 200);
+			text("GameMode:Normal ", 0, 250);
 		}
 		if (State == HARD) {
-			text("GameMode:HARD", 0, 200);
+			text("GameMode:HARD", 0, 250);
 		}
-		text((let)"Wave" + Wave, 0, 250);
+		text((let)"Wave" + Wave, 0, 300);
 	}
 	void PROMANE::GameOverTexts() {
 		fill(255, 0, 0);
-		text((let)"Score " + Score, 0, 100);
-		text((let)"HighScore " + HighScore, 0, 150);
-		text("GameOer", 0, 50); textSize(50);
+		text("GameOver", 0, 50); textSize(50);
+		text((let)"Time " + Time, 0, 100);
+		text((let)"Score " + Score, 0, 150);
+		text((let)"HighScore " + HighScore, 0, 200);
 		if (BossState == BOSSPOP) {
-			text((let)"BossHp " + Boss.Hp, 0, 200);
+			text((let)"BossHp " + Boss.Hp, 0, 250);
 		}
 	}
 	void PROMANE::GameClearTexts() {
 		rectMode(CENTER);
 		fill(0, 255, 0);
+		text((let)"Time " + Time, 0, 50);
 		strokeWeight(10);
-		text((let)"Score " + Score, 0, 50);
-		text((let)"HighScore " + HighScore, 0, 100);
+		text((let)"Score " + Score, 0, 100);
+		text((let)"HighScore " + HighScore, 0, 150);
 
 		text("GameClear", width / 3, height / 3);
 		text("ENTER‚Åƒ^ƒCƒgƒ‹‚É–ß‚é", width / 3, height / 2);
@@ -235,7 +239,7 @@ namespace GAME02 {
 			Boss.draw();
 		}
 	}
-	void PROMANE::AllUpdate() {
+	void PROMANE::AllUpdate(){
 		if (State == PLAY) {
 			Player.update();
 		}
@@ -270,6 +274,7 @@ namespace GAME02 {
 			}
 			Enemy3[i].update();
 		}
+		Time+=DeltaTime;
 
 	}
 
@@ -540,7 +545,16 @@ namespace GAME02 {
 								break;
 							}
 						}
-
+						if (!retry) {
+							for (int e = 0; e < ENEMY_NUM; e++) {
+								if (Enemy3[i].hit(Enemy[e]))
+								{
+									retry = true;
+									break;
+								}
+							}
+						}
+					
 					} while (retry);
 					Enemy3[i].Hp += Enemy3->Buf;
 					if (Enemy3[i].Delay > 10) {
@@ -957,15 +971,30 @@ namespace GAME02 {
 				{
 					if (!Ebullet[i].Alive)
 					{
+						
 						if (State == PLAY) {
-							Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
-							Enemy[e].Delay = rand() % 30 + 30;
-							break;
+							if (Player.ControlMode[1] == 1) {
+								Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
+								Enemy[e].Delay = rand() % 40 + 40;
+								break;
+							}
+							if (Player.ControlMode[1] == 2) {
+								Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
+								Enemy[e].Delay = rand() % 30 + 30;
+								break;
+							}
 						}
 						else if (State == HARD) {
-							Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
-							Enemy[e].Delay = rand() % 25 + 25;
-							break;
+							if (Player.ControlMode[1] == 1) {
+								Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
+								Enemy[e].Delay = rand() % 35 + 35;
+								break;
+							}
+							if (Player.ControlMode[1] == 2) {
+								Ebullet[i].shoot(Enemy[e].Px, Enemy[e].Py);
+								Enemy[e].Delay = rand() % 25 + 25;
+								break;
+							}
 						}
 
 					}
@@ -984,14 +1013,28 @@ namespace GAME02 {
 					if (!Zikinerai[i].Alive)
 					{
 						if (State == PLAY) {
-							Zikinerai[i].shoot(Player, Enemy3[e]);
-							Enemy3[e].Delay = rand() % 100 + 100;
-							break;
+							if (Player.ControlMode[1] == 1) {
+								Zikinerai[i].shoot(Player, Enemy3[e]);
+								Enemy3[e].Delay = rand() % 130 + 130;
+								break;
+							}
+							if (Player.ControlMode[1] == 2) {
+								Zikinerai[i].shoot(Player, Enemy3[e]);
+								Enemy3[e].Delay = rand() % 100 + 100;
+								break;
+							}
 						}
 						else if (State == HARD) {
-							Zikinerai[i].shoot(Player, Enemy3[e]);
-							Enemy3[e].Delay = rand() % 90 + 90;
-							break;
+							if (Player.ControlMode[1] == 1) {
+								Zikinerai[i].shoot(Player, Enemy3[e]);
+								Enemy3[e].Delay = rand() % 120 + 120;
+								break;
+							}
+							if (Player.ControlMode[1] == 2) {
+								Zikinerai[i].shoot(Player, Enemy3[e]);
+								Enemy3[e].Delay = rand() % 90 + 90;
+								break;
+							}
 						}
 					}
 				}

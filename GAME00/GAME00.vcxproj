@@ -133,10 +133,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BULLET.cpp" />
+    <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="FLAG.cpp" />
     <ClCompile Include="GAME00.cpp" />
+    <ClCompile Include="input2.cpp" />
+    <ClCompile Include="OBJECT.cpp" />
+    <ClCompile Include="OBJECT2.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BULLET.h" />
+    <ClInclude Include="ENEMY.h" />
+    <ClInclude Include="FLAG.h" />
     <ClInclude Include="GAME00.h" />
+    <ClInclude Include="input2.h" />
+    <ClInclude Include="OBJECT.h" />
+    <ClInclude Include="OBJECT2.h" />
+    <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game00\title.txt" />

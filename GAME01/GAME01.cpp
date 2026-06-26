@@ -1,28 +1,27 @@
-#include "../../libOne/inc/libOne.h"
+ï»¿#include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME01.h"
+#include"GAME.h"
 namespace GAME01
 {
 	int GAME::create()
 	{
+		game = new GAME1(main());
+		game->game01 = this;
+		game->create();
 		return 0;
 	}
-
 	void GAME::destroy()
 	{
-
+		delete game;
+		game = nullptr;
 	}
-
 	void GAME::proc()
 	{
 		clear(0, 0, 64);
-		textSize(50);
-		fill(255, 255, 0);
-		text("GAME01", 0, 100);
-		fill(255);
-		text("ENTERƒL[‚Åƒƒjƒ…[‚É–ß‚é", 0, 1080);
-		if (isTrigger(KEY_ENTER)) {
-			main()->backToMenu();
-		}
+		game->proc();
+	}
+	void GAME::backToMenu() {
+		main()->backToMenu();
 	}
 }

@@ -107,6 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)libOne\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -133,10 +134,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BOSS.cpp" />
+    <ClCompile Include="CHARACTER.cpp" />
+    <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="FIFTHENEMY.cpp" />
+    <ClCompile Include="FOURTHENEMY.cpp" />
+    <ClCompile Include="GAME.cpp" />
     <ClCompile Include="GAME01.cpp" />
+    <ClCompile Include="MAP.cpp" />
+    <ClCompile Include="NORMALENEMY.cpp" />
+    <ClCompile Include="PERSENT.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="SEVENTHENEMY.cpp" />
+    <ClCompile Include="SIXTHENEMY.cpp" />
+    <ClCompile Include="THIRDENEMY.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="WEAKENEMY.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BOSS.h" />
+    <ClInclude Include="CELL.h" />
+    <ClInclude Include="CHARACTER.h" />
+    <ClInclude Include="ENEMY.h" />
+    <ClInclude Include="FIFTHENEMY.h" />
+    <ClInclude Include="FOURTHENEMY.h" />
+    <ClInclude Include="GAME.h" />
     <ClInclude Include="GAME01.h" />
+    <ClInclude Include="MAP.h" />
+    <ClInclude Include="NORMALENEMY.h" />
+    <ClInclude Include="PERSENT.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="SEVENTHENEMY.h" />
+    <ClInclude Include="SIXTHENEMY.h" />
+    <ClInclude Include="THIRDENEMY.h" />
+    <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="WEAKENEMY.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game01\title.txt" />

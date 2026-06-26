@@ -2,11 +2,57 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME05.cpp" />
+    <ClCompile Include="ANIMS.cpp" />
+    <ClCompile Include="ANIM.cpp" />
+    <ClCompile Include="CHARACTER.cpp" />
+    <ClCompile Include="CHARACTER_MANAGER.cpp" />
+    <ClCompile Include="CONTAINER.cpp" />
+    <ClCompile Include="FADE.cpp" />
+    <ClCompile Include="GAME.cpp" />
+    <ClCompile Include="GAME_OBJECT.cpp" />
+    <ClCompile Include="gmain.cpp" />
+    <ClCompile Include="LAYER.cpp" />
+    <ClCompile Include="LAYER2.cpp" />
+    <ClCompile Include="MAP.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="SCENE.cpp" />
+    <ClCompile Include="STAGE.cpp" />
+    <ClCompile Include="SURAIMU.cpp" />
+    <ClCompile Include="TITLE.cpp" />
+    <ClCompile Include="PLAYER_BULLET.cpp" />
+    <ClCompile Include="TREE.cpp" />
+    <ClCompile Include="TREE_BULLET.cpp" />
+    <ClCompile Include="BOSS.cpp" />
+    <ClCompile Include="BOSS_BULLET.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME05.h" />
+    <ClInclude Include="ANIMS.h" />
+    <ClInclude Include="ANIM.h" />
+    <ClInclude Include="CHARACTER.h" />
+    <ClInclude Include="CHARACTER_MANAGER.h" />
+    <ClInclude Include="CONTAINER.h" />
+    <ClInclude Include="FADE.h" />
+    <ClInclude Include="GAME.h" />
+    <ClInclude Include="GAME_OBJECT.h" />
+    <ClInclude Include="LAYER.h" />
+    <ClInclude Include="LAYER2.h" />
+    <ClInclude Include="MAP.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="SCENE.h" />
+    <ClInclude Include="STAGE.h" />
+    <ClInclude Include="SURAIMU.h" />
+    <ClInclude Include="TITLE.h" />
+    <ClInclude Include="PLAYER_BULLET.h" />
+    <ClInclude Include="TREE.h" />
+    <ClInclude Include="TREE_BULLET.h" />
+    <ClInclude Include="BOSS.h" />
+    <ClInclude Include="BOSS_BULLET.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game05\title.txt" />
+    <Text Include="..\MAIN\assets\game05\map1.txt" />
+    <Text Include="..\MAIN\assets\game05\layer1.txt" />
+    <Text Include="..\MAIN\assets\game05\layer2.txt" />
   </ItemGroup>
 </Project>

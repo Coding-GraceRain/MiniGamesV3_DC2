@@ -7,10 +7,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GAME_BASE.cpp" />
     <ClCompile Include="GAME_FACTORY.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="TRANSITION_EFFECT.cpp" />
+    <ClCompile Include="GAME_BASE.cpp">
+      <Filter>リソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME_BASE.h" />

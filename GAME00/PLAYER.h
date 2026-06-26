@@ -15,7 +15,7 @@ namespace GAME00
 		float Gravity;
 		int JumpCount;
 		const int Max_Jump = 2;
-		bool OnGround;     //地面に乗っているか
+		bool OnGround;     //�n�ʂɏ���Ă��邩
 		float StartX, StartY;
 		int Hp;
 		int MaxHp;
@@ -40,7 +40,7 @@ namespace GAME00
 		float bottom();
 		bool hit(ENEMY& enemy);
 		bool hit(OBJECT& object);
-		bool landOn(OBJECT& object);    //landOn:着地したか
+		bool landOn(OBJECT& object);    //landOn:���n������
 		bool hit(OBJECT2& object2);
 		bool hitCeiling(OBJECT2& object2);
 		bool hitSide(OBJECT2& object2);

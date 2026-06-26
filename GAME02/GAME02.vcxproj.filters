@@ -2,9 +2,44 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME02.cpp" />
+    <ClCompile Include="BBULLET.cpp" />
+    <ClCompile Include="BULLET.cpp" />
+    <ClCompile Include="BULLET_BASE.cpp" />
+    <ClCompile Include="EBULLET.cpp" />
+    <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="ENEMY_BASE.cpp" />
+    <ClCompile Include="ENEMY2.cpp" />
+    <ClCompile Include="HAIKEI.cpp" />
+    <ClCompile Include="ITEM.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="SAVELOAD.cpp" />
+    <ClCompile Include="SHOT_POINT.cpp" />
+    <ClCompile Include="SOUNDS.cpp" />
+    <ClCompile Include="BBULLET2.cpp" />
+    <ClCompile Include="ENEMY3.cpp" />
+    <ClCompile Include="ZIKINERAI.cpp" />
+    <ClCompile Include="PROMANE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME02.h" />
+    <ClInclude Include="BBULLET.h" />
+    <ClInclude Include="BULLET.h" />
+    <ClInclude Include="BULLET_BASE.h" />
+    <ClInclude Include="DEFINES.h" />
+    <ClInclude Include="EBULLET.h" />
+    <ClInclude Include="ENEMY.h" />
+    <ClInclude Include="ENEMY_BASE.h" />
+    <ClInclude Include="ENEMY2.h" />
+    <ClInclude Include="HAIKEI.h" />
+    <ClInclude Include="ITEM.h" />
+    <ClInclude Include="PLAYER.H" />
+    <ClInclude Include="SAVELOAD.h" />
+    <ClInclude Include="SHOT_POINT.h" />
+    <ClInclude Include="SOUNDS.h" />
+    <ClInclude Include="BBULLET2.h" />
+    <ClInclude Include="ENEMY3.h" />
+    <ClInclude Include="ZIKINERAI.h" />
+    <ClInclude Include="PROMANE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game02\title.txt" />

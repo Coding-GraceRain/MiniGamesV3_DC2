@@ -1,11 +1,29 @@
-#include "../../libOne/inc/libOne.h"
-#include "../MAIN/MAIN.h"
 #include "GAME02.h"
+#include "../MAIN/MAIN.h"
+#include "../../libOne/inc/input.h"
 namespace GAME02
 {
 	int GAME::create()
 	{
+		Promane.AllCreate();
 		return 0;
+	}
+
+	void GAME::Title() {
+		Promane.TitleProcess();
+	}
+	void GAME::Option() {
+		Promane.OptionProcess();
+	}
+	void GAME::Play() {
+		Promane.PlayProcess();
+	}
+	void GAME::GameOver() {
+		Promane.GameOverProcess();
+	}
+
+	void GAME::GameClear() {
+		Promane.GameClearProcess();
 	}
 
 	void GAME::destroy()
@@ -15,14 +33,32 @@ namespace GAME02
 
 	void GAME::proc()
 	{
-		clear(0, 0, 64);
-		textSize(50);
-		fill(255, 255, 0);
-		text("GAME02", 0, 100);
-		fill(255);
-		text("ENTERキーでメニューに戻る", 0, 1080);
-		if (isTrigger(KEY_ENTER)) {
+		//clear(255, 255, 255);
+		if (isTrigger(KEY_M)) {
 			main()->backToMenu();
 		}
+		if (Promane.State == Promane.TITLE) {
+			Title();
+		}
+		else if (Promane.State == Promane.PLAY) {
+			Play();
+		}
+		else if (Promane.State == Promane.HARD) {
+			Play();
+		}
+		else if (Promane.State == Promane.OPTION) {
+			Option();
+		}
+		else if (Promane.State == Promane.GAMEOVER) {
+			GameOver();
+		}
+		else if (Promane.State == Promane.HARDOVER) {
+			GameOver();
+		}
+		else if (Promane.State == Promane.CLEAR) {
+			GameClear();
+		}
+		
 	}
+
 }

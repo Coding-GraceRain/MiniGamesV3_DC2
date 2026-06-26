@@ -15,7 +15,7 @@ namespace GAME00
 		float Gravity;
 		int JumpCount;
 		const int Max_Jump = 2;
-		bool OnGround;     //’n–Ê‚Éæ‚Á‚Ä‚¢‚é‚©
+		bool OnGround;     //ï¿½nï¿½Ê‚Éï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©
 		float StartX, StartY;
 		int Hp;
 		int MaxHp;
@@ -40,7 +40,7 @@ namespace GAME00
 		float bottom();
 		bool hit(ENEMY& enemy);
 		bool hit(OBJECT& object);
-		bool landOn(OBJECT& object);    //landOn:’…’n‚µ‚½‚©
+		bool landOn(OBJECT& object);    //landOn:ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		bool hit(OBJECT2& object2);
 		bool hitCeiling(OBJECT2& object2);
 		bool hitSide(OBJECT2& object2);

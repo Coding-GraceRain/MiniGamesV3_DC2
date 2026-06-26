@@ -10,7 +10,6 @@ namespace GAME02 {
 		Alive = false;
 	}
 	void ZIKINERAI::shoot(PLAYER& player,ENEMY3& enemy) {
-		
 		Bx = enemy.Px;
 		By = enemy.Py;
 		float vx = player.Px - enemy.Px;
@@ -26,7 +25,6 @@ namespace GAME02 {
 		}
 		Bx += Vx;
 		By += Vy;
-		//deg += 0.1f;
 		if (By > 1080) {
 			Alive = false;
 		}

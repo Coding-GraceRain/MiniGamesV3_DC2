@@ -1,6 +1,5 @@
 #include "ENEMY2.h"
 #include "../../libOne/inc/graphic.h"
-#include "../../libOne/inc/mathUtil.h"
 namespace GAME02 {
 	void BOSS::create() {
 		Img = loadImage("../main\\assets\\game02\\Fran.png");

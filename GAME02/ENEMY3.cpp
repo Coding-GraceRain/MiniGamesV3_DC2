@@ -34,7 +34,7 @@ namespace GAME02 {
 			}
 			else
 				Px += Vx;
-
+			
 			if (Px< width / 3 + 24 || Px>width - 24) { Vx *= -1; }
 		}
 		void ENEMY3::draw() {

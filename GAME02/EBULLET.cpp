@@ -1,6 +1,4 @@
 #include "EBULLET.h"
-#include <cmath>
-#include "../../libOne/inc/mathUtil.h"
 #include "../../libOne/inc/graphic.h"
 namespace GAME02 {
 	void EBULLET::create() {

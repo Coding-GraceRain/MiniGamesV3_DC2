@@ -26,6 +26,7 @@ namespace GAME02 {
         int BossState;
         float ShotDelay;
         float Time;
+        //float Timer;
         float Delay;
         float Hdelay;
         int ShotCount;
@@ -44,6 +45,8 @@ namespace GAME02 {
         };
         int Cur = 0;
         int Choose[3];
+        char buf[128];
+        //char m[10];
         POINT mouse;
         PLAYER Player;
         ITEM Item[ITEM_NUM];

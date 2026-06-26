@@ -6,6 +6,7 @@
 namespace GAME02 {
 	void PROMANE::Init() {
 		Time = 0;
+		//Timer = 120;
 		ShotDelay = 0;
 		Wave = 5;
 		Score = 0;
@@ -29,7 +30,10 @@ namespace GAME02 {
 	}
 	void PROMANE::PlayTexts() {
 		fill(255, 255, 255);
-		text((let)"Time " + Time, 0, 50);
+		sprintf_s(buf, "Time %.0fs", Time);
+		text(buf, 0, 50);
+		//sprintf_s(m, "Timer %.0f", Timer);
+		//text(m, 0, 350);
 		text((let)"Score " + Score, 0, 100);
 		text((let)"HighScore " + HighScore, 0, 150);
 		text((let)"Delay " + ShotDelay, 0, 200);
@@ -44,7 +48,8 @@ namespace GAME02 {
 	void PROMANE::GameOverTexts() {
 		fill(255, 0, 0);
 		text("GameOver", 0, 50); textSize(50);
-		text((let)"Time " + Time, 0, 100);
+		sprintf_s(buf, "Time %.0fs", Time);
+		text(buf, 0, 100);
 		text((let)"Score " + Score, 0, 150);
 		text((let)"HighScore " + HighScore, 0, 200);
 		if (BossState == BOSSPOP) {
@@ -54,7 +59,8 @@ namespace GAME02 {
 	void PROMANE::GameClearTexts() {
 		rectMode(CENTER);
 		fill(0, 255, 0);
-		text((let)"Time " + Time, 0, 50);
+		sprintf_s(buf,"Time %.0fs",Time);
+		text(buf, 0, 50);
 		strokeWeight(10);
 		text((let)"Score " + Score, 0, 100);
 		text((let)"HighScore " + HighScore, 0, 150);
@@ -275,7 +281,7 @@ namespace GAME02 {
 			Enemy3[i].update();
 		}
 		Time+=DeltaTime;
-
+		//Timer -= DeltaTime;
 	}
 
 
@@ -569,9 +575,11 @@ namespace GAME02 {
 	void PROMANE::Bossshot() {
 		if (Boss.Delay <= 0)
 		{
-			if (Player.ControlMode[1] == 1) {
+			if (Player.ControlMode[1] == 1)
+			{
 				static float offset = 0;
-				for (int i = 0; i < 16; i++) {
+				for (int i = 0; i < 16; i++)
+				{
 					float angle = (360.0f / 16.0f) * i + offset;
 					Deg[0] = angle;
 					Deg[0] += 1;
@@ -587,38 +595,40 @@ namespace GAME02 {
 						}
 
 					}
-					if (Boss.Hp < 2500) {
-						if (Player.ControlMode[1] == 1) {
-							static float offset = 0;
-							for (int i = 0; i < 8; i++) {
-								float angle = (360.0f / 8.0f) * i + offset;
-								Deg[1] = angle;
-								Deg[1] += 1;
-								float Vx = Sin(Deg[1]) * 4;
-								float Vy = -Cos(Deg[1]) * 4;
-								for (int j = 0; j < BULLET_BNUM; j++)
+				}
+				if (Boss.Hp < 2500)
+				{
+					if (Player.ControlMode[1] == 1)
+					{
+						static float offset = 0;
+						for (int i = 0; i < 4; i++)
+						{
+							float angle = (360.0f / 4.0f) * i + offset;
+							Deg[1] = angle;
+							Deg[1] += 1;
+							float Vx = Sin(Deg[1]) * 4;
+							float Vy = -Cos(Deg[1]) * 4;
+							for (int j = 0; j < BULLET_BNUM; j++)
+							{
+								if (!Bbullet2[j].Alive)
 								{
-									if (!Bbullet2[j].Alive)
-									{
-										Bbullet2[j].set(Boss.Px, Boss.Py, Vx, Vy);
-										offset -= 3;
-										break;
-
-									}
-
+									Bbullet2[j].set(Boss.Px, Boss.Py, Vx, Vy);
+									offset -= 3;
+									break;
 								}
 							}
 						}
 					}
-					Boss.Delay = 28;
-					if (Boss.Hp < 2500) {
-						Boss.Delay = 26;
-					}
+				}
+				Boss.Delay = 28;
+				if (Boss.Hp < 2500) {
+					Boss.Delay = 26;
 				}
 			}
 			if (Player.ControlMode[1] == 2) {
 				static float offset = 0;
-				for (int i = 0; i < 48; i++) {
+				for (int i = 0; i < 48; i++)
+				{
 					float angle = (360.0f / 48.0f) * i + offset;
 					Deg[0] = angle;
 					Deg[0] += 1;
@@ -635,10 +645,13 @@ namespace GAME02 {
 
 					}
 				}
-				if (Boss.Hp < 2500) {
-					if (Player.ControlMode[1] == 2) {
+				if (Boss.Hp < 2500) 
+				{
+					if (Player.ControlMode[1] == 2) 
+					{
 						static float offset = 0;
-						for (int i = 0; i < 8; i++) {
+						for (int i = 0; i < 8; i++) 
+						{
 							float angle = (360.0f / 8.0f) * i + offset;
 							Deg[1] = angle;
 							Deg[1] += 1;
@@ -717,7 +730,7 @@ namespace GAME02 {
 		clear();
 		Background.titledraw();
 		fill(0, 0, 0);
-		text("Bでタイトルに戻る", 0, 100);
+		text("Tでタイトルに戻る", 0, 100);
 		text("操作をマウスにすると難易度が上がります(簡単すぎたので)", 0, 50);
 		if (Choose[0] == 0) {
 			text("低速移動:長押し", width / 2 - 150, 450);
@@ -841,7 +854,7 @@ namespace GAME02 {
 				text("オーディオ:あり", 0, 1080);
 			}
 			else if (Choose[2] == 2) {
-				text("オーディオ:半分", 0, 1080);
+				text("オーディオ:半分...かもしれないね", 0, 1080);
 			}
 			else if (Choose[2] == 3) {
 				text("オーディオ:なし", 0, 1080);
@@ -858,7 +871,7 @@ namespace GAME02 {
 		}
 		else if (MouseX < 375 && MouseY > 1030 && Choose[2] == 2) {
 			fill(255, 255, 255);
-			text("オーディオ:半分", 0, 1080);
+			text("オーディオ:半分...かもしれないね", 0, 1080);
 		}
 		else if (MouseX < 375 && MouseY > 1030 && Choose[2] == 3) {
 			fill(255, 255, 255);
@@ -871,7 +884,7 @@ namespace GAME02 {
 			}
 			else if (Choose[2] == 2) {
 				fill(255, 0, 0);
-				text("オーディオ:半分", 0, 1080);
+				text("オーディオ:半分...かもしれないね", 0, 1080);
 			}
 			else if (Choose[2] == 3) {
 				fill(255, 0, 0);
@@ -893,7 +906,8 @@ namespace GAME02 {
 				Choose[2] = 1;
 			}
 		}
-		if (isTrigger(KEY_B)) {
+
+		if (isTrigger(KEY_T)) {
 			State = TITLE;
 			Cur = 0;
 		}
@@ -1069,6 +1083,9 @@ namespace GAME02 {
 			for (int i = 0; i < BULLET_ENUM; i++) {
 				Ebullet[i].Alive = false;
 			}
+			for (int i = 0; i < ZIKINERAI_NUM; i++) {
+				Zikinerai[i].Alive = false;
+			}
 			Boss.update();
 			Boss.draw();
 			if (Boss.Cnt4 < 0) {
@@ -1136,5 +1153,4 @@ namespace GAME02 {
 			State = TITLE;
 		}
 	}	
-
 }

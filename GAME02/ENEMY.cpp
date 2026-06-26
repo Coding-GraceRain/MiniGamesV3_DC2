@@ -9,8 +9,8 @@ namespace GAME02 {
 		Buf = 0;
 	}
 	void ENEMY::init() {
-			Px = 664 + rand()% 1227;
-			Py = 30 + rand() % 400;
+			Px = (float)664 + rand()% 1227;
+			Py = (float)30 + rand() % 400;
 			Vx = 2.0f;
 			Vy = 0.1f;
 			Cum = 1000;
@@ -35,8 +35,10 @@ namespace GAME02 {
 		else
 			Px += Vx;
 
-		if (Px< width / 3+24 || Px>width-24) { Vx *= -1; }
-	
+		if (Px< width / 3 + 24 || Px>width - 24) { Vx *= -1; }
+		/*if (Py < 24) {
+			init()
+		}*/
 	}
 	void ENEMY::draw() {
 		rectMode(CENTER);

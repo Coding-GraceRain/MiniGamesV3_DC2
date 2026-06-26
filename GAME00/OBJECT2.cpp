@@ -28,15 +28,15 @@ namespace GAME00
 		}
 	}
 	void OBJECT2::startmove() {
-		//ç§»å‹•åºŠ
+		//ˆÚ“®°
 		if (!IsMove)return;
 		Px += MoveSpeed * MoveDir;
-		//ç§»å‹•ç¯„å›²
-		if (Px > 700) MoveDir = -1;  //å·¦ã«å‹•ã
-		if (Px < 450) MoveDir = 1;   //å³ã«å‹•ã
+		//ˆÚ“®”ÍˆÍ
+		if (Px > 700) MoveDir = -1;  //¶‚É“®‚­
+		if (Px < 450) MoveDir = 1;   //‰E‚É“®‚­
 	}
 	void OBJECT2::update() {
-		//è½ä¸‹åºŠ
+		//—Ž‰º°
 		if (IsFalling) {
 			FallSpeed += 0.6f;
 			Py += FallSpeed;
@@ -69,7 +69,7 @@ namespace GAME00
 
 
 	//----------------------------------------------------------------
-	//ãƒ‡ãƒãƒƒã‚°
+	//ƒfƒoƒbƒO
 	/*
 		void OBJECT2::drawDebugNum(int num){
 			fill(255,0,0);

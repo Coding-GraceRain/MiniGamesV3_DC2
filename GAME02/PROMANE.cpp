@@ -10,7 +10,7 @@ namespace GAME02 {
 		ShotDelay = 0;
 		Wave = 5;
 		Score = 0;
-		Delay = 10;
+		Delay = 9;
 		Hdelay = 12;
 		BossState = NOPOP;
 	}
@@ -455,7 +455,7 @@ namespace GAME02 {
 							Player.Shotlevel++;
 						}
 						else if (Player.Shotlevel >= 4 && ShotDelay > 1) {
-							Hdelay -= 1;
+							Hdelay -= 0.5f;
 						}
 					}
 

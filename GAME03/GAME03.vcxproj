@@ -133,12 +133,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BUTTON.cpp" />
+    <ClCompile Include="CHARACTER.cpp" />
+    <ClCompile Include="CHARACTER_MANAGER.cpp" />
+    <ClCompile Include="CONTAINER.cpp" />
+    <ClCompile Include="FADE.cpp" />
     <ClCompile Include="GAME03.cpp" />
+    <ClCompile Include="GAME_CLEAR.cpp" />
+    <ClCompile Include="GAME_OBJECT.cpp" />
+    <ClCompile Include="MAP.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="SCENE.cpp" />
+    <ClCompile Include="STAGE.cpp" />
+    <ClCompile Include="TITLE.cpp" />
+    <ClCompile Include="TURRETS.cpp" />
+    <ClCompile Include="TURRET_BULLET.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BUTTON.h" />
+    <ClInclude Include="CHARACTER.h" />
+    <ClInclude Include="CHARACTER_MANAGER.h" />
+    <ClInclude Include="CONTAINER.h" />
+    <ClInclude Include="FADE.h" />
     <ClInclude Include="GAME03.h" />
+    <ClInclude Include="GAME_CLEAR.h" />
+    <ClInclude Include="GAME_OBJECT.h" />
+    <ClInclude Include="MAP.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="SCENE.h" />
+    <ClInclude Include="STAGE.h" />
+    <ClInclude Include="TITLE.h" />
+    <ClInclude Include="TURRETS.h" />
+    <ClInclude Include="TURRET_BULLET.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\MAIN\assets\game03\stage02.txt" />
+    <Text Include="..\MAIN\assets\game03\stage01.txt" />
+    <Text Include="..\MAIN\assets\game03\stage03.txt" />
+    <Text Include="..\MAIN\assets\game03\stage04.txt" />
+    <Text Include="..\MAIN\assets\game03\stage05.txt" />
     <Text Include="..\MAIN\assets\game03\title.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

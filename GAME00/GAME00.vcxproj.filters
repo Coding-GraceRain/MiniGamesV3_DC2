@@ -2,9 +2,23 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME00.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="input2.cpp" />
+    <ClCompile Include="ENEMY.cpp" />
+    <ClCompile Include="OBJECT.cpp" />
+    <ClCompile Include="OBJECT2.cpp" />
+    <ClCompile Include="BULLET.cpp" />
+    <ClCompile Include="FLAG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME00.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="input2.h" />
+    <ClInclude Include="ENEMY.h" />
+    <ClInclude Include="OBJECT.h" />
+    <ClInclude Include="OBJECT2.h" />
+    <ClInclude Include="BULLET.h" />
+    <ClInclude Include="FLAG.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game00\title.txt" />

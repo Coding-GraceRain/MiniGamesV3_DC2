@@ -133,10 +133,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ENEMY.cpp" />
     <ClCompile Include="GAME04.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ENEMY.h" />
     <ClInclude Include="GAME04.h" />
+    <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game04\title.txt" />

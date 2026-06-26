@@ -2,9 +2,15 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME06.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="back.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME06.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="back.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game06\title.txt" />

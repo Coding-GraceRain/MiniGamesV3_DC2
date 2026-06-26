@@ -1,12 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="GAME03.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="MAP.cpp" />
+    <ClCompile Include="GAME03.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME_CLEAR.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GAME_OBJECT.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="STAGE.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TITLE.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SCENE.cpp">
+      <Filter>scene\base</Filter>
+    </ClCompile>
+    <ClCompile Include="CONTAINER.cpp">
+      <Filter>container</Filter>
+    </ClCompile>
+    <ClCompile Include="TURRETS.cpp" />
+    <ClCompile Include="CHARACTER.cpp" />
+    <ClCompile Include="CHARACTER_MANAGER.cpp" />
+    <ClCompile Include="TURRET_BULLET.cpp" />
+    <ClCompile Include="FADE.cpp" />
+    <ClCompile Include="BUTTON.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GAME03.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="MAP.h" />
+    <ClInclude Include="GAME03.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME_CLEAR.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GAME_OBJECT.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="STAGE.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TITLE.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SCENE.h">
+      <Filter>scene\base</Filter>
+    </ClInclude>
+    <ClInclude Include="CONTAINER.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="TURRETS.h" />
+    <ClInclude Include="CHARACTER.h" />
+    <ClInclude Include="CHARACTER_MANAGER.h" />
+    <ClInclude Include="TURRET_BULLET.h" />
+    <ClInclude Include="FADE.h" />
+    <ClInclude Include="BUTTON.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game03\title.txt" />
+    <Text Include="..\MAIN\assets\game03\stage02.txt" />
+    <Text Include="..\MAIN\assets\game03\stage01.txt" />
+    <Text Include="..\MAIN\assets\game03\stage03.txt" />
+    <Text Include="..\MAIN\assets\game03\stage04.txt" />
+    <Text Include="..\MAIN\assets\game03\stage05.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="manager">
+      <UniqueIdentifier>{c1a84cbe-8757-461e-8b59-4c7a7ad21d61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{95c3bbd5-74ee-46dd-a8b9-d82f875e74f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\base">
+      <UniqueIdentifier>{e3209cc8-9dec-4f8a-aca9-246db5356d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="container">
+      <UniqueIdentifier>{cc95e669-2d61-4255-affc-a3635eb32f52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

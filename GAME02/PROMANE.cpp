@@ -13,6 +13,7 @@ namespace GAME02 {
 		Delay = 9;
 		Hdelay = 12;
 		BossState = NOPOP;
+		BossState = NOPOP;
 	}
 
 	//Text‘S”ÊBˆê•”—áŠO‚ ‚è

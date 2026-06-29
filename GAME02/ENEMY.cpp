@@ -9,8 +9,8 @@ namespace GAME02 {
 		Buf = 0;
 	}
 	void ENEMY::init() {
-			Px = (float)664 + rand()% 1227;
-			Py = (float)30 + rand() % 400;
+			Px = 670 + rand()% 1220;
+			Py = 30 + rand() % 400;
 			Vx = 2.0f;
 			Vy = 0.1f;
 			Cum = 1000;

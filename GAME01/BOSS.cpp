@@ -18,6 +18,6 @@ namespace GAME01 {
 	void BOSS::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("çŽ?, Px, Py);
+		text("‰¤", Px, Py);
 	}
 }

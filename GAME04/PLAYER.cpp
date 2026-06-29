@@ -42,7 +42,7 @@ void PLAYER::update(int seJump) {
 	}
 
 }
-void PLAYER::draw(int imgSoldier[3]) {
+void PLAYER::draw(int imgSoldier[3]) const {
 	image(imgSoldier[anime], x - 10, y, 4, 4);
-	rect(x + 30, y + 20, 40, 90);
+	//rect(x + 30, y + 20, 40, 90);
 }

@@ -134,9 +134,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GAME07.cpp" />
+    <ClCompile Include="SAIKORO.cpp" />
+    <ClCompile Include="MULTI.cpp" />
+    <ClCompile Include="SORO.cpp" />
+    <ClCompile Include="TAITLE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME07.h" />
+    <ClInclude Include="SAIKORO.h" />
+    <ClInclude Include="MULTI.h" />
+    <ClInclude Include="SORO.h" />
+    <ClInclude Include="TAITLE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game07\title.txt" />

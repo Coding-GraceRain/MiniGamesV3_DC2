@@ -1,4 +1,4 @@
-Ôªø#include "WEAKENEMY.h"
+#include "WEAKENEMY.h"
 namespace GAME01
 {
 	void WEAKENEMY::init(int IPx, int IPy) {
@@ -19,6 +19,6 @@ namespace GAME01
 	void WEAKENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("È™®", Px, Py);
+		text("çú", Px, Py);
 	}
 }

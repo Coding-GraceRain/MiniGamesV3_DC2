@@ -1,4 +1,4 @@
-﻿#include "THIRDENEMY.h"
+#include "THIRDENEMY.h"
 namespace GAME01 {
 	void THIRDENEMY::init(int IPx, int IPy) {
 		isAlive = true;
@@ -18,6 +18,6 @@ namespace GAME01 {
 	void THIRDENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("蟲", Px, Py);
+		text("�", Px, Py);
 	}
 }

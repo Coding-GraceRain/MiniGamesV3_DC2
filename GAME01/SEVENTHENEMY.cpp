@@ -1,4 +1,4 @@
-ï»¿#include "SEVENTHENEMY.h"
+#include "SEVENTHENEMY.h"
 namespace GAME01 {
 	void SEVENTHENEMY::init(int IPx, int IPy) {
 		isAlive = true;
@@ -18,6 +18,6 @@ namespace GAME01 {
 	void SEVENTHENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("å†¥", Px, Py);
+		text("–»", Px, Py);
 	}
 }

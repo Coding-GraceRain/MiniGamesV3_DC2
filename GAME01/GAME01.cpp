@@ -1,4 +1,4 @@
-﻿#include "../../libOne/inc/libOne.h"
+#include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME01.h"
 #include"GAME.h"

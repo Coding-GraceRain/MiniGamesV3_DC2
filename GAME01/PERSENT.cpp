@@ -1,4 +1,4 @@
-ï»¿#include"PERSENT.h"
+#include"PERSENT.h"
 namespace GAME01
 {
 	int rand100() {
@@ -11,8 +11,8 @@ namespace GAME01
 		return((rand() % 100000) + 1);
 	}
 	int customrand(int min, int max) {
-		int finrand;//ã“ã“ã«æœ€çµ‚çµæœã‚’å…¥ã‚Œã‚‹
-		finrand = (rand() % ((max + 1) - min)) + min;//ä¾‹min = 25,max = 50  51-25=26 rand%26 = 0~25 +25 = 25~50
+		int finrand;//‚±‚±‚ÉÅIŒ‹‰Ê‚ğ“ü‚ê‚é
+		finrand = (rand() % ((max + 1) - min)) + min;//—ámin = 25,max = 50  51-25=26 rand%26 = 0~25 +25 = 25~50
 		return finrand;
 	}
 }

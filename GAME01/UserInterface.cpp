@@ -1,4 +1,4 @@
-Ôªø#include"UserInterface.h"
+#include"UserInterface.h"
 #include"GAME.h"
 #include"PLAYER.h"
 #include<string>
@@ -29,14 +29,14 @@ namespace GAME01
 			"EXIT",
 		};
 		switch (index) {
-		case 1://ÁõÆÊ¨°
+		case 1://ñ⁄éü
 			wardCount = 0;
-			//Ë°®Á§∫
+			//ï\é¶
 			for (int c = 0;c < Col;c++) {
 				for (int r = 0;r < Row;r++) {
 					if (c == 0 || r == 1 || c == Col - 1 || r == Row - 1) {
 						fill(255);
-						text("Êû†", c * size, r * size);
+						text("òg", c * size, r * size);
 					}
 					else if (r == 2) {
 						if (c == 1) {
@@ -65,10 +65,10 @@ namespace GAME01
 					}
 				}
 			}
-			text("‚Üê‚Üí„Ç≠„Éº„ÅßÈÅ∏Êäû", width / 2-150, height - (size * 2));
-			text("ENTER„ÅßÁ¢∫ÂÆö", width - (size * 9), height - (size * 2));
-			text("SHIFT+ENTER„ÇíÊäº„Åó„Å¶Êàª„Çã", size, height - (size * 2));
-			//ÈÅ∏Êäû
+			text("Å©Å®ÉLÅ[Ç≈ëIë", width / 2-150, height - (size * 2));
+			text("ENTERÇ≈ämíË", width - (size * 9), height - (size * 2));
+			text("SHIFT+ENTERÇâüÇµÇƒñﬂÇÈ", size, height - (size * 2));
+			//ëIë
 			if (isTrigger(KEY_RIGHT)) choiceCursor++;
 			if (isTrigger(KEY_LEFT))choiceCursor--;
 			if (choiceCursor > entryNum)choiceCursor = 1;
@@ -91,7 +91,7 @@ namespace GAME01
 				for (int r = 0;r < Row;r++) {
 					if (c == 0 || r == 1 || c == Col - 1 || r == Row - 1) {
 						fill(255);
-						text("Êû†", c * size, r * size);
+						text("òg", c * size, r * size);
 					}
 					if (r == 2 && c == 1)text(menu[index - 2].c_str(), c * size, r * size);
 				}
@@ -100,27 +100,27 @@ namespace GAME01
 				std::string s;
 				if (i < 2) {
 					s = status[Hp].str() + "/" + status[MaxHp].str();
-					s = "HP Ôºö" + s;
+					s = "HP ÅF" + s;
 
 				}
 				else {
 					s = status[i].str();
-					if (i == 2)s = "STRÔºö" + s;
-					else if (i == 3)s = "DEFÔºö" + s;
-					else if (i == 4)s = "INTÔºö" + s;
-					else if (i == 5)s = "DEXÔºö" + s;
-					else if (i == 6)s = "LUCÔºö" + s;
+					if (i == 2)s = "STRÅF" + s;
+					else if (i == 3)s = "DEFÅF" + s;
+					else if (i == 4)s = "INTÅF" + s;
+					else if (i == 5)s = "DEXÅF" + s;
+					else if (i == 6)s = "LUCÅF" + s;
 				}
 				int drawX = size * 2;
-				int drawY = (size * 2) + ((height / 6) - size) + (i * size);//(1080/6=180)‚ÜêÂÖ≠Á≠âÂàÜ-60‚Üê„Åù„Çå„Åã„ÇâÁúü„Çì‰∏≠„Å´ +(i*size)‚ÜêÊØéÂõûÔºíË°å„Åö„Å§„Åö„Çâ„Åôi„ÅåË°åÊï∞size„Åå‰∏ÄË°å„ÅÆÁ∏¶ÂπÖ
+				int drawY = (size * 2) + ((height / 6) - size) + (i * size);//(1080/6=180)Å©òZìôï™-60Å©ÇªÇÍÇ©ÇÁê^ÇÒíÜÇ… +(i*size)Å©ñàâÒÇQçsÇ∏Ç¬Ç∏ÇÁÇ∑iÇ™çsêîsizeÇ™àÍçsÇÃècïù
 				if(i!=0)text(s.c_str(), drawX, drawY);
 			}
 			if (player->getHPAbsorption() != 0) {
 				std::string s;
-				s = "HPÂê∏ÂèéÔºö" + std::to_string(player->getHPAbsorption()) + "%";
+				s = "HPãzé˚ÅF" + std::to_string(player->getHPAbsorption()) + "%";
 				text(s.c_str(), width / 2, (height / 6)-size);
 			}
-			text("SHIFT+ENTER„ÇíÊäº„Åó„Å¶Êàª„Çã", size, height - (size * 2));
+			text("SHIFT+ENTERÇâüÇµÇƒñﬂÇÈ", size, height - (size * 2));
 			if (isPress(KEY_SHIFT) && isTrigger(KEY_ENTER))index = 1;
 			break;
 		}
@@ -129,13 +129,13 @@ namespace GAME01
 				for (int r = 0;r < Row;r++) {
 					if (c == 0 || r == 1 || c == Col - 1 || r == Row - 1) {
 						fill(255);
-						text("Êû†", c * size, r * size);
+						text("òg", c * size, r * size);
 					}
 					if (r == 2 && c == 1)text(menu[index - 2].c_str(), c * size, r * size);
 				}
 			}
-			text("„ÄÄÊú™„ÄÄÂÆü„ÄÄË£Ö„ÄÄ", (width / 2) - 180, height / 2);
-			text("SHIFT+ENTER„ÇíÊäº„Åó„Å¶Êàª„Çã", size, height - (size * 2));
+			text("Å@ñ¢Å@é¿Å@ëïÅ@", (width / 2) - 180, height / 2);
+			text("SHIFT+ENTERÇâüÇµÇƒñﬂÇÈ", size, height - (size * 2));
 			if (isPress(KEY_SHIFT) && isTrigger(KEY_ENTER))index = 1;
 			break;
 		case 4://WEAPON
@@ -143,13 +143,13 @@ namespace GAME01
 				for (int r = 0;r < Row;r++) {
 					if (c == 0 || r == 1 || c == Col - 1 || r == Row - 1) {
 						fill(255);
-						text("Êû†", c * size, r * size);
+						text("òg", c * size, r * size);
 					}
 					if (r == 2 && c == 1)text(menu[index - 2].c_str(), c * size, r * size);
 				}
 			}
-			text("„ÄÄÊú™„ÄÄÂÆü„ÄÄË£Ö„ÄÄ", (width / 2) - 180, height / 2);
-			text("SHIFT+ENTER„ÇíÊäº„Åó„Å¶Êàª„Çã", size, height - (size * 2));
+			text("Å@ñ¢Å@é¿Å@ëïÅ@", (width / 2) - 180, height / 2);
+			text("SHIFT+ENTERÇâüÇµÇƒñﬂÇÈ", size, height - (size * 2));
 			if (isPress(KEY_SHIFT) && isTrigger(KEY_ENTER))index = 1;
 			break;
 		case 5://EXIT
@@ -157,13 +157,13 @@ namespace GAME01
 				for (int r = 0;r < Row;r++) {
 					if (c == 0 || r == 1 || c == Col - 1 || r == Row - 1) {
 						fill(255);
-						text("Êû†", c * size, r * size);
+						text("òg", c * size, r * size);
 					}
 					if (r == 2 && c == 1)text(menu[index - 2].c_str(), c * size, r * size);
 				}
 			}
-			text("T„ÇíÊäº„Åó„Å¶„Çø„Ç§„Éà„É´„Å´Êàª„Çã", ((width - size) / 2)-(size*5), (height / 2));
-			text("SHIFT+ENTER„ÇíÊäº„Åó„Å¶Êàª„Çã", size, height - (size*2));
+			text("TÇâüÇµÇƒÉ^ÉCÉgÉãÇ…ñﬂÇÈ", ((width - size) / 2)-(size*5), (height / 2));
+			text("SHIFT+ENTERÇâüÇµÇƒñﬂÇÈ", size, height - (size*2));
 			if (isTrigger(KEY_T)) {
 				game->openUI = false;
 				game->setState(0); 

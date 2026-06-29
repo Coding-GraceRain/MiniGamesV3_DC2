@@ -1,4 +1,4 @@
-﻿#include "FOURTHENEMY.h"
+#include "FOURTHENEMY.h"
 namespace GAME01 {
 	void FOURTHENEMY::init(int IPx, int IPy) {
 		isAlive = true;
@@ -18,6 +18,6 @@ namespace GAME01 {
 	void FOURTHENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("骸", Px, Py);
+		text("�[", Px, Py);
 	}
 }

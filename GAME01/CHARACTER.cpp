@@ -1,4 +1,4 @@
-ï»¿#include "CHARACTER.h"
+#include "CHARACTER.h"
 #include"GAME.h"
 #include"PERSENT.h"
 #include<string>
@@ -14,7 +14,7 @@ namespace GAME01
 	}
 	void CHARACTER::draw() {
 		textSize(size * n.SIZ);
-		text("è©¦", Px, Py);
+		text("ŽŽ", Px, Py);
 	}
 	void CHARACTER::update() {
 		n.HP = 10;
@@ -40,40 +40,40 @@ namespace GAME01
 			knockVy = 0;
 		}
 	}
-	//ã“ã¡ã‚‰ãŒçœŸä¸‹ã«ã„ã‚‹åˆ¤å®š
+	//‚±‚¿‚ç‚ª^‰º‚É‚¢‚é”»’è
 	bool CHARACTER::enemyUp(CHARACTER* ME, CHARACTER* YOU, float step) {
 		return (fabs(ME->Px - YOU->Px) < 0.1f) && (fabs((ME->Py - step) - YOU->Py) < 0.1f);
 	}
-	//ã“ã¡ã‚‰ãŒçœŸä¸Šã«ã„ã‚‹åˆ¤å®š
+	//‚±‚¿‚ç‚ª^ã‚É‚¢‚é”»’è
 	bool CHARACTER::enemyDawn(CHARACTER* ME, CHARACTER* YOU, float step) {
 		return (fabs(ME->Px - YOU->Px) < 0.1f) && (fabs(YOU->Py - (ME->Py + step)) < 0.1f);
 	}
-	//ã“ã¡ã‚‰ãŒçœŸå³ã«ã„ã‚‹åˆ¤å®š
+	//‚±‚¿‚ç‚ª^‰E‚É‚¢‚é”»’è
 	bool CHARACTER::enemyLeft(CHARACTER* ME, CHARACTER* YOU, float step) {
 		return (fabs((YOU->Px) - (ME->Px - step)) < 0.1f) && (fabs(ME->Py - YOU->Py) < 0.1f);
 	}
-	//ã“ã¡ã‚‰ãŒçœŸå·¦ã«ã„ã‚‹åˆ¤å®š
+	//‚±‚¿‚ç‚ª^¶‚É‚¢‚é”»’è
 	bool CHARACTER::enemyRaight(CHARACTER* ME, CHARACTER* YOU, float step) {
 		return (fabs((ME->Px + step) - (YOU->Px)) < 0.1f) && (fabs(ME->Py - YOU->Py) < 0.1f);
 	}
-	//ã“ã¡ã‚‰ãŒçœŸä¸‹ã«ã„ã‚‹åˆ¤å®š(å£)
+	//‚±‚¿‚ç‚ª^‰º‚É‚¢‚é”»’è(•Ç)
 	bool CHARACTER::objectUp(CHARACTER* ME, MAP* MAP) {
 		if (ME->PCelly - 1 < 0)return true;
 		return MAP->Cell[ME->PCellx][ME->PCelly - 1].type == 1;
 	}
-	//ã“ã¡ã‚‰ãŒçœŸä¸Šã«ã„ã‚‹åˆ¤å®š(å£)
+	//‚±‚¿‚ç‚ª^ã‚É‚¢‚é”»’è(•Ç)
 	bool CHARACTER::objectDawn(CHARACTER* ME, MAP* MAP) {
 		if (ME->PCelly + 1 >= MAP->getRow()) return true;
 		return MAP->Cell[ME->PCellx][(ME->PCelly) + 1].type == 1;
 	}
-	//ã“ã¡ã‚‰ãŒçœŸå³ã«ã„ã‚‹åˆ¤å®š(å£)
+	//‚±‚¿‚ç‚ª^‰E‚É‚¢‚é”»’è(•Ç)
 	bool CHARACTER::objectLeft(CHARACTER* ME, MAP* MAP) {
 		if (ME->PCellx - 1 < 0)return true;
 		return MAP->Cell[(ME->PCellx) - 1][ME->PCelly].type == 1;
 	}
-	//ã“ã¡ã‚‰ãŒçœŸå·¦ã«ã„ã‚‹åˆ¤å®š(å£)
+	//‚±‚¿‚ç‚ª^¶‚É‚¢‚é”»’è(•Ç)
 	bool CHARACTER::objectRight(CHARACTER* ME, MAP* MAP) {
-		if (ME->PCellx + 1 >= MAP->getCol()) return true; // å£æ‰±ã„
+		if (ME->PCellx + 1 >= MAP->getCol()) return true; // •Çˆµ‚¢
 		return MAP->Cell[ME->PCellx + 1][ME->PCelly].type == 1;
 	}
 	void CHARACTER::attack(CHARACTER* ME, CHARACTER* YOU) {
@@ -82,7 +82,7 @@ namespace GAME01
 		float step = ME->size * ME->n.SIZ;
 		switch (ME->direction) {
 		case 1:
-			//åŠåˆ†é€²ã‚€
+			//”¼•ªi‚Þ
 			ME->Py -= step / 2;
 			if (criticalHit) {
 				YOU->setHp(ME->n.STR * 2);
@@ -95,11 +95,11 @@ namespace GAME01
 				YOU->setHp(ME->n.STR);
 				ME->healHp((ME->n.STR * (100.0f / (100.0f + YOU->n.DEF)) * (HPAbsorptionEffect / 100)));
 			}
-			//æˆ»ã‚‹
+			//–ß‚é
 			game->knockback(ME->direction, ME);
 			break;
 		case 2:
-			//åŠåˆ†é€²ã‚€
+			//”¼•ªi‚Þ
 			ME->Px -= step / 2;
 			if (criticalHit) {
 				YOU->setHp(ME->n.STR * 2);
@@ -112,11 +112,11 @@ namespace GAME01
 				YOU->setHp(ME->n.STR);
 				ME->healHp((ME->n.STR * (100.0f / (100.0f + YOU->n.DEF)) * (HPAbsorptionEffect / 100)));
 			}
-			//æˆ»ã‚‹
+			//–ß‚é
 			game->knockback(ME->direction, ME);
 			break;
 		case 3:
-			//åŠåˆ†é€²ã‚€
+			//”¼•ªi‚Þ
 			ME->Py += step / 2;
 			if (criticalHit) {
 				YOU->setHp(ME->n.STR * 2);
@@ -129,11 +129,11 @@ namespace GAME01
 				YOU->setHp(ME->n.STR);
 				ME->healHp((ME->n.STR * (100.0f / (100.0f + YOU->n.DEF)) * (HPAbsorptionEffect / 100)));
 			}
-			//æˆ»ã‚‹
+			//–ß‚é
 			game->knockback(ME->direction, ME);
 			break;
 		case 4:
-			//åŠåˆ†é€²ã‚€
+			//”¼•ªi‚Þ
 			ME->Px += step / 2;
 			if (criticalHit) {
 				YOU->setHp(ME->n.STR * 2);
@@ -146,7 +146,7 @@ namespace GAME01
 				YOU->setHp(ME->n.STR);
 				ME->healHp((ME->n.STR * (100.0f / (100.0f + YOU->n.DEF)) * (HPAbsorptionEffect / 100)));
 			}
-			//æˆ»ã‚‹
+			//–ß‚é
 			game->knockback(ME->direction, ME);
 			break;
 		}

@@ -14,7 +14,7 @@
 #include "BBULLET2.h"
 #include "ENEMY3.h"
 #include "ZIKINERAI.h"
-#include "../../libOne/inc/window.h"
+#include<windows.h>
 namespace GAME02 {
     //Project Manager
     class PROMANE 

@@ -2,6 +2,7 @@
 #include "../../libOne/inc/graphic.h"
 #include "../../libOne/inc/input.h"
 #include "../../libOne/inc/mathUtil.h"
+#include "../../libOne/inc/window.h"
 
 namespace GAME02 {
 	void PROMANE::Init() {

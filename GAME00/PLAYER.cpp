@@ -21,7 +21,7 @@ namespace GAME00 {
 		Gravity = 0.8f;
 		JumpCount = 0;
 		OnGround = false;
-		MaxHp = 5;
+		MaxHp = 7;
 		Hp = MaxHp;
 		DamageTimer = 0.0f;
 	}

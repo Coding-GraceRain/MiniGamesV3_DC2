@@ -33,7 +33,7 @@ namespace GAME00
 		}
 		ShotTimer += delta;
 
-		if (ShotTimer >= 2.0f) {
+		if (ShotTimer >= 3.0f) {
 
 			for (int i = 0; i < Bullet_Max; i++) {
 

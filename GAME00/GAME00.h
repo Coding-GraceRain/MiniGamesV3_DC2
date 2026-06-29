@@ -21,7 +21,7 @@ namespace GAME00
         int GetSe;
         int GameOverSe;
         PLAYER Player;
-        static const int Enum = 4;
+        static const int Enum = 3;
         ENEMY Enemies[Enum];
         OBJECT Object;
         static const int Obj2_Max = 30;

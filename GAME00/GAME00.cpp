@@ -245,7 +245,7 @@ namespace GAME00
 		textSize(30);
 		fill(0);
 		text("    HP :", 30, 130);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 7; i++) {
 			if (i < Player.getHp()) {
 				image(HpImg, 150 + i * 35, 100);
 			}
@@ -436,10 +436,9 @@ namespace GAME00
 		Enemies[0].init(0.0f, 0.0f);
 		Enemies[1].init(145, -750); 
 		Enemies[2].init(1050, -2900);
-		Enemies[3].init(815, -3800);
 	}
 
 	void GAME::TimeInit() {
-		TimeLimit = 60.0f;
+		TimeLimit = 80.0f;
 	}
 }

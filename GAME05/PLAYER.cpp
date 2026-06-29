@@ -4,7 +4,6 @@
 #include"ANIMS.h"
 #include"CONTAINER.h"
 #include"GAME.h"
-#include"GAME05.h"
 #include"MAP.h"
 #include "PLAYER.h"
 namespace GAME05 {

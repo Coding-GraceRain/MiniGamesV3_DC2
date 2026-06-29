@@ -2,7 +2,6 @@
 #include"ANIM.h"
 #include"CONTAINER.h"
 #include"GAME.h"
-#include"GAME05.h"
 #include"MAP.h"
 #include"SURAIMU.h"
 namespace GAME05 {

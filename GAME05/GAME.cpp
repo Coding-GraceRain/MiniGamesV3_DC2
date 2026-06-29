@@ -10,7 +10,6 @@
 #include"LAYER.h"
 #include"CHARACTER_MANAGER.h"
 #include"GAME.h"
-//#include"GAME05.h"
 namespace GAME05 {
     GAME_::GAME_() {//コンストラクタ
 

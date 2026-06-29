@@ -2,7 +2,6 @@
 #include"../../libOne/inc/input.h"
 #include "../../libOne/inc/libOne.h"
 #include"GAME.h"
-#include"GAME05.h"
 #include"CONTAINER.h"
 #include"STAGE.h"
 #include"FADE.h"

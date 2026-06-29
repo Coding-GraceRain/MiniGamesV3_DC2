@@ -1,10 +1,14 @@
 #include "../../libOne/inc/libOne.h"
 #include "../MAIN/MAIN.h"
 #include "GAME07.h"
+
+
 namespace GAME07
 {
+
 	int GAME::create()
 	{
+		taitle.create();
 		return 0;
 	}
 
@@ -15,14 +19,12 @@ namespace GAME07
 
 	void GAME::proc()
 	{
-		clear(0, 0, 64);
-		textSize(50);
-		fill(255, 255, 0);
-		text("GAME07", 0, 100);
-		fill(255);
-		text("ENTERキーでメニューに戻る", 0, 1080);
-		if (isTrigger(KEY_ENTER)) {
-			main()->backToMenu();
-		}
+			if (isTrigger(KEY_ENTER)) {
+				main()->backToMenu();
+			}
+			taitle.state();
+			
+			
 	}
+
 }

@@ -54,11 +54,11 @@ void KOUMORI::update(float speed) {
 
 void OBAKE::draw() {
 	image(img[anime], x - 30, y - 30, 4, 4);
-	rect(x, y, w, h);
+	//rect(x, y, w, h);
 }
 void KOUMORI::draw() {
 	image(img[anime], x-70 , y-60 , 5, 5);
-	rect(x , y , w, h);
+	//rect(x , y , w, h);
 }
 
 void OBAKE::damage() {

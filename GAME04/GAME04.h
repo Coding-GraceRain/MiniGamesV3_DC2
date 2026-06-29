@@ -2,6 +2,7 @@
 #include "../MAIN/GAME_BASE.h"
 #include "PLAYER.h"
 #include "ENEMY.h"
+
 namespace GAME04
 {
     class GAME :
@@ -48,8 +49,10 @@ namespace GAME04
         ~GAME() {};
 
         PLAYER player;
-        OBAKE obake[5];
-        KOUMORI koumori[5];
+        //OBAKE obake[5];
+        //KOUMORI koumori[5];
+        class OBAKE* obake = 0;
+        class KOUMORI* koumori = 0;
 
         int create();
         void proc();

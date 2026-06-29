@@ -14,7 +14,7 @@ public:
 
 	void init();
 	void update(int seJump);
-	void draw(int imgSoldier[3]);
+	void draw(int imgSoldier[3]) const;
 
 	void setY(float ny) { y = ny; }
 	void setVy(float nvy) { vy = nvy; }

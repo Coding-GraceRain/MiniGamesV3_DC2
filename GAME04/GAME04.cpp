@@ -51,6 +51,8 @@ namespace GAME04
 		setVolume(seJump, 0.1f);
 		state = TITLE;
 
+		obake = new OBAKE[5];
+		koumori = new KOUMORI[5];
 		return 0;
 	}
 	void GAME :: init() {
@@ -75,6 +77,7 @@ namespace GAME04
 		}
 
 
+
 		for (int i = 0; i < 3; i++) {
 			fx[i] = 1800 + i * 300;
 			if (rand() % 3 == 0) {
@@ -96,7 +99,8 @@ namespace GAME04
 
 	void GAME::destroy()
 	{
-
+		delete[]obake;
+		delete[]koumori;
 	}
 	void GAME::collision() {
 		float px = player.getx() + 20;
@@ -210,11 +214,14 @@ namespace GAME04
 		else if (state == PLAY) {
 			clear(255,255,255);
 			player.update(seJump);
-			for (int i = 0; i < 5; i++) {
-				obake[i].update(speed);
-				koumori[i].update(speed);
+				for (int i = 0; i < 5; i++) {
+					obake[i].update(speed);
+					koumori[i].update(speed);
+				}
+			if (score <ginit-50 ) {
+				collision();
 			}
-			collision();
+
 			
 			image(imgHaikei, haikeix,0,0,1.2f);
 			image(imgHaikei, haikeix + 1920,0, 0,1.2f);

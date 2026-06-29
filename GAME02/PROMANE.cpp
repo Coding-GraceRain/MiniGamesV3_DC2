@@ -56,6 +56,7 @@ namespace GAME02 {
 		if (BossState == BOSSPOP) {
 			text((let)"BossHp " + Boss.Hp, 0, 250);
 		}
+		text("Rキーでリトライ", 0, 1080);
 	}
 	void PROMANE::GameClearTexts() {
 		rectMode(CENTER);

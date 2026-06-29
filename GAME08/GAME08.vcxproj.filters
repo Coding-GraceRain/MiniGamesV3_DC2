@@ -2,9 +2,21 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="GAME08.cpp" />
+    <ClCompile Include="ACTOR.cpp" />
+    <ClCompile Include="COURT.cpp" />
+    <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="BALL.cpp" />
+    <ClCompile Include="PLAYER2.cpp" />
+    <ClCompile Include="SCORE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME08.h" />
+    <ClInclude Include="ACTOR.h" />
+    <ClInclude Include="COURT.h" />
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="BALL.h" />
+    <ClInclude Include="PLAYER2.h" />
+    <ClInclude Include="SCORE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game08\title.txt" />

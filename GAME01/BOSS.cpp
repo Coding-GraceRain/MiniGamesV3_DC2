@@ -1,4 +1,4 @@
-﻿#include "BOSS.h"
+#include "BOSS.h"
 namespace GAME01 {
 	void BOSS::init(int IPx, int IPy) {
 		isAlive = true;
@@ -18,6 +18,6 @@ namespace GAME01 {
 	void BOSS::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("王", Px, Py);
+		text("�?, Px, Py);
 	}
 }

@@ -1,4 +1,4 @@
-﻿#include "NORMALENEMY.h"
+#include "NORMALENEMY.h"
 namespace GAME01
 {
 	void NORMALENEMY::init(int IPx, int IPy) {
@@ -19,6 +19,6 @@ namespace GAME01
 	void NORMALENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("狼", Px, Py);
+		text("�T", Px, Py);
 	}
 }

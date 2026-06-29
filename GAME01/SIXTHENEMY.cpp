@@ -1,4 +1,4 @@
-Ôªø#include "SIXTHENEMY.h"
+#include "SIXTHENEMY.h"
 namespace GAME01 {
 	void SIXTHENEMY::init(int IPx, int IPy) {
 		isAlive = true;
@@ -18,6 +18,6 @@ namespace GAME01 {
 	void SIXTHENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("Ëùø", Px, Py);
+		text("îà", Px, Py);
 	}
 }

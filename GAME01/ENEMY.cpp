@@ -1,4 +1,4 @@
-ï»¿#include "ENEMY.h"
+#include "ENEMY.h"
 #include"GAME.h"
 #include<string>
 #include<cmath>
@@ -25,7 +25,7 @@ namespace GAME01
 	void ENEMY::draw() {
 		if (!isAlive)return;
 		textSize(size * n.SIZ);
-		text("ä»®", Px, Py);
+		text("‰¼", Px, Py);
 	}
 	void ENEMY::update() {
 		
@@ -38,7 +38,7 @@ namespace GAME01
 			return;
 		}
 		if (!isAlive)return;
-		//è¡Œå‹•å›æ•°ã‚’ã„ã˜ãã‚‹ã‚„ã¤
+		//s“®‰ñ”‚ğ‚¢‚¶‚­‚é‚â‚Â
 		float Action = std::ceil(n.DEX / 10);
 		float step = (size * n.SIZ);
 

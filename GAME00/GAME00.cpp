@@ -73,6 +73,8 @@ namespace GAME00
 			Player.init();
 			Player.saveStartPos();
 
+			FallCount = 0;
+
 			EnemiesInit();
 			Object.init();
 
@@ -171,6 +173,7 @@ namespace GAME00
 				WorldScrollY = 0;
 		}
 		if (Player.top() > height) {
+			FallCount++;
 			Player.damage(1);
 			Player.respawn();
 
@@ -214,6 +217,7 @@ namespace GAME00
 			Player.left() < Flag.right() &&
 			Player.bottom() > Flag.top(WorldScrollY) &&
 			Player.top() < Flag.bottom(WorldScrollY)) {
+			ClearTime = 80.0f - TimeLimit;
 			setVolume(GetSe, -3000);
 			playSound(GetSe);
 			State = CLEAR;
@@ -271,6 +275,15 @@ namespace GAME00
 		fill(255, 255, 0);
 		textSize(120);
 		text("GAME CLEAR", 675, 250);
+
+		fill(255);
+		textSize(80);
+
+		text("落ちた回数   :", 700, 750);
+		text(FallCount, 1300, 750);
+
+		text("クリアタイム :", 700, 900);
+		text((int)ClearTime, 1300, 900);
 		fill(255);
 		textSize(50);
 		text("ENTERキーでメニューに戻る", 0, 1080);
@@ -351,6 +364,7 @@ namespace GAME00
 		setVolume(Bgm, -4300);
 		playLoopSound(Bgm);
 		Player.init();
+		FallCount = 0;
 		EnemiesInit();
 		Object.init();
 

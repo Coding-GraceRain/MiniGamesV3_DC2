@@ -20,6 +20,8 @@ namespace GAME00
         int PushSe;
         int GetSe;
         int GameOverSe;
+        int FallCount;
+        float ClearTime;
         PLAYER Player;
         static const int Enum = 3;
         ENEMY Enemies[Enum];

@@ -102,15 +102,16 @@ void TAITLE::state() {
 		if (num[0] >= 4) {
 			multi3.set(1200, 650, num[4] % num[0]);
 			multi3.judge(1375, 850);
-			if (num[6] == 4 || num[4] % num[0] == 3) {
+			if (num[6] == 4 ){
 				multi3.kakekin();
 				text("4P", 900, 500);
-				if (isTrigger(KEY_SPACE) && Flag[2] == 0) {
+				if (isTrigger(KEY_SPACE) && Flag[2] == 0 || num[4] % num[0] == 3) {
 					num[6] += 1;
 					Flag[2] = 1;
 				}
 			}
 		}
+
 		if (Flag[2] == 1 && num[0] == num[6] - 1) {
 			saikoro.kakekinf();
 			multi1.kakekinf();
@@ -169,7 +170,7 @@ void TAITLE::state() {
 			init();
 			State = TAITLE1;
 		}
-		text(" Mでタイトルへも戻る", 20, 1080);
+		text(" Mでタイトルへ戻る", 20, 1080);
 	}
 }
 
@@ -192,7 +193,7 @@ void TAITLE::setumei() {
 	text(" A：掛け金マイナス", 20, 60*3);
 	text(" W,S:上下", 20, 60 * 4);
 	text(" Q：ゲーム説明", 20, 60 * 5);
-	text(" M：タイトルへも戻る", 20, 60 * 6);
+	text(" M：タイトルへ戻る", 20, 60 * 6);
 	text("SPACE：決定、次へ", 20, 60*7);
 	text("サイコロを振る", 20, 60 *8);
 	text("1P:U, 2P:I, 3P:O, 4P:P", 20,60*9);
@@ -340,10 +341,10 @@ void TAITLE::kekka() {
 		textSize(100);
 		text(i+1, 100, 200 + 150 * i);
 		text("位", 150, 200 + 150 * i);
-		text(n[i], 400, 200 + 150 * i);
+		text(n[i] , 400, 200 + 150 * i);
 		text("点", 600, 200 + 150 * i);
-		text(a[i], 750, 200 + 150 * i);
-		text("PLAYER", 800, 200 + 150 * i);
+		text(a[i],  750, 200 + 150 * i);
+		text("P", 800, 200 + 150 * i);
 	}
 }
 

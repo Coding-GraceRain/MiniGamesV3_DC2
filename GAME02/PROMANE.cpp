@@ -3,7 +3,6 @@
 #include "../../libOne/inc/input.h"
 #include "../../libOne/inc/mathUtil.h"
 #include "../../libOne/inc/window.h"
-
 namespace GAME02 {
 	void PROMANE::Init() {
 		Time = 0;
@@ -205,6 +204,7 @@ namespace GAME02 {
 			} while (retry);
 		}*/
 		Enemy->Buf = 0;
+		Enemy3->Buf = 0;
 		Init();
 		GetCursorPos(&mouse);
 		ClientToScreen(HWnd, &mouse);

@@ -9,7 +9,7 @@ namespace GAME00
 		int ImgRight;
 		float Px, Py;
 		float Vx, Vy;
-		static const int Bullet_Max = 10;
+		static const int Bullet_Max = 3;
 		BULLET Bullet[Bullet_Max];
 		float ShotTimer;
 	public:

@@ -133,6 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="..\MAIN\assets\game08\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="ACTOR.cpp" />
     <ClCompile Include="BALL.cpp" />
     <ClCompile Include="COURT.cpp" />
@@ -149,9 +152,6 @@
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="PLAYER2.h" />
     <ClInclude Include="SCORE.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\MAIN\assets\game08\title.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

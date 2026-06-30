@@ -74,7 +74,7 @@ namespace GAME08
 		float dx = ball->px() - (pad->px() + pad->w() / 2);
 		float angle = Map(dx, -halfW, halfW, 135, 45);
 		setVx(Cos(angle) * sp());
-		if (ball->py() < pad->py()) {
+		if (ball->px() < pad->py()) {
 			setVy(-Sin(angle) * sp());
 		}
 		else {

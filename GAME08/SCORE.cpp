@@ -17,7 +17,7 @@ namespace GAME08
 		PlayerScore = 0;
 		Player2Score = 0;
 		ScoreFlag = false;
-		WinerScore = 1;
+		Winner = 0;
 	}
 	void SCORE::update()
 	{

@@ -20,6 +20,7 @@ public:
 		GAME14_ID,
 		GAME15_ID,
 		MENU_ID=100,
+		TITLE_ID,
 	};
 	GAME_FACTORY(class MAIN* main);
 	~GAME_FACTORY();

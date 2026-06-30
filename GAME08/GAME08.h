@@ -19,6 +19,7 @@ namespace GAME08
         class ACTOR* player2() { return Player2; }
         class ACTOR* score() { return Score; }
         class ACTOR* game() { return Game; }
+        class ACTOR* title() { return Title; }
         void GameOver() { Playing = false; }
     private:
         void Init();
@@ -29,6 +30,7 @@ namespace GAME08
         class ACTOR* Player2;
         class ACTOR* Score;
         class ACTOR* Game;
+        class ACTOR* Title;
         bool Playing = true;
     };
 }

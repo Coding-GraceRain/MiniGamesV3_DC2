@@ -11,11 +11,13 @@ namespace GAME08
         void init();
         void update();
         void draw();
-
+        void winner();
+        int playerScore() { return PlayerScore; }
+        int player2Score() { return Player2Score; }
     private:
         int PlayerScore;
         int Player2Score;
         bool ScoreFlag;
-        int WinerScore;
+        int Winner;
     };
 }

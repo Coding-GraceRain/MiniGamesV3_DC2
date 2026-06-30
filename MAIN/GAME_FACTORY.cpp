@@ -17,6 +17,7 @@
 #include "../MENU/MENU.h"
 #include "MAIN.h"
 #include "GAME_FACTORY.h"
+#include "../GAME08/TITLE.h"
 
 GAME_FACTORY::GAME_FACTORY(MAIN* main):Main(main){}
 
@@ -24,6 +25,7 @@ GAME_FACTORY::~GAME_FACTORY(){Main = nullptr;}
 
 GAME_BASE* GAME_FACTORY::create(GAME_ID id)
 {
+	if (id == TITLE_ID) return new GAME08::TITLE(Main);
 	if (id == GAME00_ID)return new GAME00::GAME(Main);
 	if (id == GAME01_ID)return new GAME01::GAME(Main);
 	if (id == GAME02_ID)return new GAME02::GAME(Main);

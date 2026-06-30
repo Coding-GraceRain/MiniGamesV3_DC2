@@ -8,6 +8,7 @@
     <ClCompile Include="BALL.cpp" />
     <ClCompile Include="PLAYER2.cpp" />
     <ClCompile Include="SCORE.cpp" />
+    <ClCompile Include="TITLE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GAME08.h" />
@@ -17,6 +18,7 @@
     <ClInclude Include="BALL.h" />
     <ClInclude Include="PLAYER2.h" />
     <ClInclude Include="SCORE.h" />
+    <ClInclude Include="TITLE.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\MAIN\assets\game08\title.txt" />

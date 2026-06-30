@@ -8,6 +8,7 @@
 #include"BALL.h"
 #include"PLAYER2.h"
 #include"SCORE.h"
+#include"TITLE.h"
 
 namespace GAME08
 {
@@ -17,7 +18,7 @@ namespace GAME08
 		Actors.push_back(Player = new PLAYER(this));
 		Actors.push_back(Ball = new BALL(this));
 		Actors.push_back(Player2 = new PLAYER2(this));
-		Actors.push_back(new SCORE(this));
+		Actors.push_back(Score = new SCORE(this));
 
 		Init();
 
@@ -54,14 +55,23 @@ namespace GAME08
 			}
 			if (!Playing)
 			{
-				textSize(425);
+				textSize(125);
 				fill(255, 0, 0);
 				textMode(BCENTER);
-				text("YOU LOSE", 200, 540);
+				SCORE* score = (SCORE*)this->score();
+
+				if (score->playerScore() >= 3)
+				{
+					text("PLAYER 1 WIN!", 960, 300);
+				}
+				else if (score->player2Score() >= 3)
+				{
+					text("PLAYER 2 WIN!", 960, 300);
+				}
 			}
 		textSize(80);
 		fill(255, 255, 0);
-		text("PON", 10, 100);
+		text("PONG", 20, 30);
 		if (isTrigger(KEY_ENTER)) {
 			main()->backToMenu();
 		}

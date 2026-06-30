@@ -90,10 +90,17 @@ void MENU::proc()
 	//描画--------------------------------------------------
 	Draw();
 	//左クリックで選択したゲームに切り替え-----------------------
+//左クリックで選択したゲームに切り替え-----------------------
 	if (isTrigger(MOUSE_LBUTTON)) {
 		if (TileIndexMouseOver >= 0) {
 			int index = GameIndices[TileIndexMouseOver];
-			main()->setNextGameId((GAME_FACTORY::GAME_ID)index);
+
+			if (index == GAME_FACTORY::GAME08_ID) {
+				main()->setNextGameId(GAME_FACTORY::TITLE_ID);
+			}
+			else {
+				main()->setNextGameId((GAME_FACTORY::GAME_ID)index);
+			}
 		}
 	}
 }

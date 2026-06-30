@@ -20,7 +20,7 @@ namespace GAME05 {
         size = 50;
         textSize(size);
         fill(255);
-        text("A......LeftRight  ", (width - size / 2 * 13) / 2, 290);
+        text("A......Left  ", (width - size / 2 * 13) / 2, 290);
         text("D......Right  ", (width - size / 2 * 13) / 2, 360);
         text("J......Jump  ", (width - size / 2 * 13) / 2, 430);
         text("L......attack  ", (width - size / 2 * 13) / 2, 500);
